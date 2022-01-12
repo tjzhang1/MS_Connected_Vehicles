@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-01-06 17:12:10 by Eclipse SUMO netedit Version v1_10_0+2390-e1c4ea0d0d5
+<!-- generated on 2022-01-11 19:28:10 by Eclipse SUMO netedit Version v1_10_0+2390-e1c4ea0d0d5
 -->
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
-    <flow id="continueHwy_flow" begin="0.00" from="hwyStart" to="hwyEnd" end="3600.00" number="1800"/>
-    <flow id="enterHwy_flow" begin="0.00" color="blue" from="onRamp" to="hwyEnd" end="3600.00" number="200"/>
-    <flow id="exitHwy_flow" begin="0.00" color="red" from="hwyStart" to="offRamp" end="3600.00" number="900"/>
+    <flow id="continueHwy" begin="0.00" from="hwyStart" to="hwyEnd" end="3600.00" number="1800"/>
+    <flow id="enterAndExit" begin="0.00" color="orange" from="onRamp" to="offRamp" end="3600.00" number="500"/>
+    <flow id="enterHwy" begin="0.00" color="red" from="onRamp" to="hwyEnd" end="3600.00" number="500"/>
+    <flow id="exitHwy" begin="0.00" color="blue" from="hwyStart" to="offRamp" end="3600.00" number="500"/>
 </routes>

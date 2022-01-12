@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-01-11 19:41:59 by Eclipse SUMO netedit Version v1_10_0+2390-e1c4ea0d0d5
+<!-- generated on 2022-01-12 00:11:26 by Eclipse SUMO netedit Version 1.11.0
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
-        <sumo-net-file value="/home/tjzhang/Sumo/highway/highway.net.xml"/>
+        <sumo-net-file value="/home/tjzhang/Research/VEINS_Connected_Vehicles/highway.net.xml"/>
     </input>
 
     <output>
-        <output-file value="/home/tjzhang/Sumo/highway/highway.net.xml"/>
+        <output-file value="/home/tjzhang/Research/VEINS_Connected_Vehicles/highway.net.xml"/>
     </output>
 
     <processing>
@@ -30,8 +30,7 @@
     </pedestrian>
 
     <netedit>
-        <additional-files value="/home/tjzhang/Sumo/highway/highway.add.xml"/>
-        <route-files value="/home/tjzhang/Sumo/highway/highway.rou.xml"/>
+        <route-files value="/home/tjzhang/Research/VEINS_Connected_Vehicles/highway.rou.xml"/>
     </netedit>
 
     <report>
@@ -91,8 +90,16 @@
         <phase duration="3"  state="y"/>
         <phase duration="5"  state="r"/>
     </tlLogic>
-    <tlLogic id="rampMeter" type="static" programID="my_program" offset="0">
-        <phase duration="31" state="r"/>
+    <tlLogic id="rampMeter" type="actuated" programID="my_program" offset="0">
+        <phase duration="31" state="g" minDur="5" maxDur="45"/>
+        <phase duration="10" state="r" minDur="10" maxDur="10"/>
+        <param key="detector-gap" value="2.0"/>
+        <param key="file" value="NULL"/>
+        <param key="freq" value="300"/>
+        <param key="max-gap" value="3.0"/>
+        <param key="passing-time" value="2.0"/>
+        <param key="show-detectors" value="true"/>
+        <param key="vTypes" value=""/>
     </tlLogic>
 
     <junction id="J0" type="dead_end" x="0.00" y="0.00" incLanes="" intLanes="" shape="0.00,0.00 0.00,-6.40"/>

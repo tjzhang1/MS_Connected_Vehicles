@@ -1,0 +1,3 @@
+package smarthighway;
+
+@license(LGPL);

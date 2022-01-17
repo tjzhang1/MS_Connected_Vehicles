@@ -5,7 +5,6 @@
     <param key="passing-time" value="2.0"/>
     <param key="show-detectors" value="true"/>
     <param key="vTypes" value=""/>
-    <param key="file" value="NULL"/>
     <param key="freq" value="300"/>
     <phase duration="31" minDur="5" maxDur="45" state="g"/>
     <phase duration="10" minDur="10" maxDur="10" state="r"/>

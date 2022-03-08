@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-01-12 18:42:09 by Eclipse SUMO netedit Version v1_10_0+2390-e1c4ea0d0d5
+<!-- generated on 2022-02-15 20:31:37 by Eclipse SUMO netedit Version v1_10_0+2390-e1c4ea0d0d5
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
-        <sumo-net-file value="/home/tjzhang/Sumo/highway/highway.net.xml"/>
+        <sumo-net-file value="/home/tjzhang/Sumo/highway/sumoProj/highway.net.xml"/>
     </input>
 
     <output>
-        <output-file value="/home/tjzhang/Sumo/highway/highway.net.xml"/>
+        <output-file value="/home/tjzhang/Sumo/highway/sumoProj/highway.net.xml"/>
     </output>
 
     <processing>

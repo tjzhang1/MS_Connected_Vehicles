@@ -1,0 +1,45 @@
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/.
+// 
+
+#include "RSUApp.h"
+#include "veins/modules/application/traci/TraCIDemo11pMessage_m.h"
+#include "Messaging/ProbeVehicleData_m.h"
+#include <stdio.h>
+
+using namespace veins;
+
+Define_Module(veins::RSUApp);
+
+void RSUApp::onWSA(DemoServiceAdvertisment* wsa)
+{
+    // if this RSU receives a WSA for service 42, it will tune to the chan
+    if (wsa->getPsid() == 42) {
+        mac->changeServiceChannel(static_cast<Channel>(wsa->getTargetChannel()));
+    }
+}
+
+void RSUApp::onWSM(BaseFrame1609_4* frame)
+{
+    if ( TraCIDemo11pMessage* wsm = dynamic_cast<TraCIDemo11pMessage*>(frame) )
+    {
+        // this rsu repeats the received traffic update in 2 seconds plus some random delay
+        sendDelayedDown(wsm->dup(), 2 + uniform(0.01, 0.2));
+    }
+    else if ( ProbeVehicleData* pvd = dynamic_cast<ProbeVehicleData*>(frame) )
+    {
+        std::cout << "Received vType " << pvd->getVehicleTypeID() << " data from pos" << pvd->getSenderPos() << ", speed" << pvd->getSenderSpeed() << std::endl;
+    }
+    // Can add more functionality here
+}

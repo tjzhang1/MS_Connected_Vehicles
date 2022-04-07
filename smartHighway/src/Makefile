@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for smartHighway
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -KVEINS_PROJ=/home/tjzhang/programs/veins-veins-5.1 -DVEINS_IMPORT -I$$\(VEINS_PROJ\)/src -I. -L$$\(VEINS_PROJ\)/src -lveins$$\(D\)
+#  opp_makemake -f --deep -KVEINS_PROJ=/home/tjzhang/programs/veins-veins-5.1 -DVEINS_IMPORT -I. -I$$\(VEINS_PROJ\)/src -L$$\(VEINS_PROJ\)/src -lveins$$\(D\)
 #
 
 # Name of target to be created (-o option)
@@ -20,7 +20,7 @@ USERIF_LIBS = $(ALL_ENV_LIBS) # that is, $(TKENV_LIBS) $(QTENV_LIBS) $(CMDENV_LI
 #USERIF_LIBS = $(QTENV_LIBS)
 
 # C++ include paths (with -I)
-INCLUDE_PATH = -I$(VEINS_PROJ)/src -I.
+INCLUDE_PATH = -I. -I$(VEINS_PROJ)/src
 
 # Additional object and library files to link with
 EXTRA_OBJS =
@@ -34,10 +34,12 @@ PROJECTRELATIVE_PATH = src
 O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 
 # Object files for local .cc, .msg and .sm files
-OBJS =
+OBJS = $O/BadCarApp/BadCarApp.o $O/CarApplication/CarApp.o $O/RSUApp/RSUApp.o $O/Messaging/ProbeDataManagement_m.o $O/Messaging/ProbeVehicleData_m.o
 
 # Message files
-MSGFILES =
+MSGFILES = \
+    Messaging/ProbeDataManagement.msg \
+    Messaging/ProbeVehicleData.msg
 
 # SM files
 SMFILES =

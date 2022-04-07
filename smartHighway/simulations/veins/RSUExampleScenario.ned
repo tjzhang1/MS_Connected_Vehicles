@@ -23,6 +23,7 @@ package smarthighway.simulations.veins;
 
 import org.car2x.veins.nodes.RSU;
 import org.car2x.veins.nodes.Scenario;
+import org.car2x.veins.nodes.Car;
 
 network RSUExampleScenario extends Scenario
 {

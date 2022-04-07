@@ -1,4 +1,4 @@
-file 3092 1644789334                                            
+file 3092 1649361992                                            
 version 2
 run WithBeaconing-0-20220213-16:55:25-7813
 attr configname WithBeaconing
@@ -70,11 +70,10 @@ param *.*node[*0].veinsmobility.accidentStart 73s
 param *.*node[*0].veinsmobility.accidentDuration 50s
 
 vector 0 RSUExampleScenario.bad_node[0].veinsmobility posx ETV
-vector 1 RSUExampleScenario.bad_node[0].veinsmobility posy ETV
-vector 2 RSUExampleScenario.node[1].veinsmobility posx ETV
-vector 3 RSUExampleScenario.node[1].veinsmobility posy ETV
 0	3010 23 11 11 1 1 1 31.174628598893 31.174628598893 31.174628598893 971.85746827892
+vector 1 RSUExampleScenario.bad_node[0].veinsmobility posy ETV
 1	3033 12 11 11 1 1 1 29.8 29.8 29.8 888.04
+vector 2 RSUExampleScenario.node[1].veinsmobility posx ETV
 2	3045 23 11 11 1 1 1 51.097004042362 51.097004042362 51.097004042362 2610.9038221052
-3	3068 23 11 11 1 1 1 73.080139145959 73.080139145959 73.080139145959 5340.7067375927
-
+vector 3 RSUExampleScenario.node[1].veinsmobility posy ETV
+3	3068 24 11 11 1 1 1 73.080139145959 73.080139145959 73.080139145959 5340.7067375927

@@ -14,10 +14,10 @@
 // 
 
 package smarthighway.RampMeterControl;
-import org.car2x.veins.base.modules.IBaseApplLayer;
+import org.car2x.veins.modules.application.ieee80211p.DemoBaseApplLayer;
 
-simple RampMeterController like IBaseApplLayer
+simple RampMeterController extends DemoBaseApplLayer
 {
-    @class();
+    @class(veins::RampMeterController);
     @display("i=block/app2");
 }

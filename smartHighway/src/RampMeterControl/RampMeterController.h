@@ -13,12 +13,13 @@
 namespace veins {
 
 class RampMeterController : public DemoBaseApplLayer {
-public:
-    void initialize(int stage) override;
 protected:
+    void initialize(int stage) override;
+    void handleSelfMsg(cMessage* msg) override;
+    void onWSM(BaseFrame1609_4* wsm) override;
+    void onWSA(DemoServiceAdvertisment* wsa) override;
     /* Which traffic light to control */
     std::string trafficLightID;
-    TraCICommandInterface::Trafficlight rampMeter;
 };
 
 }

@@ -14,16 +14,15 @@
 // 
 
 package smarthighway.RampMeterControl;
-import org.car2x.veins.modules.application.ieee80211p.DemoBaseApplLayer;
-import org.car2x.veins.base.modules.ITrafficLightApplLayer;
+import org.car2x.veins.base.modules.ITrafficLightLogic;
 
-// Application for the TrafficLight VEINS module
+// Logic block for TrafficLight VEINS module
 
-simple RampMeterController extends DemoBaseApplLayer like ITrafficLightApplLayer
+simple RampMeterLogic like ITrafficLightLogic
 {
-	@class(veins::RampMeterController);
-    @display("i=block/app2");
-    string rampMeterID;  //name of ramp meter this block will control
+    parameters:
+        @display("i=block/classifier");
     gates:
-        inout logic; //connects to logic block
+        inout interface; //from tlInterface
+        inout applLayer; //from application
 }

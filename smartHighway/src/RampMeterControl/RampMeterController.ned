@@ -18,6 +18,7 @@ import org.car2x.veins.modules.application.ieee80211p.DemoBaseApplLayer;
 
 simple RampMeterController extends DemoBaseApplLayer
 {
-    @class(veins::RampMeterController);
+	@class(veins::RampMeterController);
     @display("i=block/app2");
+    string rampMeterID;  //name of ramp meter this block will control
 }

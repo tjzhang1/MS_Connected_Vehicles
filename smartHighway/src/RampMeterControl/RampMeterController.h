@@ -19,7 +19,7 @@ protected:
     void onWSM(BaseFrame1609_4* wsm) override;
     void onWSA(DemoServiceAdvertisment* wsa) override;
     /* Which traffic light to control */
-    std::string trafficLightID;
+//    std::string trafficLightID;
 };
 
 }

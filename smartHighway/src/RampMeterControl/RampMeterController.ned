@@ -23,7 +23,7 @@ simple RampMeterController extends DemoBaseApplLayer like ITrafficLightApplLayer
 {
 	@class(veins::RampMeterController);
     @display("i=block/app2");
-    string rampMeterID;  //name of ramp meter this block will control
+//    string rampMeterID;  //name of ramp meter this block will control
     gates:
         inout logic; //connects to logic block
 }

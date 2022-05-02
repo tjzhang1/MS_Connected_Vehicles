@@ -32,7 +32,7 @@ network RSUExampleScenario extends Scenario
         rsu[1]: RSU {
             @display("p=150,140;i=veins/sign/yellowdiamond;is=vs");
         }
-        rampMeter[1]: TrafficLight {
-            @display("p=108.32955,146.5635;i=veins/sign/yellowdiamond;is=vs");
-        }
+//        rampMeter[1]: TrafficLight {
+//            @display("p=108.32955,146.5635;i=veins/sign/yellowdiamond;is=vs");
+//        }
 }

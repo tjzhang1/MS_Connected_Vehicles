@@ -9,6 +9,7 @@
 #define RAMPMETERCONTROL_RAMPMETERCONTROLLER_H_
 
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
+#include "veins/modules/world/traci/trafficLight/TraCITrafficLightInterface.h"
 
 namespace veins {
 
@@ -20,6 +21,30 @@ protected:
     void onWSA(DemoServiceAdvertisment* wsa) override;
     /* Which traffic light to control */
 //    std::string trafficLightID;
+    TraCITrafficLightInterface* tlInterface;
+    int updatePeriodALINEA = 300; //period of time to use the next ALINEA ramp metering rate: [40, 300] seconds
+    double onRampOccupancy; //accumulated occupancy measured during updatePeriodALINEA
+    double hwyOccupancy;
+    double numHwyLanes = 3.0;
+    /*
+     * From Caltrans Ramp Metering Design Manual:
+    For a typical one vehicle per green operation, a
+    ramp meter has practical lower and upper output
+    limits of 240 and 900 vehicles per hour (VPH) per
+    lane, respectively. Ramp metering signals set for
+    flow rates outside this range tend to have high
+    violation rates and cannot effectively control
+    traffic.
+    */
+    // In SUMO, can't force 1 vehicle per green.
+    // 240 VPH = 4 VPM => 15 seconds down time between greens
+    // 900 VPH = 15 VPM => 4 seconds down time between greens
+    double rMax = 900;
+    double rMin = 240;
+    double meterFlow;
+    double meterRate; //time between green lights
+    double KR = 70.0;
+    double targetOccupancy = 20.0;
 };
 
 }

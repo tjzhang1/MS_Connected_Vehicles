@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-02-15 20:31:37 by Eclipse SUMO netedit Version v1_10_0+2390-e1c4ea0d0d5
+<!-- generated on 2022-01-12 18:42:09 by Eclipse SUMO netedit Version v1_10_0+2390-e1c4ea0d0d5
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
-        <sumo-net-file value="/home/tjzhang/Sumo/highway/sumoProj/highway.net.xml"/>
+        <sumo-net-file value="/home/tjzhang/Sumo/highway/highway.net.xml"/>
     </input>
 
     <output>
-        <output-file value="/home/tjzhang/Sumo/highway/sumoProj/highway.net.xml"/>
+        <output-file value="/home/tjzhang/Sumo/highway/highway.net.xml"/>
     </output>
 
     <processing>
@@ -82,10 +82,11 @@
     </edge>
 
     <tlLogic id="rampMeter" type="static" programID="0" offset="0">
-        <phase duration="82" state="G"/>
-        <phase duration="3"  state="y"/>
-        <phase duration="5"  state="r"/>
+        <phase duration="1" state="G"/>
+        <phase duration="1"  state="y"/>
+        <phase duration="1000"  state="r"/>
     </tlLogic>
+    <!-- This program causes errors in tlInterface because of type=actuated
     <tlLogic id="rampMeter" type="actuated" programID="my_program" offset="0">
         <phase duration="31" state="g" minDur="5" maxDur="45"/>
         <phase duration="10" state="r" minDur="10" maxDur="10"/>
@@ -97,6 +98,7 @@
         <param key="show-detectors" value="true"/>
         <param key="vTypes" value=""/>
     </tlLogic>
+    -->
 
     <junction id="J0" type="dead_end" x="0.00" y="0.00" incLanes="" intLanes="" shape="0.00,0.00 0.00,-6.40"/>
     <junction id="J1" type="priority" x="100.00" y="0.00" incLanes="onRampMerge_0 hwyStart_0 hwyStart_1" intLanes=":J1_0_0 :J1_1_0 :J1_1_1" shape="92.17,0.00 92.17,-9.60 91.09,-9.64 90.71,-9.71 90.34,-9.85 89.93,-10.07 89.40,-10.39 87.71,-7.68 88.68,-6.97 88.87,-6.72 88.86,-6.54 88.66,-6.44 88.26,-6.40 88.26,0.00">

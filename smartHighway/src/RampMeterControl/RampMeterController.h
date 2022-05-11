@@ -22,7 +22,7 @@ protected:
     /* Which traffic light to control */
 //    std::string trafficLightID;
     TraCITrafficLightInterface* tlInterface;
-    int updatePeriodALINEA = 300; //period of time to use the next ALINEA ramp metering rate: [40, 300] seconds
+    int updatePeriodALINEA = 60; //period of time to use the next ALINEA ramp metering rate: [40, 300] seconds
     double onRampOccupancy; //accumulated occupancy measured during updatePeriodALINEA
     double hwyOccupancy;
     double numHwyLanes = 3.0;

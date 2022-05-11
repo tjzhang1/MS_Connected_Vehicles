@@ -82,9 +82,9 @@
     </edge>
 
     <tlLogic id="rampMeter" type="static" programID="0" offset="0">
-        <phase duration="82" state="G"/>
-        <phase duration="3"  state="y"/>
-        <phase duration="5"  state="r"/>
+        <phase duration="1000"  state="r"/>
+        <phase duration="1" state="G"/>
+        <phase duration="1"  state="y"/>
     </tlLogic>
     <!-- This program causes errors in tlInterface because of type=actuated
     <tlLogic id="rampMeter" type="actuated" programID="my_program" offset="0">

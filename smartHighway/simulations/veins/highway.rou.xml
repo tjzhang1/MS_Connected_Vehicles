@@ -5,8 +5,8 @@
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
     <vType id="XXX" length="5.00" maxSpeed="70.00" accel="2.6" decel="4.5" sigma="0.5"/>
-    <flow id="continueHwy" type="XXX" begin="0.00" from="hwyStart" to="hwyEnd" end="3600.00" number="1800"/>
-    <flow id="enterAndExit" begin="0.00" color="orange" from="onRamp" to="offRamp" end="3600.00" number="500"/>
-    <flow id="enterHwy" begin="0.00" color="red" from="onRamp" to="hwyEnd" end="3600.00" number="500"/>
-    <flow id="exitHwy" begin="0.00" color="blue" from="hwyStart" to="offRamp" end="3600.00" number="500"/>
+    <flow id="continueHwy" type="XXX" begin="0.00" from="hwyStart" to="hwyEnd" end="1000.00" number="1800"/>
+    <flow id="enterAndExit" begin="0.00" color="orange" from="onRamp" to="offRamp" end="1000.00" number="55"/>
+    <flow id="enterHwy" begin="0.00" color="red" from="onRamp" to="hwyEnd" end="1000.00" number="56"/>
+    <flow id="exitHwy" begin="0.00" color="blue" from="hwyStart" to="offRamp" end="1000.00" number="500"/>
 </routes>

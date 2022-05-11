@@ -23,14 +23,16 @@ void RampMeterController::initialize(int stage) {
             traci = tlInterface->getCommandInterface();
             std::cerr << "Initialized tlInterface" << endl;
         }
-        cMessage *initMsg = new cMessage("ramp meter init", 100);
-        cMessage *updateMsg = new cMessage("update ALINEA", 101);
-        scheduleAt(simTime() + 1, initMsg);
+        cMessage *measureMsg = new cMessage("ALINEA: measure occupancy", 100);
+        cMessage *updateMsg = new cMessage("ALINEA: update meter rate", 101);
+        cMessage *changePhaseMsg = new cMessage("Set ramp meter to green", 102);
+        scheduleAt(simTime() + 1, measureMsg);
         scheduleAt(simTime() + updatePeriodALINEA, updateMsg);
+        scheduleAt(simTime() + meterRate, changePhaseMsg);
         onRampOccupancy = 0.0;
         hwyOccupancy = 0.0;
         meterFlow = 300;
-        meterRate = 10.0;
+        meterRate = 15.0;
     }
 }
 void RampMeterController::handleSelfMsg(cMessage* msg) {
@@ -46,26 +48,15 @@ void RampMeterController::handleSelfMsg(cMessage* msg) {
 //            std::cerr << "Received init message\n";
             if (traci)
             {
-//                printf("On ramp occupancy is %.4f%%\n", occupancy);
                 onRampOccupancy += traci->getInductorOccupancy("e1_onRamp");
                 hwyOccupancy += traci->getInductorOccupancy("e1_hwy_lane0");
                 hwyOccupancy += traci->getInductorOccupancy("e1_hwy_lane1");
                 hwyOccupancy += traci->getInductorOccupancy("e1_hwy_lane2");
-//                std::cerr << "last step occupancy: " << occupancy << endl;
-//                std::list<std::string> inductionLoops = traci->getInductorIds();
-//                for (std::string loopID : inductionLoops) //LOOP THROUGH LIST OF STRINGS
-//                {
-//                    std::cout << "induction loop: " << loopID << endl;
-//                    double occupancy;
-//                    occupancy = traci->getInductorOccupancy(loopID); // not returning requested data for some reason
-//                    printf("On ramp occupancy is %.4f%%\n", occupancy);
-//                }
             }
             scheduleAt(simTime() + 1, msg);
             break;
         }
         case 101: {
-            std::cerr << "Received update msg\n";
             printf("Accumulated on ramp occupancy is %f%%\n", onRampOccupancy / (float)updatePeriodALINEA); //onRampOccupancy is in units [%*s]
             printf("Accumulated hwy occupancy is %f%%\n", hwyOccupancy / (numHwyLanes*(float)updatePeriodALINEA));
             double delta = KR*(targetOccupancy - (hwyOccupancy / (numHwyLanes*(float)updatePeriodALINEA)));
@@ -79,6 +70,13 @@ void RampMeterController::handleSelfMsg(cMessage* msg) {
             onRampOccupancy = 0.0;
             hwyOccupancy = 0.0;
             scheduleAt(simTime() + updatePeriodALINEA, msg);
+            break;
+        }
+        case 102: {
+            //Set phase to green (index = 1)
+            tlInterface->setCurrentPhaseByNr(1, true);
+            //Schedule this call again
+            scheduleAt(simTime() + meterRate, msg);
             break;
         }
         default:

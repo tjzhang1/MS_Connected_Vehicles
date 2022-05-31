@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- generated on 2022-05-16 15:20:08.814391 by $Id: ptlines2flows.py v1_3_1+0313-ccb31df3eb jakob.erdmann@dlr.de 2019-09-02 13:26:32 +0200 $ UNKNOWN
-  options: 
+
+<!-- generated on 2022-05-30 17:00:22 by Eclipse SUMO netedit Version v1_10_0+2390-e1c4ea0d0d5
 -->
+
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
-    <vType id="pt_bus" vClass="bus"/>
-    <vType id="pt_tram" vClass="tram"/>
-    <vType id="pt_train" vClass="rail"/>
-    <vType id="pt_subway" vClass="rail_urban"/>
-    <vType id="pt_light_rail" vClass="rail_urban"/>
-    <vType id="pt_monorail" vClass="rail"/>
-    <vType id="pt_trolleybus" vClass="bus"/>
-    <vType id="pt_minibus" vClass="bus"/>
-    <vType id="pt_share_taxi" vClass="taxi"/>
     <vType id="pt_aerialway" vClass="bus"/>
+    <vType id="pt_bus" vClass="bus"/>
     <vType id="pt_ferry" vClass="ship"/>
+    <vType id="pt_light_rail" vClass="rail_urban"/>
+    <vType id="pt_minibus" vClass="bus"/>
+    <vType id="pt_monorail" vClass="rail"/>
+    <vType id="pt_share_taxi" vClass="taxi"/>
+    <vType id="pt_subway" vClass="rail_urban"/>
+    <vType id="pt_train" vClass="rail"/>
+    <vType id="pt_tram" vClass="tram"/>
+    <vType id="pt_trolleybus" vClass="bus"/>
+    <flow id="flow_ATLANTIC_BLVD" begin="0.00" from="4004150" to="28897421" end="3599.94" number="327"/>
+    <flow id="flow_ATLANTIC_TRIGGS" begin="0.00" from="385595003" to="28897421" end="3599.87" number="129"/>
+    <flow id="flow_CALZONA" begin="0.00" from="139639760.97" to="28897421" end="3599.94" number="69"/>
+    <flow id="flow_DITMAN" begin="0.00" from="1047801943" to="28897421" end="3599.94" number="127"/>
+    <flow id="flow_DOWNEY" begin="0.00" from="4370760" to="28897421" end="3599.86" number="163"/>
+    <flow id="flow_FLORENCE_AVE" begin="0.00" from="399524360#1" to="28897421" end="3599.80" number="205"/>
+    <flow id="flow_NB_LAKEWOOD" begin="0.00" from="13275783" to="28897421" end="3599.82" number="209"/>
+    <flow id="flow_PARAMOUNT_BLVD" begin="0.00" from="178116793" to="28897421" end="3599.94" number="303"/>
+    <flow id="flow_SB_605" begin="0.00" from="13261575-AddedOffRampEdge" to="28897421" end="3599.74" number="380"/>
+    <flow id="flow_SB_LAKEWOOD" begin="0.00" from="399669559#0" to="28897421" end="3599.97" number="165"/>
+    <flow id="flow_STUDEBAKER" begin="0.00" from="399524358" to="28897421" end="3599.05" number="1274"/>
+    <flow id="flow_TELEGRAPH_GARFIELD" begin="0.00" from="965816736-AddedOnRampEdge" to="28897421" end="3599.69" number="534"/>
+    <flow id="flow_TELGRAPH_WASHINGTON" begin="0.00" from="23394679" to="28897421" end="3599.65" number="442"/>
 </routes>

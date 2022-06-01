@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2022-06-01 16:29:12 by Eclipse SUMO netedit Version 1.13.0
+-->
+
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <!-- StoppingPlaces -->
+    <parkingArea id="pa_0" lane="E0_0" startPos="10.00" endPos="100.00" roadsideCapacity="403" onRoad="1" width="5.00"/>
+    <!-- Detectors -->
+    <e1Detector id="e1_LAKEWOOD_0" lane="866210533_0" pos="13.98" freq="300.00" file="e1_3.xml"/>
+    <e1Detector id="e1_LAKEWOOD_1" lane="866210533_1" pos="14.07" freq="300.00" file="e1_2.xml"/>
+    <e1Detector id="e1_LAKEWOOD_2" lane="866210533_2" pos="14.58" freq="300.00" file="e1_1.xml"/>
+    <e1Detector id="e1_LAKEWOOD_3" lane="866210533_3" pos="14.64" freq="300.00" file="e1_0.xml"/>
+    <e2Detector id="e2_0" lane="13275783_0" pos="0.00" length="127.63" freq="300.00" file="e2_0.xml"/>
+    <e2Detector id="e2_1" lane="13275783_1" pos="0.00" length="127.63" freq="300.00" file="e2_1.xml"/>
+</additional>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-06-01 16:29:12 by Eclipse SUMO netedit Version 1.13.0
+<!-- generated on 2022-06-02 11:42:47 by Eclipse SUMO netedit Version 1.13.0
 -->
 
 <additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
@@ -11,6 +11,21 @@
     <e1Detector id="e1_LAKEWOOD_1" lane="866210533_1" pos="14.07" freq="300.00" file="e1_2.xml"/>
     <e1Detector id="e1_LAKEWOOD_2" lane="866210533_2" pos="14.58" freq="300.00" file="e1_1.xml"/>
     <e1Detector id="e1_LAKEWOOD_3" lane="866210533_3" pos="14.64" freq="300.00" file="e1_0.xml"/>
-    <e2Detector id="e2_0" lane="13275783_0" pos="0.00" length="127.63" freq="300.00" file="e2_0.xml"/>
-    <e2Detector id="e2_1" lane="13275783_1" pos="0.00" length="127.63" freq="300.00" file="e2_1.xml"/>
+    <e2Detector id="e2_0" lane="13275783_0" pos="77.63" length="50.00" freq="300.00" file="e2_0.xml"/>
+    <e2Detector id="e2_1" lane="13275783_1" pos="77.63" length="50.00" freq="300.00" file="e2_1.xml"/>
+    <e2Detector id="e2_10" lane="4370760.101_0" pos="0.00" length="50.00" freq="300.00" file="e2_10.xml"/>
+    <e2Detector id="e2_11" lane="178116793_1" pos="16.38" length="50.00" freq="300.00" file="e2_11.xml"/>
+    <e2Detector id="e2_12" lane="178116793.68_0" pos="0.00" length="10.00" freq="300.00" file="e2_12.xml"/>
+    <e2Detector id="e2_13" lane="178116793.68_1" pos="0.00" length="10.00" freq="300.00" file="e2_13.xml"/>
+    <e2Detector id="e2_14" lane="399654775_0" pos="0.00" length="39.00" freq="300.00" file="e2_14.xml"/>
+    <e2Detector id="e2_15" lane="178116793_0" pos="16.38" length="50.00" freq="300.00" file="e2_15.xml"/>
+    <e2Detector id="e2_16" lane="4370760_0" pos="40.75" length="50.00" freq="300.00" file="e2_16.xml"/>
+    <e2Detector id="e2_2" lane="399669014_0" pos="0.00" length="35.00" freq="300.00" file="e2_2.xml"/>
+    <e2Detector id="e2_3" lane="23426514_1" pos="19.50" length="50.00" freq="300.00" file="e2_3.xml"/>
+    <e2Detector id="e2_4" lane="23426514_0" pos="19.50" length="50.00" freq="300.00" file="e2_4.xml"/>
+    <e2Detector id="e2_5" lane="13275783.140_0" pos="0.00" length="12.02" freq="300.00" file="e2_5.xml"/>
+    <e2Detector id="e2_6" lane="13275783.140_1" pos="0.00" length="12.00" freq="300.00" file="e2_6.xml"/>
+    <e2Detector id="e2_7" lane="23426514.71_0" pos="0.00" length="16.00" freq="300.00" file="e2_7.xml"/>
+    <e2Detector id="e2_8" lane="23426514.71_1" pos="0.00" length="16.00" freq="300.00" file="e2_8.xml"/>
+    <e2Detector id="e2_9" lane="399668245_0" pos="0.00" length="34.00" freq="300.00" file="e2_9.xml"/>
 </additional>

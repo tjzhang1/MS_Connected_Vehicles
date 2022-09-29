@@ -35,4 +35,9 @@ network RSUExampleScenario extends Scenario
 //        rampMeter[1]: TrafficLight {
 //            @display("p=108.32955,146.5635;i=veins/sign/yellowdiamond;is=vs");
 //        }
+		TMC: smarthighway.TrafficManagementCenter.TMC {
+		    @display("p=0,0;i=veins/sign/yellowdiamond;is=vs");
+		}
+	connections:
+	    rsu[0].TMC_port <--> TMC.RSU_port++;
 }

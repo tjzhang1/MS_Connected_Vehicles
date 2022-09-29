@@ -62,7 +62,15 @@ void CarApp::handleSelfMsg(cMessage* msg)
         }
     }
     else {
-        DemoBaseApplLayer::handleSelfMsg(msg);
+        switch(msg->getKind()) {
+        case PARKNRIDE_MSG: {
+            // Handle reroute to parking structure
+            break;
+        }
+        default: {
+            DemoBaseApplLayer::handleSelfMsg(msg);
+        }
+        }
     }
 }
 

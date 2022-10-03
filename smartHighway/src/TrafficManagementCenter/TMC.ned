@@ -18,12 +18,13 @@ package smarthighway.TrafficManagementCenter;
 //
 // TODO auto-generated type
 //
-module TMC
+simple TMC
 {
+    parameters:
+        int numRSUs;
+        @class(veins::TMC);
+    	@display("i=block/app2");
 	gates:
-	    inout RSU_port[];
-    submodules:
-        app: TMCApp;
-    connections:
-       	
+	    input RSU_port[numRSUs] @directIn;  // Connections to external RSUs, populated in RSUExampleScenario.ned
+
 }

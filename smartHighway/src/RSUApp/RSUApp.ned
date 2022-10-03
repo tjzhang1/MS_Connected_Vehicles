@@ -20,4 +20,7 @@ simple RSUApp extends DemoBaseApplLayer
 {
     @class(veins::RSUApp);
     @display("i=block/app2");
+    gates:
+        input TMC_port @directIn;
+//		inout TMC_port;
 }

@@ -38,6 +38,7 @@ network RSUExampleScenario extends Scenario
 		TMC: smarthighway.TrafficManagementCenter.TMC {
 		    @display("p=0,0;i=veins/sign/yellowdiamond;is=vs");
 		}
-	connections:
-	    rsu[0].TMC_port <--> TMC.RSU_port++;
+//	    for i = 0..sizeof(rsu)-1 {
+//	    	rsu[i].TMC_port <--> TMC.RSU_port++;
+//	    }
 }

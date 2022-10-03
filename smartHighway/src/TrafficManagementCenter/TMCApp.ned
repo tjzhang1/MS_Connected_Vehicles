@@ -20,4 +20,6 @@ package smarthighway.TrafficManagementCenter;
 //
 simple TMCApp
 {
+    gates:
+        inout RSU_src[];
 }

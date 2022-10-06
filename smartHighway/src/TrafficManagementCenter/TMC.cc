@@ -6,4 +6,63 @@ using namespace veins;
 
 Define_Module(veins::TMC);
 
+void TMC::initialize() {
+    // Initialize update period timer at simulation start
+    cMessage *timer = new cMessage("RL_PERIOD_TIMER", TMC_TIMER_MSG);
+    scheduleAt(simTime() + RL_PERIOD, timer);
+}
 
+void TMC::finish() {
+    // Does nothing at sim end
+}
+
+// Determine the control output for the system (signal timings, broadcast to reroute)
+void TMC::computeAction(void) {
+
+}
+// Control: update signal timing for a particular RSU
+void TMC::updateSignalTiming(void) {
+
+}
+// Control: tell RSU to broadcast vehicles to reroute
+void TMC::broadcastReroute(void) {
+
+}
+// Data: sample the availability of registered park n rides
+void TMC::parkingLotStatus(void) {
+
+}
+// Data: sample the position and velocities of cars near RSUs
+void TMC::collectTrafficInfo(void) {
+
+}
+
+void TMC::handleMessage(cMessage *msg) {
+    // Can receive messages from gate for RSU data
+    // Can receive self messages as a timer for updating control plan
+    switch(msg->getKind()) {
+    case RSU_DATA_MSG: {
+        collectTrafficInfo();
+        break;
+    }
+    case TMC_TIMER_MSG: {
+        parkingLotStatus();
+        computeAction();
+        break;
+    }
+    default: {
+        delete msg;
+        break;
+    }
+    }
+}
+
+TMC::TMC() {
+    rsuData = new cQueue("rsuData");
+    parkingData = new cQueue("parkingData");
+}
+
+TMC::~TMC() {
+    delete rsuData;
+    delete parkingData;
+}

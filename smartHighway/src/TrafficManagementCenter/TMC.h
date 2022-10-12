@@ -5,7 +5,43 @@
 
 #define RSU_DATA_MSG 0
 #define TMC_TIMER_MSG 1
-#define RL_PERIOD 300
+#define RL_PERIOD 10
+
+class parkingLotData : public cObject {
+public:
+    parkingLotData(int l, int c, int o) {
+        lotID = l;
+        capacity = c;
+        occupancy = o;
+    }
+    parkingLotData(void) {
+        lotID = 0;
+        capacity = 0;
+        occupancy = 0;
+    }
+    int lotID;
+    int capacity;
+    int occupancy;
+};
+
+class vehicleData : public cObject {
+public:
+    int vehID;
+    int posX, posY;
+    int velX, velY;
+};
+
+//typedef struct parkingLotData {
+//    int lotID;
+//    int capacity;
+//    int occupancy;
+//} parkingLotData_t;
+//
+//typedef struct vehicleData {
+//    int vehID;
+//    Coord pos;
+//    Coord vel;
+//} vehicleData_t;
 
 namespace veins {
 
@@ -19,7 +55,7 @@ public:
     TMC(void);
     ~TMC(void);
 protected:
-    void initialize() override;
+    void initialize(int stage) override;
     void handleMessage(cMessage *msg) override;
     void finish(void) override;
 
@@ -39,6 +75,7 @@ private:
     cQueue *rsuData;
     // need some sort of queue to hold parking data
     cQueue *parkingData;
+    int numParkingLots;
 };
 
 }

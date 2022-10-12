@@ -406,6 +406,9 @@ public:
     double getInductorOccupancy(std::string nodeId);
     std::list<std::string> getInductorIds();
 
+    // Parking lot status methods
+
+
     // Polygon methods
     std::list<std::string> getPolygonIds();
     void addPolygon(std::string polyId, std::string polyType, const TraCIColor& color, bool filled, int32_t layer, const std::list<Coord>& points);

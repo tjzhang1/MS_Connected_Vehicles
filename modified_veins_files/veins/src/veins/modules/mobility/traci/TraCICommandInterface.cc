@@ -1778,4 +1778,10 @@ std::list<std::string> TraCICommandInterface::getInductorIds()
     return genericGetStringList(CMD_GET_INDUCTIONLOOP_VARIABLE, "", ID_LIST, RESPONSE_GET_INDUCTIONLOOP_VARIABLE);
 }
 
+// Parking lot status methods
+std::string TraCICommandInterface::getParkingOccupancy() {
+    return genericGetString(VAR_PARAMETER, "parkingArea", );
+}
+
+
 } // namespace veins

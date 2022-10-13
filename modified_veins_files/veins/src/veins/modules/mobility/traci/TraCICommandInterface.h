@@ -407,6 +407,7 @@ public:
     std::list<std::string> getInductorIds();
 
     // Parking lot status methods
+    void getParkingOccupancy(std::string nodeID, std::string& value);
 
 
     // Polygon methods

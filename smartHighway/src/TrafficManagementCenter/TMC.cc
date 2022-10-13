@@ -41,10 +41,21 @@ void TMC::broadcastReroute(void) {
 }
 // Data: sample the availability of registered park n rides
 void TMC::parkingLotStatus(void) {
-    for(int i=0; i<numParkingLots; i++) {
-        parkingLotData *p = new parkingLotData();
-        parkingData->insert(p);
-    }
+//    for(int i=0; i<numParkingLots; i++) {
+//        parkingLotData *p = new parkingLotData();
+//        parkingData->insert(p);
+//    }
+    std::cerr << "Started parking lot status" << endl;
+
+    TraCIScenarioManager *manager = TraCIScenarioManagerAccess().get();
+    TraCICommandInterface *traci = manager->getCommandInterface();
+    if(manager && traci)
+        std::cerr << "manager and traci loaded" << endl;
+    std::string occ = traci->getParkingOccupancy("pa_0");
+    std::string cap = traci->getParkingCapacity("pa_0");
+
+    std::cerr << "Parking occupancy is " << occ << endl;
+    std::cerr << "Parking capacity is " << cap << endl;
 }
 // Data: sample the position and velocities of cars near RSUs
 void TMC::collectTrafficInfo(void) {
@@ -62,6 +73,7 @@ void TMC::handleMessage(cMessage *msg) {
     case TMC_TIMER_MSG: {
         parkingLotStatus();
         computeAction();
+        delete msg;
         break;
     }
     default: {

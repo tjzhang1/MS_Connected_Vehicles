@@ -407,8 +407,9 @@ public:
     std::list<std::string> getInductorIds();
 
     // Parking lot status methods
-    void getParkingOccupancy(std::string nodeID, std::string& value);
-
+    void getSimulationParameter(uint8_t variable, const std::string nodeId, const std::string parameter, std::string& value);
+    std::string getParkingOccupancy(const std::string nodeId);
+    std::string getParkingCapacity(const std::string nodeId);
 
     // Polygon methods
     std::list<std::string> getPolygonIds();

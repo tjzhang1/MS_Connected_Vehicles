@@ -24,16 +24,16 @@ void RampMeterController::initialize(int stage) {
             if(traci && tlInterface)
                 std::cerr << "Initialized traci tlInterface" << endl;
         }
-        cMessage *measureMsg = new cMessage("ALINEA: measure occupancy", 100);
-        cMessage *updateMsg = new cMessage("ALINEA: update meter rate", 101);
-        cMessage *changePhaseMsg = new cMessage("Set ramp meter to green", 102);
-        scheduleAt(1, measureMsg);
-        scheduleAt(updatePeriodALINEA, updateMsg);
-        scheduleAt(meterRate, changePhaseMsg);
         onRampOccupancy = 0.0;
         hwyOccupancy = 0.0;
         meterFlow = 300;
         meterRate = 15.0;
+        cMessage *measureMsg = new cMessage("ALINEA: measure occupancy", 100);
+        cMessage *updateMsg = new cMessage("ALINEA: update meter rate", 101);
+        cMessage *changePhaseMsg = new cMessage("Set ramp meter to green", 102);
+        scheduleAt(simTime() + 1, measureMsg);
+        scheduleAt(simTime() + updatePeriodALINEA, updateMsg);
+        scheduleAt(simTime() + (int)meterRate, changePhaseMsg);
     }
 }
 void RampMeterController::handleSelfMsg(cMessage* msg) {

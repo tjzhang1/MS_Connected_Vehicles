@@ -1779,13 +1779,9 @@ std::list<std::string> TraCICommandInterface::getInductorIds()
 }
 
 // Parking lot status methods
-void TraCICommandInterface::getParkingOccupancy(std::string nodeId, std::string& value) {
-    // Command byte is CMD_GET_SIM_VARIABLE
-    // Variable is VAR_PARAMETER
-    // Object ID is name of parkingArea
-    // Byte value is TYPE_STRING
-    // Parameter is "parkingArea.occupancy"
-    TraCIBuffer response = connection.query(CMD_GET_SIM_VARIABLE, TraCIBuffer() << static_cast<uint8_t>(VAR_PARAMETER) << nodeId << static_cast<uint8_t>(TYPE_STRING) << "parkingArea.occupancy");
+void TraCICommandInterface::getSimulationParameter(uint8_t var, const std::string nodeId, const std::string parameter, std::string& value) {
+    // It is important to use std::string("") for constant strings rather than "". This is because TraCIBuffers are overloaded for std::string but not for const char *.
+    TraCIBuffer response = connection.query(CMD_GET_SIM_VARIABLE, TraCIBuffer() << static_cast<uint8_t>(var) << nodeId << static_cast<uint8_t>(TYPE_STRING) << parameter);
     uint8_t cmdLength;
     response >> cmdLength;
     uint8_t responseId;
@@ -1793,7 +1789,7 @@ void TraCICommandInterface::getParkingOccupancy(std::string nodeId, std::string&
     ASSERT(responseId == RESPONSE_GET_SIM_VARIABLE);
     uint8_t variable;
     response >> variable;
-    ASSERT(variable == VAR_PARAMETER);
+    ASSERT(variable == var);
     std::string id;
     response >> id;
     ASSERT(id == nodeId);
@@ -1803,5 +1799,26 @@ void TraCICommandInterface::getParkingOccupancy(std::string nodeId, std::string&
     response >> value;
 }
 
+std::string TraCICommandInterface::getParkingOccupancy(const std::string nodeId) {
+    // Command byte is CMD_GET_SIM_VARIABLE
+    // Variable is VAR_PARAMETER
+    // Object ID is name of parkingArea from additional file
+    // Byte value is TYPE_STRING
+    // Parameter is "parkingArea.occupancy"
+    std::string value;
+    getSimulationParameter(VAR_PARAMETER, nodeId, "parkingArea.occupancy", value);
+    return value;
+}
+
+std::string TraCICommandInterface::getParkingCapacity(const std::string nodeId) {
+    // Command byte is CMD_GET_SIM_VARIABLE
+    // Variable is VAR_PARAMETER
+    // Object ID is name of parkingArea from additional file
+    // Byte value is TYPE_STRING
+    // Parameter is "parkingArea.occupancy"
+    std::string value;
+    getSimulationParameter(VAR_PARAMETER, nodeId, "parkingArea.capacity", value);
+    return value;
+}
 
 } // namespace veins

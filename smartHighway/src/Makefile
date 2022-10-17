@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for smartHighway
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -KVEINS_PROJ=/home/tjzhang/programs/veins-veins-5.1 -DVEINS_IMPORT -I. -I$$\(VEINS_PROJ\)/src -L$$\(VEINS_PROJ\)/src -lveins$$\(D\)
+#  opp_makemake -f --deep -KVEINS_PROJ=/home/tjzhang/programs/veins-veins-5.2 -DVEINS_IMPORT -I. -I$$\(VEINS_PROJ\)/src -L$$\(VEINS_PROJ\)/src -lveins$$\(D\)
 #
 
 # Name of target to be created (-o option)
@@ -34,7 +34,13 @@ PROJECTRELATIVE_PATH = src
 O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 
 # Object files for local .cc, .msg and .sm files
-OBJS = $O/BadCarApp/BadCarApp.o $O/CarApplication/CarApp.o $O/RSUApp/RSUApp.o $O/Messaging/ProbeDataManagement_m.o $O/Messaging/ProbeVehicleData_m.o
+OBJS = \
+    $O/BadCarApp/BadCarApp.o \
+    $O/CarApplication/CarApp.o \
+    $O/RSUApp/RSUApp.o \
+    $O/RampMeterControl/RampMeterController.o \
+    $O/Messaging/ProbeDataManagement_m.o \
+    $O/Messaging/ProbeVehicleData_m.o
 
 # Message files
 MSGFILES = \
@@ -45,7 +51,7 @@ MSGFILES = \
 SMFILES =
 
 # Other makefile variables (-K)
-VEINS_PROJ=/home/tjzhang/programs/veins-veins-5.1
+VEINS_PROJ=/home/tjzhang/programs/veins-veins-5.2
 
 #------------------------------------------------------------------------------
 

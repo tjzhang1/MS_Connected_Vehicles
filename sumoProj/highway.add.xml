@@ -1,49 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-02-15 20:41:30 by Eclipse SUMO netedit Version v1_10_0+2390-e1c4ea0d0d5
-<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
-
-    <input>
-        <sumo-net-file value="/home/tjzhang/Sumo/highway/sumoProj/highway.net.xml"/>
-    </input>
-
-    <output>
-        <output-file value="/home/tjzhang/Sumo/highway/sumoProj/highway.net.xml"/>
-    </output>
-
-    <processing>
-        <geometry.min-radius.fix.railways value="false"/>
-        <geometry.max-grade.fix value="false"/>
-        <offset.disable-normalization value="true"/>
-        <lefthand value="false"/>
-    </processing>
-
-    <junctions>
-        <no-turnarounds value="true"/>
-        <junctions.corner-detail value="5"/>
-        <junctions.limit-turn-speed value="5.5"/>
-        <rectangular-lane-cut value="false"/>
-    </junctions>
-
-    <pedestrian>
-        <walkingareas value="false"/>
-    </pedestrian>
-
-    <netedit>
-        <additional-files value="/home/tjzhang/Sumo/highway/sumoProj/highway.add.xml"/>
-        <route-files value="/home/tjzhang/Sumo/highway/sumoProj/highway.rou.xml"/>
-    </netedit>
-
-    <report>
-        <aggregate-warnings value="5"/>
-    </report>
-
-</configuration>
+<!-- generated on 2022-10-17 11:52:43 by Eclipse SUMO netedit Version 1.14.1
 -->
 
 <additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
-    <poly id="poly_0" type="building" color="red" fill="0" layer="0.00" shape="75.040169,-24.449496 91.131726,-13.430278 118.417409,-13.255369 118.242501,-23.050230 75.564894,-24.274588"/>
-    <poly id="poly_1" type="building" color="red" fill="0" layer="0.00" shape="71.925967,10.833981 71.925967,1.770555 101.978380,1.452540 101.978380,11.947034 72.084974,11.151996"/>
-    <poly id="poly_2" type="building" color="red" fill="0" layer="0.00" shape="148.213781,13.510502 148.358333,2.090874 187.965650,2.235426 187.821098,13.944159 148.213781,13.510502"/>
-    <poly id="poly_3" type="building" color="red" fill="0" layer="0.00" shape="176.835127,-12.653456 176.835127,-22.916666 217.887967,-23.494875 208.492071,-13.809874 176.835127,-12.942560"/>
+    <!-- StoppingPlaces -->
+    <parkingArea id="pa_0" lane="offRamp_0" startPos="60.01" endPos="70.01" roadsideCapacity="25"/>
+    <!-- Detectors -->
+    <e1Detector id="e1_hwy_lane0" lane="hwyMid_0" pos="50.00" period="300.00" file="e1_hwy_lane0.xml"/>
+    <e1Detector id="e1_hwy_lane1" lane="hwyMid_1" pos="50.00" period="300.00" file="e1_hwy_lane1.xml"/>
+    <e1Detector id="e1_hwy_lane2" lane="hwyMid_2" pos="50.00" period="300.00" file="e1_hwy_lane2.xml"/>
+    <e1Detector id="e1_onRamp" lane="onRamp_0" pos="20.00" period="300.00" file="e1_onRamp.xml"/>
+    <e2Detector id="e2_0" lane="hwyStart_0" pos="10.00" length="60.00" period="300.00" file="e2_0.xml"/>
+    <e2Detector id="e2_1" lane="hwyStart_1" pos="10.00" length="60.00" period="300.00" file="e2_0.xml"/>
+    <!-- Shapes -->
+    <poly id="poly_0" type="building" color="red" fill="1" layer="0.00" shape="75.040169,-24.449496 91.131726,-13.430278 118.417409,-13.255369 118.242501,-23.050230 75.564894,-24.274588"/>
+    <poly id="poly_1" type="building" color="red" fill="1" layer="0.00" shape="71.925967,10.833981 71.925967,1.770555 101.978380,1.452540 101.978380,11.947034 72.084974,11.151996"/>
+    <poly id="poly_2" type="building" color="red" fill="1" layer="0.00" shape="148.213781,13.510502 148.358333,2.090874 187.965650,2.235426 187.821098,13.944159 148.213781,13.510502"/>
+    <poly id="poly_3" type="building" color="red" fill="1" layer="0.00" shape="176.835127,-12.653456 176.835127,-22.916666 217.887967,-23.494875 208.492071,-13.809874 176.835127,-12.942560"/>
 </additional>

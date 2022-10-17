@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2022-06-02 11:51:55 by Eclipse SUMO GUI Version 1.13.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="osm.net.xml"/>
+        <route-files value="/home/tjzhang/Documents/VEINS_Connected_Vehicles/Interstate_5/osm_pt.rou.xml"/>
+        <additional-files value="/home/tjzhang/Documents/VEINS_Connected_Vehicles/Interstate_5/osm.add.xml"/>
+    </input>
+
+</configuration>
+-->
+
+<detector xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/det_e1_file.xsd">
+    <interval begin="0.00" end="300.00" id="e1_LAKEWOOD_0" nVehContrib="68" flow="816.00" occupancy="4.87" speed="25.13" harmonicMeanSpeed="23.26" length="5.00" nVehEntered="68"/>
+    <interval begin="300.00" end="348.00" id="e1_LAKEWOOD_0" nVehContrib="18" flow="1350.00" occupancy="7.63" speed="24.88" harmonicMeanSpeed="24.59" length="5.00" nVehEntered="18"/>
+</detector>

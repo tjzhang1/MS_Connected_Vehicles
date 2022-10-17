@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-02-15 20:31:37 by Eclipse SUMO netedit Version v1_10_0+2390-e1c4ea0d0d5
+<!-- generated on 2022-10-17 11:52:40 by Eclipse SUMO netedit Version 1.14.1
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
-        <sumo-net-file value="/home/tjzhang/Sumo/highway/sumoProj/highway.net.xml"/>
+        <sumo-net-file value="highway.net.xml"/>
     </input>
 
     <output>
-        <output-file value="/home/tjzhang/Sumo/highway/sumoProj/highway.net.xml"/>
+        <output-file value="highway.net.xml"/>
     </output>
 
     <processing>
@@ -29,9 +29,10 @@
         <walkingareas value="false"/>
     </pedestrian>
 
-    <report>
-        <aggregate-warnings value="5"/>
-    </report>
+    <netedit>
+        <additional-files value="/home/tjzhang/Documents/VEINS_Connected_Vehicles/sumoProj/highway.add.xml"/>
+        <route-files value="/home/tjzhang/Documents/VEINS_Connected_Vehicles/sumoProj/highway.rou.xml"/>
+    </netedit>
 
 </configuration>
 -->
@@ -82,15 +83,14 @@
     </edge>
 
     <tlLogic id="rampMeter" type="static" programID="0" offset="0">
-        <phase duration="82" state="G"/>
-        <phase duration="3"  state="y"/>
-        <phase duration="5"  state="r"/>
+        <phase duration="1"  state="G"/>
+        <phase duration="1"  state="y"/>
+        <phase duration="1000" state="r"/>
     </tlLogic>
     <tlLogic id="rampMeter" type="actuated" programID="my_program" offset="0">
         <phase duration="31" state="g" minDur="5" maxDur="45"/>
         <phase duration="10" state="r" minDur="10" maxDur="10"/>
         <param key="detector-gap" value="2.0"/>
-        <param key="file" value="NULL"/>
         <param key="freq" value="300"/>
         <param key="max-gap" value="3.0"/>
         <param key="passing-time" value="2.0"/>

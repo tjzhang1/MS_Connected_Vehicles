@@ -1,0 +1,6 @@
+Warning: At actuated tlLogic '122596320', linkIndex 1 has no controlling detector.
+Warning: At actuated tlLogic '122596320', linkIndex 2 has no controlling detector.
+Warning: At actuated tlLogic '122596320', linkIndex 3 has no controlling detector.
+Warning: At actuated tlLogic '122786571', linkIndex 8 has no controlling detector.
+Warning: At actuated tlLogic '122786571', linkIndex 9 has no controlling detector.
+Warning: 57 total messages of type: At actuated tlLogic '%', linkIndex % has no controlling detector.

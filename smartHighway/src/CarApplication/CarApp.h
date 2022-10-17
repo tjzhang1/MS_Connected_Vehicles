@@ -2,6 +2,7 @@
 
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
 
+#define PARKNRIDE_MSG 103
 namespace veins {
 
     class VEINS_API CarApp : public DemoBaseApplLayer {

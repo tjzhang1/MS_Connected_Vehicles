@@ -16,11 +16,75 @@
 #include "RSUApp.h"
 #include "veins/modules/application/traci/TraCIDemo11pMessage_m.h"
 #include "Messaging/ProbeVehicleData_m.h"
-#include <stdio.h>
+#include <boost/algorithm/string.hpp>
+#include "TrafficManagementCenter/TMC.h"
 
 using namespace veins;
 
 Define_Module(veins::RSUApp);
+
+RSUApp::RSUApp() {
+    samplingMsg = new cMessage("RSU: send data to TMC", RSU_SAMPLE_MSG);
+}
+
+RSUApp::~RSUApp() {
+    cancelAndDelete(samplingMsg);
+}
+
+void RSUApp::initialize(int stage) {
+    DemoBaseApplLayer::initialize(stage);
+    if(stage == 0) {
+        stringListFromParam(areaDetectorList, "areaDetectors");
+        scheduleAt(simTime() + SAMPLING_PERIOD, samplingMsg);
+    }
+}
+
+void RSUApp::finish() {
+    DemoBaseApplLayer::finish();
+}
+
+void RSUApp::handleSelfMsg(cMessage *msg) {
+    switch(msg->getKind()) {
+    case RSU_BROADCAST_MSG: {
+        break;
+    }
+    case RSU_SAMPLE_MSG: {
+        sampleAreaDetectors();
+        sendToTMC();
+        scheduleAt(simTime() + SAMPLING_PERIOD, msg);
+        break;
+    }
+    default:
+        DemoBaseApplLayer::handleSelfMsg(msg);
+    }
+}
+
+void RSUApp::sendToTMC() {
+    cMessage *data = new cMessage("Hi there", TMC_DATA_MSG);  // Send the actual data
+    // RSUExampleScenario -> RSU -> RSUApp
+    //                   |-> TMC
+    cModule *target = getParentModule()->getParentModule()->getSubmodule("TMC");
+    sendDirect(data, target, "RSU_port", 0);  // How to take advantage of this index?
+}
+
+std::list<std::string> RSUApp::sampleAreaDetectors() {
+    TraCIScenarioManager *manager = TraCIScenarioManagerAccess().get();
+    TraCICommandInterface *traci = manager->getCommandInterface();
+
+    std::list<std::string> vehicleIDs;
+    for(auto area=areaDetectorList.begin(); area!=areaDetectorList.end(); area++) {
+        TraCICommandInterface::LaneAreaDetector LAD = traci->laneAreaDetector(*area);  // Acquire connection to corresponding laneAreaDetector
+        vehicleIDs.merge(LAD.getLastStepVehicleIDs());  // Append its vehicle IDs into the list
+    }
+#if RSU_VERBOSE
+    std::cout << "Recorded vehicle IDs: ";
+    for(auto veh=vehicleIDs.begin(); veh!=vehicleIDs.end(); veh++) {
+        std::cout << *veh << " ";
+    }
+    std::cout << endl;
+#endif
+    return vehicleIDs;
+}
 
 void RSUApp::onWSA(DemoServiceAdvertisment* wsa)
 {
@@ -42,4 +106,16 @@ void RSUApp::onWSM(BaseFrame1609_4* frame)
         std::cout << "Received vType " << pvd->getVehicleTypeID() << " data from pos" << pvd->getSenderPos() << ", speed" << pvd->getSenderSpeed() << std::endl;
     }
     // Can add more functionality here
+}
+
+void RSUApp::stringListFromParam(std::vector<std::string> &list, const char *parName) {
+    std::string s = par(parName);
+    boost::split(list, s, boost::is_any_of(", "), boost::token_compress_on);
+#if RSU_VERBOSE
+    std::cout << parName << ": ";
+    for(auto i = list.begin(); i!=list.end(); i++) {
+        std::cout << *i << " ";
+    }
+    std::cout << endl;
+#endif
 }

@@ -24,7 +24,7 @@
     </report>
 
     <gui_only>
-        <start value="true"/>
+        <start value="false"/>
     </gui_only>
 	
 </configuration>

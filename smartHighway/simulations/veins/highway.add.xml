@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-02-15 20:41:30 by Eclipse SUMO netedit Version v1_10_0+2390-e1c4ea0d0d5
+<!-- generated on 2022-05-04 14:38:05 by Eclipse SUMO netedit Version 1.12.0
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
-        <sumo-net-file value="/home/tjzhang/Sumo/highway/sumoProj/highway.net.xml"/>
+        <sumo-net-file value="/home/tjzhang/Documents/VEINS_Connected_Vehicles/smartHighway/simulations/veins/highway.net.xml"/>
     </input>
 
     <output>
-        <output-file value="/home/tjzhang/Sumo/highway/sumoProj/highway.net.xml"/>
+        <output-file value="/home/tjzhang/Documents/VEINS_Connected_Vehicles/smartHighway/simulations/veins/highway.net.xml"/>
     </output>
 
     <processing>
@@ -30,8 +30,7 @@
     </pedestrian>
 
     <netedit>
-        <additional-files value="/home/tjzhang/Sumo/highway/sumoProj/highway.add.xml"/>
-        <route-files value="/home/tjzhang/Sumo/highway/sumoProj/highway.rou.xml"/>
+        <additional-files value="/home/tjzhang/Documents/VEINS_Connected_Vehicles/smartHighway/simulations/veins/highway.add.xml"/>
     </netedit>
 
     <report>
@@ -42,6 +41,10 @@
 -->
 
 <additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <e1Detector id="e1_onRamp" lane="onRamp_0" pos="20.00" freq="300.00" file="e1_onRamp.xml"/>
+    <e1Detector id="e1_hwy_lane0" lane="hwyMid_0" pos="50.00" freq="300.00" file="e1_hwy_lane0.xml"/>
+    <e1Detector id="e1_hwy_lane1" lane="hwyMid_1" pos="50.00" freq="300.00" file="e1_hwy_lane1.xml"/>
+    <e1Detector id="e1_hwy_lane2" lane="hwyMid_2" pos="50.00" freq="300.00" file="e1_hwy_lane2.xml"/>
     <poly id="poly_0" type="building" color="red" fill="1" layer="0.00" shape="75.040169,-24.449496 91.131726,-13.430278 118.417409,-13.255369 118.242501,-23.050230 75.564894,-24.274588"/>
     <poly id="poly_1" type="building" color="red" fill="1" layer="0.00" shape="71.925967,10.833981 71.925967,1.770555 101.978380,1.452540 101.978380,11.947034 72.084974,11.151996"/>
     <poly id="poly_2" type="building" color="red" fill="1" layer="0.00" shape="148.213781,13.510502 148.358333,2.090874 187.965650,2.235426 187.821098,13.944159 148.213781,13.510502"/>

@@ -3,24 +3,31 @@
 #include "Messaging/ProbeVehicleData_m.h"
 #include "veins/modules/mobility/traci/TraCIScenarioManager.h"
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
-#include <stdio.h>
+#include <boost/algorithm/string.hpp>
 
 using namespace veins;
 
 Define_Module(veins::TMC);
 
-void TMC::initialize(int stage) {
-    // Acquire traci command interface
-    TraCIScenarioManager *manager = TraCIScenarioManagerAccess().get();
-    TraCICommandInterface *traci = manager->getCommandInterface();
-    if(manager)
-        std::cout << "Manager init" << endl;
-    if(traci)
-        std::cout << "traci init" << endl;
+TMC::TMC() {
+    rsuData = new cQueue("rsuData");
+    parkingData = new cQueue("parkingData");
+    control_timer = new cMessage("TMC_CONTROL_TIMER", TMC_TIMER_MSG);
+}
 
-    // Initialize update period timer at simulation start
-    cMessage *timer = new cMessage("RL_PERIOD_TIMER", TMC_TIMER_MSG);
-    scheduleAt(simTime() + RL_PERIOD, timer);
+TMC::~TMC() {
+    delete rsuData;
+    delete parkingData;
+    cancelAndDelete(control_timer);
+}
+
+void TMC::initialize(int stage) {
+    if(stage == 0)
+    {
+        // Initialize update period timer at simulation start
+        scheduleAt(simTime() + RL_PERIOD, control_timer);
+        stringListFromParam(parkingLotList, "parkingLots");
+    }
 }
 
 void TMC::finish() {
@@ -29,7 +36,7 @@ void TMC::finish() {
 
 // Determine the control output for the system (signal timings, broadcast to reroute)
 void TMC::computeAction(void) {
-
+    parkingData->clear();
 }
 // Control: update signal timing for a particular RSU
 void TMC::updateSignalTiming(void) {
@@ -41,21 +48,20 @@ void TMC::broadcastReroute(void) {
 }
 // Data: sample the availability of registered park n rides
 void TMC::parkingLotStatus(void) {
-//    for(int i=0; i<numParkingLots; i++) {
-//        parkingLotData *p = new parkingLotData();
-//        parkingData->insert(p);
-//    }
-    std::cerr << "Started parking lot status" << endl;
-
     TraCIScenarioManager *manager = TraCIScenarioManagerAccess().get();
     TraCICommandInterface *traci = manager->getCommandInterface();
-    if(manager && traci)
-        std::cerr << "manager and traci loaded" << endl;
-    std::string occ = traci->getParkingOccupancy("pa_0");
-    std::string cap = traci->getParkingCapacity("pa_0");
-
-    std::cerr << "Parking occupancy is " << occ << endl;
-    std::cerr << "Parking capacity is " << cap << endl;
+    if(manager && traci) {
+        for(auto lot=parkingLotList.begin(); lot!=parkingLotList.end(); lot++) {
+            int occ = std::stoi(traci->getParkingOccupancy(*lot));
+            int cap = std::stoi(traci->getParkingCapacity(*lot));
+            parkingLotData *p = new parkingLotData(*lot, cap, occ);
+            parkingData->insert(p);
+#if TMC_VERBOSE
+            std::cerr << "Lot " << *lot << " occupancy is " << occ << ", ";
+            std::cerr << "capacity is " << cap << endl;
+#endif
+        }
+    }
 }
 // Data: sample the position and velocities of cars near RSUs
 void TMC::collectTrafficInfo(void) {
@@ -73,7 +79,8 @@ void TMC::handleMessage(cMessage *msg) {
     case TMC_TIMER_MSG: {
         parkingLotStatus();
         computeAction();
-        delete msg;
+
+        scheduleAt(simTime() + RL_PERIOD, msg);
         break;
     }
     default: {
@@ -83,13 +90,14 @@ void TMC::handleMessage(cMessage *msg) {
     }
 }
 
-TMC::TMC() {
-    rsuData = new cQueue("rsuData");
-    parkingData = new cQueue("parkingData");
-    numParkingLots = 2;
-}
-
-TMC::~TMC() {
-    delete rsuData;
-    delete parkingData;
+void TMC::stringListFromParam(std::vector<std::string> &list, const char *parName) {
+    std::string s = par(parName);
+    boost::split(list, s, boost::is_any_of(", "), boost::token_compress_on);
+#if TMC_VERBOSE
+    std::cout << parName << ": ";
+    for(auto i = list.begin(); i!=list.end(); i++) {
+        std::cout << *i << " ";
+    }
+    std::cout << endl;
+#endif
 }

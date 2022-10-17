@@ -21,6 +21,7 @@ package smarthighway.TrafficManagementCenter;
 simple TMC
 {
     parameters:
+        string parkingLots;
         int numRSUs;
         @class(veins::TMC);
     	@display("i=block/app2");

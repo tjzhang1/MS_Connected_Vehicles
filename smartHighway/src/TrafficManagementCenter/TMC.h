@@ -3,23 +3,27 @@
 
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
 
-#define RSU_DATA_MSG 0
-#define TMC_TIMER_MSG 1
+// Expected message types
+enum {
+    RSU_DATA_MSG = 0,
+    TMC_TIMER_MSG = 1,
+};
 #define RL_PERIOD 10
+#define TMC_VERBOSE 1
 
 class parkingLotData : public cObject {
 public:
-    parkingLotData(int l, int c, int o) {
-        lotID = l;
-        capacity = c;
-        occupancy = o;
+    parkingLotData(std::string nodeId, int cap, int occ) {
+        lotID = nodeId;
+        capacity = cap;
+        occupancy = occ;
     }
     parkingLotData(void) {
-        lotID = 0;
+        lotID = "genericParkingArea";
         capacity = 0;
         occupancy = 0;
     }
-    int lotID;
+    std::string lotID;
     int capacity;
     int occupancy;
 };
@@ -30,18 +34,6 @@ public:
     int posX, posY;
     int velX, velY;
 };
-
-//typedef struct parkingLotData {
-//    int lotID;
-//    int capacity;
-//    int occupancy;
-//} parkingLotData_t;
-//
-//typedef struct vehicleData {
-//    int vehID;
-//    Coord pos;
-//    Coord vel;
-//} vehicleData_t;
 
 namespace veins {
 
@@ -58,6 +50,7 @@ protected:
     void initialize(int stage) override;
     void handleMessage(cMessage *msg) override;
     void finish(void) override;
+    void stringListFromParam(std::vector<std::string> &list, const char *parName);
 
     // Determine the control output for the system (signal timings, broadcast to reroute)
     void computeAction(void);
@@ -75,7 +68,8 @@ private:
     cQueue *rsuData;
     // need some sort of queue to hold parking data
     cQueue *parkingData;
-    int numParkingLots;
+    std::vector<std::string> parkingLotList;
+    cMessage *control_timer;  // Recurring self message for control updates
 };
 
 }

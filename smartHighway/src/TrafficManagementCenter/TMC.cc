@@ -57,8 +57,8 @@ void TMC::parkingLotStatus(void) {
             parkingLotData *p = new parkingLotData(*lot, cap, occ);
             parkingData->insert(p);
 #if TMC_VERBOSE
-            std::cerr << "Lot " << *lot << " occupancy is " << occ << ", ";
-            std::cerr << "capacity is " << cap << endl;
+            std::cout << "Lot " << *lot << " occupancy is " << occ << ", ";
+            std::cout << "capacity is " << cap << endl;
 #endif
         }
     }

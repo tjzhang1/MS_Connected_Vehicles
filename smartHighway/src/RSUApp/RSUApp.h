@@ -18,12 +18,21 @@
 
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
 
+#define RSU_VERBOSE 1
+
 namespace veins {
 
 class RSUApp : public DemoBaseApplLayer {
+public:
+    RSUApp();
+    ~RSUApp();
+    void initialize(int stage) override;
+    void finish(int stage) override;
 protected:
     void onWSM(BaseFrame1609_4* wsm) override;
     void onWSA(DemoServiceAdvertisment* wsa) override;
+    void stringListFromParam(std::vector<std::string> &list, const char *parName);
+    void handleSelfMsg(cMessage *msg) override;
 };
 
 }

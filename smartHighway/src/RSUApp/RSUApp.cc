@@ -22,6 +22,26 @@ using namespace veins;
 
 Define_Module(veins::RSUApp);
 
+RSUApp::RSUApp() {
+
+}
+
+RSUApp::~RSUApp() {
+
+}
+
+void RSUApp::initialize(int stage) {
+    DemoBaseApplLayer::initialize(stage);
+}
+
+void RSUApp::finish(int stage) {
+    DemoBaseApplLayer::finish(stage);
+}
+
+void RSUApp::handleSelfMsg(cMessage *msg) {
+    DemoBaseApplLayer::handleSelfMsg(msg);
+}
+
 void RSUApp::onWSA(DemoServiceAdvertisment* wsa)
 {
     // if this RSU receives a WSA for service 42, it will tune to the chan
@@ -42,4 +62,16 @@ void RSUApp::onWSM(BaseFrame1609_4* frame)
         std::cout << "Received vType " << pvd->getVehicleTypeID() << " data from pos" << pvd->getSenderPos() << ", speed" << pvd->getSenderSpeed() << std::endl;
     }
     // Can add more functionality here
+}
+
+void RSUApp::stringListFromParam(std::vector<std::string> &list, const char *parName) {
+    std::string s = par(parName);
+    boost::split(list, s, boost::is_any_of(", "), boost::token_compress_on);
+#if RSU_VERBOSE
+    std::cout << parName << ": ";
+    for(auto i = list.begin(); i!=list.end(); i++) {
+        std::cout << *i << " ";
+    }
+    std::cout << endl;
+#endif
 }

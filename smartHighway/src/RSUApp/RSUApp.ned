@@ -18,9 +18,10 @@ import org.car2x.veins.modules.application.ieee80211p.DemoBaseApplLayer;
 
 simple RSUApp extends DemoBaseApplLayer
 {
-    @class(veins::RSUApp);
-    @display("i=block/app2");
+    parameters:
+        string areaDetectors;
+    	@class(veins::RSUApp);
+    	@display("i=block/app2");
     gates:
         input TMC_port @directIn;
-//		inout TMC_port;
 }

@@ -11,21 +11,31 @@
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
 #include "veins/modules/world/traci/trafficLight/TraCITrafficLightInterface.h"
 
+enum {
+    RMC_ALINEA_MEASURE_MSG = 100,
+    RMC_ALINEA_UPDATE_MSG = 101,
+    RMC_SET_GREEN_MSG = 102,
+};
+
+#define RMC_VERBOSE 1
+
 namespace veins {
 
 class RampMeterController : public DemoBaseApplLayer {
+public:
+    RampMeterController(void);
+    ~RampMeterController(void);
 protected:
     void initialize(int stage) override;
     void handleSelfMsg(cMessage* msg) override;
     void onWSM(BaseFrame1609_4* wsm) override;
     void onWSA(DemoServiceAdvertisment* wsa) override;
+    void stringListFromParam(std::vector<std::string> &list, const char *parName);
     /* Which traffic light to control */
-//    std::string trafficLightID;
     TraCITrafficLightInterface* tlInterface;
     int updatePeriodALINEA = 60; //period of time to use the next ALINEA ramp metering rate: [40, 300] seconds
     double onRampOccupancy; //accumulated occupancy measured during updatePeriodALINEA
     double hwyOccupancy;
-    double numHwyLanes = 3.0;
     /*
      * From Caltrans Ramp Metering Design Manual:
     For a typical one vehicle per green operation, a
@@ -45,6 +55,13 @@ protected:
     double meterRate; //time between green lights
     double KR = 70.0;
     double targetOccupancy = 20.0;
+
+    std::vector<std::string> highwayInductorsList;
+    std::vector<std::string> onRampInductorsList;
+
+    cMessage *measureMsg;
+    cMessage *updateMsg;
+    cMessage *changePhaseMsg;
 };
 
 }

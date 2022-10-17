@@ -21,9 +21,11 @@ import org.car2x.veins.base.modules.ITrafficLightApplLayer;
 
 simple RampMeterController extends DemoBaseApplLayer like ITrafficLightApplLayer
 {
-	@class(veins::RampMeterController);
-    @display("i=block/app2");
-//    string rampMeterID;  //name of ramp meter this block will control
+    parameters:
+        string highwayInductors;
+        string onRampInductors;
+		@class(veins::RampMeterController);
+    	@display("i=block/app2");
     gates:
         inout logic; //connects to logic block
 }

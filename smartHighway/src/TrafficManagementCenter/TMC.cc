@@ -65,15 +65,16 @@ void TMC::parkingLotStatus(void) {
 }
 // Data: sample the position and velocities of cars near RSUs
 void TMC::collectTrafficInfo(void) {
-
+    std::cout << "Message received" << endl;
 }
 
 void TMC::handleMessage(cMessage *msg) {
     // Can receive messages from gate for RSU data
     // Can receive self messages as a timer for updating control plan
     switch(msg->getKind()) {
-    case RSU_DATA_MSG: {
+    case TMC_DATA_MSG: {
         collectTrafficInfo();
+        delete msg;
         break;
     }
     case TMC_TIMER_MSG: {

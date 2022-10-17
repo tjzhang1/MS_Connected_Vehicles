@@ -19,6 +19,7 @@
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
 
 #define RSU_VERBOSE 1
+#define SAMPLING_PERIOD 8
 
 namespace veins {
 
@@ -27,12 +28,21 @@ public:
     RSUApp();
     ~RSUApp();
     void initialize(int stage) override;
-    void finish(int stage) override;
+    void finish() override;
+    enum RSU_MSG_types {
+        RSU_BROADCAST_MSG,    // Tells RSU to broadcast an advisory to cars
+        RSU_SAMPLE_MSG,       // Tells RSU to collect information on nearby cars
+    };
 protected:
     void onWSM(BaseFrame1609_4* wsm) override;
     void onWSA(DemoServiceAdvertisment* wsa) override;
+    void sendToTMC(void);
     void stringListFromParam(std::vector<std::string> &list, const char *parName);
+    std::list<std::string> sampleAreaDetectors(void);
     void handleSelfMsg(cMessage *msg) override;
+private:
+    std::vector<std::string> areaDetectorList;
+    cMessage *samplingMsg;
 };
 
 }

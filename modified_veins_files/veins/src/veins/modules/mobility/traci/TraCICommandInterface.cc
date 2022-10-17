@@ -1160,6 +1160,36 @@ int TraCICommandInterface::LaneAreaDetector::getLastStepVehicleNumber()
     return traci->genericGetInt(CMD_GET_LANEAREA_VARIABLE, laneAreaDetectorId, LAST_STEP_VEHICLE_NUMBER, RESPONSE_GET_LANEAREA_VARIABLE);
 }
 
+double TraCICommandInterface::LaneAreaDetector::getLastStepMeanSpeed()
+{
+    return traci->genericGetDouble(CMD_GET_LANEAREA_VARIABLE, laneAreaDetectorId, LAST_STEP_MEAN_SPEED, RESPONSE_GET_LANEAREA_VARIABLE);
+}
+
+std::list<std::string> TraCICommandInterface::LaneAreaDetector::getLastStepVehicleIDs()
+{
+    return traci->genericGetStringList(CMD_GET_LANEAREA_VARIABLE, laneAreaDetectorId, LAST_STEP_VEHICLE_ID_LIST, RESPONSE_GET_LANEAREA_VARIABLE);
+}
+
+int TraCICommandInterface::LaneAreaDetector::getLastStepOccupancy()
+{
+    return traci->genericGetInt(CMD_GET_LANEAREA_VARIABLE, laneAreaDetectorId, LAST_STEP_OCCUPANCY, RESPONSE_GET_LANEAREA_VARIABLE);
+}
+
+int TraCICommandInterface::LaneAreaDetector::getLastStepHaltingVehiclesNumber()
+{
+    return traci->genericGetInt(CMD_GET_LANEAREA_VARIABLE, laneAreaDetectorId, LAST_STEP_VEHICLE_HALTING_NUMBER, RESPONSE_GET_LANEAREA_VARIABLE);
+}
+
+int TraCICommandInterface::LaneAreaDetector::getLastStepJamLengthInNumber()
+{
+    return traci->genericGetInt(CMD_GET_LANEAREA_VARIABLE, laneAreaDetectorId, JAM_LENGTH_VEHICLE, RESPONSE_GET_LANEAREA_VARIABLE);
+}
+
+int TraCICommandInterface::LaneAreaDetector::getLastStepJamLengthInMeters()
+{
+    return traci->genericGetInt(CMD_GET_LANEAREA_VARIABLE, laneAreaDetectorId, JAM_LENGTH_METERS, RESPONSE_GET_LANEAREA_VARIABLE);
+}
+
 std::list<std::string> TraCICommandInterface::getJunctionIds()
 {
     return genericGetStringList(CMD_GET_JUNCTION_VARIABLE, "", ID_LIST, RESPONSE_GET_JUNCTION_VARIABLE);

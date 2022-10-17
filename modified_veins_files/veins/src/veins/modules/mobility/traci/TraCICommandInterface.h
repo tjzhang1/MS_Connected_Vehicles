@@ -391,6 +391,12 @@ public:
         }
 
         int getLastStepVehicleNumber();
+        double getLastStepMeanSpeed();
+        std::list<std::string> getLastStepVehicleIDs();
+        int getLastStepOccupancy();
+        int getLastStepHaltingVehiclesNumber();
+        int getLastStepJamLengthInNumber();
+        int getLastStepJamLengthInMeters();
 
     protected:
         TraCICommandInterface* traci;

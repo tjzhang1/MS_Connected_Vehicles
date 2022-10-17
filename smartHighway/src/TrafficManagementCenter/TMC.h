@@ -5,7 +5,7 @@
 
 // Expected message types
 enum {
-    RSU_DATA_MSG = 0,
+    TMC_DATA_MSG = 0,
     TMC_TIMER_MSG = 1,
 };
 #define RL_PERIOD 10

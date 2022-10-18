@@ -64,7 +64,7 @@ void RSUApp::sendToTMC() {
     // RSUExampleScenario -> RSU -> RSUApp
     //                   |-> TMC
     cModule *target = getParentModule()->getParentModule()->getSubmodule("TMC");
-    sendDirect(data, target, "RSU_port", 0);  // How to take advantage of this index?
+    sendDirect(data, target, "RSU_port");
 }
 
 std::list<std::string> RSUApp::sampleAreaDetectors() {

@@ -163,6 +163,7 @@ public:
         double getAngle();
         double getAcceleration();
         double getDistanceTravelled();
+        Coord getPosition();
 
         void setParameter(const std::string& parameter, int value);
         void setParameter(const std::string& parameter, double value);

@@ -19,7 +19,7 @@
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
 
 #define RSU_VERBOSE 1
-#define SAMPLING_PERIOD 8
+#define SAMPLING_PERIOD 8  // How often to collect a sample and send to TMC
 
 namespace veins {
 

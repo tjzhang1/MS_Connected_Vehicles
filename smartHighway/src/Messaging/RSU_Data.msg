@@ -13,18 +13,19 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package smarthighway.TrafficManagementCenter;
-
 //
-// TODO auto-generated type
+// TODO generated message class
 //
-simple TMC
-{
-    parameters:
-        string parkingLots;
-        @class(veins::TMC);
-    	@display("i=block/app2");
-	gates:
-	    input RSU_port @directIn;  // Connections to external RSUs, populated in RSUExampleScenario.ned
+struct VehicleData {
+    string vehicleId;
+	double speed;
+	double position[2];
+}
 
+message RSU_Data {
+    string rsuId;
+    int lastStepOccupancy;
+    double lastStepMeanSpeed;
+    int lastStepHaltingVehiclesNumber;
+    VehicleData vehicles[];
 }

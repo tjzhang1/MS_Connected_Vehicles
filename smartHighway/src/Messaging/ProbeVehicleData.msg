@@ -19,13 +19,13 @@ cplusplus {{
 #include "veins/base/utils/SimpleAddress.h"
 }}
 
+import veins.base.utils.Coord;
+import veins.modules.messages.BaseFrame1609_4;
+import veins.base.utils.SimpleAddress;
+
 namespace veins;
 
-class BaseFrame1609_4;
-class noncobject Coord;
-class LAddress::L2Type extends void;
-
-packet ProbeVehicleData extends BaseFrame1609_4{
+packet ProbeVehicleData extends BaseFrame1609_4 {
     Coord senderPos;
     Coord senderSpeed;
     string vehicleTypeID;

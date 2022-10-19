@@ -39,13 +39,16 @@ OBJS = \
     $O/CarApplication/CarApp.o \
     $O/RSUApp/RSUApp.o \
     $O/RampMeterControl/RampMeterController.o \
+    $O/TrafficManagementCenter/TMC.o \
     $O/Messaging/ProbeDataManagement_m.o \
-    $O/Messaging/ProbeVehicleData_m.o
+    $O/Messaging/ProbeVehicleData_m.o \
+    $O/Messaging/RSU_Data_m.o
 
 # Message files
 MSGFILES = \
     Messaging/ProbeDataManagement.msg \
-    Messaging/ProbeVehicleData.msg
+    Messaging/ProbeVehicleData.msg \
+    Messaging/RSU_Data.msg
 
 # SM files
 SMFILES =

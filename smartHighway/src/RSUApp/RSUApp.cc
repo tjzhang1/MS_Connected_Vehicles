@@ -15,6 +15,7 @@
 
 #include "RSUApp.h"
 #include "veins/modules/application/traci/TraCIDemo11pMessage_m.h"
+#include "Messaging/RSU_Data_m.h"
 #include "Messaging/ProbeVehicleData_m.h"
 #include <boost/algorithm/string.hpp>
 #include "TrafficManagementCenter/TMC.h"
@@ -60,7 +61,8 @@ void RSUApp::handleSelfMsg(cMessage *msg) {
 }
 
 void RSUApp::sendToTMC() {
-    cMessage *data = new cMessage("Hi there", TMC_DATA_MSG);  // Send the actual data
+    RSU_Data *data = new RSU_Data("RSU measurements update", TMC_DATA_MSG);
+    // Populate the data
     // RSUExampleScenario -> RSU -> RSUApp
     //                   |-> TMC
     cModule *target = getParentModule()->getParentModule()->getSubmodule("TMC");

@@ -18,10 +18,10 @@ cplusplus {{
 #include "veins/base/utils/SimpleAddress.h"
 }}
 
-namespace veins;
+import veins.modules.messages.BaseFrame1609_4;
+import veins.base.utils.SimpleAddress;
 
-class BaseFrame1609_4;
-class LAddress::L2Type extends void;
+namespace veins;
 
 packet ProbeDataManagement extends BaseFrame1609_4 {
     bool senderPos;

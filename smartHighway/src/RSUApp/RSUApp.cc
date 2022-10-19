@@ -19,6 +19,7 @@
 #include "Messaging/ProbeVehicleData_m.h"
 #include <boost/algorithm/string.hpp>
 #include "TrafficManagementCenter/TMC.h"
+#include "veins/base/utils/Coord.h"
 
 using namespace veins;
 
@@ -35,8 +36,9 @@ RSUApp::~RSUApp() {
 void RSUApp::initialize(int stage) {
     DemoBaseApplLayer::initialize(stage);
     if(stage == 0) {
+        traci = NULL;
         stringListFromParam(areaDetectorList, "areaDetectors");
-        scheduleAt(simTime() + SAMPLING_PERIOD, samplingMsg);
+        scheduleAt(simTime() + SAMPLING_PERIOD, samplingMsg);  // Instead of using SAMPLING_PERIOD, use a poisson process to determine next time
     }
 }
 
@@ -50,8 +52,12 @@ void RSUApp::handleSelfMsg(cMessage *msg) {
         break;
     }
     case RSU_SAMPLE_MSG: {
-        sampleAreaDetectors();
-        sendToTMC();
+        if(!traci) {
+            TraCIScenarioManager *manager = TraCIScenarioManagerAccess().get();
+            traci = manager->getCommandInterface();
+        }
+        std::list<std::string> vehicleIDs = sampleAreaDetectors();
+        sendToTMC(vehicleIDs);
         scheduleAt(simTime() + SAMPLING_PERIOD, msg);
         break;
     }
@@ -60,9 +66,38 @@ void RSUApp::handleSelfMsg(cMessage *msg) {
     }
 }
 
-void RSUApp::sendToTMC() {
-    RSU_Data *data = new RSU_Data("RSU measurements update", TMC_DATA_MSG);
-    // Populate the data
+void RSUApp::populateData(RSU_Data *data, std::list<std::string> &vehicleIDs) {
+    data->setRsuId(getParentModule()->getFullName());
+#if RSU_VERBOSE
+    std::cout << "From " << getParentModule()->getFullName() << " - ";
+    std::cout << "Recorded vehicle IDs: ";
+#endif
+    // Allocate enough space for vehicles
+    data->setVehiclesArraySize(sizeof(vehicleIDs));
+    // Iterate through the vehicle list
+    int k = 0;
+    for(auto veh=vehicleIDs.begin(); veh!=vehicleIDs.end(); veh++) {
+        TraCICommandInterface::Vehicle vehicleConnection = traci->vehicle(*veh);
+        VehicleData vehicle;
+        vehicle.vehicleId = (omnetpp::opp_string)*veh;
+        vehicle.vehicleTypeId = vehicleConnection.getVType();
+        vehicle.speed = vehicleConnection.getSpeed();
+        Coord pos = vehicleConnection.getPosition();
+        vehicle.position[0] = pos.x;
+        vehicle.position[1] = pos.y;
+        data->setVehicles(k++, vehicle);  // Insert vehicle at position k
+#if RSU_VERBOSE
+        std::cout << *veh << " ";
+#endif
+    }
+#if RSU_VERBOSE
+    std::cout << endl;
+#endif
+}
+
+void RSUApp::sendToTMC(std::list<std::string> &vehicleIDs) {
+    RSU_Data *data = new RSU_Data("Collected vehicle data", TMC_DATA_MSG);  // inherited from cMessage class
+    populateData(data, vehicleIDs);
     // RSUExampleScenario -> RSU -> RSUApp
     //                   |-> TMC
     cModule *target = getParentModule()->getParentModule()->getSubmodule("TMC");
@@ -70,21 +105,11 @@ void RSUApp::sendToTMC() {
 }
 
 std::list<std::string> RSUApp::sampleAreaDetectors() {
-    TraCIScenarioManager *manager = TraCIScenarioManagerAccess().get();
-    TraCICommandInterface *traci = manager->getCommandInterface();
-
     std::list<std::string> vehicleIDs;
     for(auto area=areaDetectorList.begin(); area!=areaDetectorList.end(); area++) {
         TraCICommandInterface::LaneAreaDetector LAD = traci->laneAreaDetector(*area);  // Acquire connection to corresponding laneAreaDetector
         vehicleIDs.merge(LAD.getLastStepVehicleIDs());  // Append its vehicle IDs into the list
     }
-#if RSU_VERBOSE
-    std::cout << "Recorded vehicle IDs: ";
-    for(auto veh=vehicleIDs.begin(); veh!=vehicleIDs.end(); veh++) {
-        std::cout << *veh << " ";
-    }
-    std::cout << endl;
-#endif
     return vehicleIDs;
 }
 

@@ -17,6 +17,7 @@
 #define RSUAPP_RSUAPP_H_
 
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
+#include "Messaging/RSU_Data_m.h"
 
 #define RSU_VERBOSE 1
 #define SAMPLING_PERIOD 8  // How often to collect a sample and send to TMC
@@ -36,13 +37,15 @@ public:
 protected:
     void onWSM(BaseFrame1609_4* wsm) override;
     void onWSA(DemoServiceAdvertisment* wsa) override;
-    void sendToTMC(void);
+    void sendToTMC(std::list<std::string> &vehicleIDs);
     void stringListFromParam(std::vector<std::string> &list, const char *parName);
     std::list<std::string> sampleAreaDetectors(void);
     void handleSelfMsg(cMessage *msg) override;
+    void populateData(RSU_Data *data, std::list<std::string> &vehicleIDs);
 private:
     std::vector<std::string> areaDetectorList;
     cMessage *samplingMsg;
+    TraCICommandInterface *traci;
 };
 
 }

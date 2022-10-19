@@ -18,14 +18,15 @@
 //
 struct VehicleData {
     string vehicleId;
+    string vehicleTypeId;
 	double speed;
 	double position[2];
 }
 
 message RSU_Data {
     string rsuId;
-    int lastStepOccupancy;
-    double lastStepMeanSpeed;
-    int lastStepHaltingVehiclesNumber;
+    int lastStepOccupancy;  //unimplemented
+    double lastStepMeanSpeed;  //unimplemented
+    int lastStepHaltingVehiclesNumber;  //unimplemented
     VehicleData vehicles[];
 }

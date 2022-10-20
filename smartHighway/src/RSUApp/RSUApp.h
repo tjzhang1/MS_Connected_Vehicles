@@ -21,6 +21,10 @@
 
 #define RSU_VERBOSE 1
 #define SAMPLING_PERIOD 8  // How often to collect a sample and send to TMC
+enum RSU_MSG_types {
+    RSU_BROADCAST_MSG,    // Tells RSU to broadcast an advisory to cars
+    RSU_SAMPLE_MSG,       // Tells RSU to collect information on nearby cars
+};
 
 namespace veins {
 
@@ -30,10 +34,6 @@ public:
     ~RSUApp();
     void initialize(int stage) override;
     void finish() override;
-    enum RSU_MSG_types {
-        RSU_BROADCAST_MSG,    // Tells RSU to broadcast an advisory to cars
-        RSU_SAMPLE_MSG,       // Tells RSU to collect information on nearby cars
-    };
 protected:
     void onWSM(BaseFrame1609_4* wsm) override;
     void onWSA(DemoServiceAdvertisment* wsa) override;

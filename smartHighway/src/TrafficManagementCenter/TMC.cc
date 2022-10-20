@@ -1,4 +1,5 @@
 #include "TMC.h"
+#include "RSUApp/RSUApp.h"
 #include "Messaging/ProbeVehicleData_m.h"
 #include "veins/modules/mobility/traci/TraCIScenarioManager.h"
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
@@ -36,16 +37,22 @@ void TMC::finish() {
 void TMC::computeAction(void) {
     parkingData->clear();
     rsuData->clear();
-
+    broadcastReroute(0);
 }
 // Control: update signal timing for a particular RSU
 void TMC::updateSignalTiming(void) {
 
 }
 // Control: tell RSU to broadcast vehicles to reroute
-void TMC::broadcastReroute(void) {
-
+void TMC::broadcastReroute(int targetRSU) {
+    cMessage *msg = new cMessage("broadcastReroute", RSU_BROADCAST_MSG);
+    // RSUExampleScenario -> RSU -> RSUApp
+    //                   |-> TMC
+    std::cerr << "broadcasting new route" << endl;
+    cModule *target = getParentModule()->getSubmodule("RSU", targetRSU)->getSubmodule("RSUApp");
+    sendDirect(msg, 1, 0, target, "TMC_port");
 }
+
 // Data: sample the availability of registered park n rides
 void TMC::parkingLotStatus(void) {
     TraCIScenarioManager *manager = TraCIScenarioManagerAccess().get();

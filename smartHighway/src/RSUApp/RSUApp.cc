@@ -17,6 +17,7 @@
 #include "veins/modules/application/traci/TraCIDemo11pMessage_m.h"
 #include "Messaging/RSU_Data_m.h"
 #include "Messaging/ProbeVehicleData_m.h"
+#include "Messaging/ParkingReroute_m.h"
 #include <boost/algorithm/string.hpp>
 #include "TrafficManagementCenter/TMC.h"
 #include "veins/base/utils/Coord.h"
@@ -49,6 +50,10 @@ void RSUApp::finish() {
 void RSUApp::handleSelfMsg(cMessage *msg) {
     switch(msg->getKind()) {
     case RSU_BROADCAST_MSG: {
+        ParkingReroute *wsm = new ParkingReroute(/*set relevant args here*/);
+        DemoBaseApplLayer::populateWSM(wsm);
+        sendDown(wsm);
+        delete msg;
         break;
     }
     case RSU_SAMPLE_MSG: {
@@ -121,6 +126,7 @@ void RSUApp::onWSA(DemoServiceAdvertisment* wsa)
     }
 }
 
+// Handles what happens when receives message from a lower network layer
 void RSUApp::onWSM(BaseFrame1609_4* frame)
 {
     if ( TraCIDemo11pMessage* wsm = dynamic_cast<TraCIDemo11pMessage*>(frame) )

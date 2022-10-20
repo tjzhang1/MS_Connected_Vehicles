@@ -1,9 +1,9 @@
 #include "TMC.h"
-//#include "veins/modules/application/traci/TraCIDemo11pMessage_m.h"
 #include "Messaging/ProbeVehicleData_m.h"
 #include "veins/modules/mobility/traci/TraCIScenarioManager.h"
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
 #include <boost/algorithm/string.hpp>
+#include "Messaging/RSU_Data_m.h"
 
 using namespace veins;
 
@@ -24,8 +24,6 @@ TMC::~TMC() {
 void TMC::initialize(int stage) {
     if(stage == 0)
     {
-        // Initialize update period timer at simulation start
-        scheduleAt(simTime() + RL_PERIOD, control_timer);
         stringListFromParam(parkingLotList, "parkingLots");
     }
 }
@@ -37,6 +35,8 @@ void TMC::finish() {
 // Determine the control output for the system (signal timings, broadcast to reroute)
 void TMC::computeAction(void) {
     parkingData->clear();
+    rsuData->clear();
+
 }
 // Control: update signal timing for a particular RSU
 void TMC::updateSignalTiming(void) {
@@ -63,25 +63,22 @@ void TMC::parkingLotStatus(void) {
         }
     }
 }
-// Data: sample the position and velocities of cars near RSUs
-void TMC::collectTrafficInfo(void) {
-    std::cout << "Message received" << endl;
-}
 
 void TMC::handleMessage(cMessage *msg) {
     // Can receive messages from gate for RSU data
     // Can receive self messages as a timer for updating control plan
     switch(msg->getKind()) {
     case TMC_DATA_MSG: {
-        collectTrafficInfo();
-        delete msg;
+        rsuData->insert(static_cast<RSU_Data *>(msg));
+        // Doesn't cause issues if multiple RSUs feed data at once
+        if(control_timer->isScheduled() == false) {
+            scheduleAt(simTime() + RL_INTERVAL, control_timer);
+        }
         break;
     }
     case TMC_TIMER_MSG: {
         parkingLotStatus();
         computeAction();
-
-        scheduleAt(simTime() + RL_PERIOD, msg);
         break;
     }
     default: {

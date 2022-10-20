@@ -2,13 +2,14 @@
 #define TMC_H_
 
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
+#include "Messaging/RSU_Data_m.h"
 
 // Expected message types
 enum {
     TMC_DATA_MSG = 0,
     TMC_TIMER_MSG = 1,
 };
-#define RL_PERIOD 10
+#define RL_INTERVAL 1  // Time between receiving RSU data and performing a computation
 #define TMC_VERBOSE 1
 
 class parkingLotData : public cObject {
@@ -26,13 +27,6 @@ public:
     std::string lotID;
     int capacity;
     int occupancy;
-};
-
-class vehicleData : public cObject {
-public:
-    int vehID;
-    int posX, posY;
-    int velX, velY;
 };
 
 namespace veins {
@@ -60,8 +54,6 @@ protected:
     void broadcastReroute(void);
     // Data: sample the availability of registered park n rides
     void parkingLotStatus(void);
-    // Data: sample the position and velocities of cars near RSUs
-    void collectTrafficInfo(void);
 
 private:
     // need some sort of queue to hold RSU data

@@ -46,11 +46,13 @@ void TMC::updateSignalTiming(void) {
 // Control: tell RSU to broadcast vehicles to reroute
 void TMC::broadcastReroute(int targetRSU) {
     cMessage *msg = new cMessage("broadcastReroute", RSU_BROADCAST_MSG);
-    // RSUExampleScenario -> RSU -> RSUApp
+    // RSUExampleScenario -> rsu -> appl
     //                   |-> TMC
-    std::cerr << "broadcasting new route" << endl;
-    cModule *target = getParentModule()->getSubmodule("RSU", targetRSU)->getSubmodule("RSUApp");
-    sendDirect(msg, 1, 0, target, "TMC_port");
+    cGate *target = getParentModule()->getSubmodule("rsu", targetRSU)->getSubmodule("appl")->gate("TMC_port");  // submodule name must match definition in .ned
+#if TMC_VERBOSE
+    std::cout << "Broadcasting new route, gate " << target->getFullName() << " acquired" << endl;
+#endif
+    sendDirect(msg, 1, 0, target);
 }
 
 // Data: sample the availability of registered park n rides

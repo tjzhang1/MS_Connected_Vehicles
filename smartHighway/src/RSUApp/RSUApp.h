@@ -40,7 +40,7 @@ protected:
     void sendToTMC(std::list<std::string> &vehicleIDs);
     void stringListFromParam(std::vector<std::string> &list, const char *parName);
     std::list<std::string> sampleAreaDetectors(void);
-    void handleSelfMsg(cMessage *msg) override;
+    void handleMessage(cMessage *msg) override;
     void populateData(RSU_Data *data, std::list<std::string> &vehicleIDs);
 private:
     std::vector<std::string> areaDetectorList;

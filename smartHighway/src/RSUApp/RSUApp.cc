@@ -47,7 +47,7 @@ void RSUApp::finish() {
     DemoBaseApplLayer::finish();
 }
 
-void RSUApp::handleSelfMsg(cMessage *msg) {
+void RSUApp::handleMessage(cMessage *msg) {
     switch(msg->getKind()) {
     case RSU_BROADCAST_MSG: {
         ParkingReroute *wsm = new ParkingReroute(/*set relevant args here*/);
@@ -67,7 +67,7 @@ void RSUApp::handleSelfMsg(cMessage *msg) {
         break;
     }
     default:
-        DemoBaseApplLayer::handleSelfMsg(msg);
+        DemoBaseApplLayer::handleMessage(msg);
     }
 }
 

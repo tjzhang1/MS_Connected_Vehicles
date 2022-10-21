@@ -1,6 +1,7 @@
 #include "CarApp.h"
 
 #include "veins/modules/application/traci/TraCIDemo11pMessage_m.h"
+#include "Messaging/ParkingReroute_m.h"
 
 using namespace veins;
 
@@ -43,6 +44,10 @@ void CarApp::onWSM(BaseFrame1609_4* frame)
         }
     }
     // Can add more functionality here
+    else if(ParkingReroute *wsm = dynamic_cast<ParkingReroute*>(frame)) {
+        std::cerr << "rerouting" << endl;
+        traciVehicle->changeTarget("onRamp");
+    }
 }
 
 void CarApp::handleSelfMsg(cMessage* msg)

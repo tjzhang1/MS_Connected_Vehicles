@@ -45,8 +45,21 @@ void CarApp::onWSM(BaseFrame1609_4* frame)
     }
     // Can add more functionality here
     else if(ParkingReroute *wsm = dynamic_cast<ParkingReroute*>(frame)) {
-        std::cerr << "rerouting" << endl;
-        traciVehicle->changeTarget("onRamp");
+//        for(int k=0; k<wsm->getOpenLotArraySize(); k++) {
+//            omnetpp::opp_string lotId = wsm->getOpenLot(k);
+//            try {
+//                traciVehicle->changeTarget("onRamp");
+//            }
+//            catch(cRuntimeError &e){
+//                std::cerr << e.what() << endl;
+//            }
+//        }
+                    try {
+                        traciVehicle->changeTarget("pa_0");
+                    }
+                    catch(cRuntimeError &e){
+                        std::cerr << e.what() << endl;
+                    }
     }
 }
 

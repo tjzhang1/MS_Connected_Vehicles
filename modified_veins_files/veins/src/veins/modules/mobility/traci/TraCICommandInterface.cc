@@ -533,11 +533,11 @@ double TraCICommandInterface::getDistance(const Coord& p1, const Coord& p2, bool
     return distance;
 }
 
-void TraCICommandInterface::Vehicle::stopAt(std::string roadId, double pos, uint8_t laneid, double radius, simtime_t waittime)
+void TraCICommandInterface::Vehicle::stopAt(std::string roadId, double pos, uint8_t laneid, simtime_t waittime, uint8_t flags)
 {
     uint8_t variableId = CMD_STOP;
     uint8_t variableType = TYPE_COMPOUND;
-    int32_t count = 4;
+    int32_t count = 5;
     uint8_t edgeIdT = TYPE_STRING;
     std::string edgeId = roadId;
     uint8_t stopPosT = TYPE_DOUBLE;
@@ -546,8 +546,10 @@ void TraCICommandInterface::Vehicle::stopAt(std::string roadId, double pos, uint
     uint8_t stopLane = laneid;
     uint8_t durationT = traci->getTimeType();
     simtime_t duration = waittime;
+    uint8_t stopFlagsT = TYPE_BYTE;
+    uint8_t stopFlags = flags;
 
-    TraCIBuffer buf = connection->query(CMD_SET_VEHICLE_VARIABLE, TraCIBuffer() << variableId << nodeId << variableType << count << edgeIdT << edgeId << stopPosT << stopPos << stopLaneT << stopLane << durationT << duration);
+    TraCIBuffer buf = connection->query(CMD_SET_VEHICLE_VARIABLE, TraCIBuffer() << variableId << nodeId << variableType << count << edgeIdT << edgeId << stopPosT << stopPos << stopLaneT << stopLane << durationT << duration << stopFlagsT << stopFlags);
     ASSERT(buf.eof());
 }
 

@@ -150,7 +150,7 @@ public:
         std::list<std::string> getPlannedRoadIds();
         std::string getRouteId();
         void changeRoute(std::string roadId, simtime_t travelTime);
-        void stopAt(std::string roadId, double pos, uint8_t laneid, double radius, simtime_t waittime);
+        void stopAt(std::string roadId, double pos, uint8_t laneid, simtime_t waittime, uint8_t flags);
         int32_t getLaneIndex();
         std::string getTypeId();
         bool changeVehicleRoute(const std::list<std::string>& roads);

@@ -5,6 +5,7 @@
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
 #include <boost/algorithm/string.hpp>
 #include "Messaging/RSU_Data_m.h"
+#include "Messaging/ParkingReroute_m.h"
 
 using namespace veins;
 
@@ -35,9 +36,9 @@ void TMC::finish() {
 
 // Determine the control output for the system (signal timings, broadcast to reroute)
 void TMC::computeAction(void) {
+    broadcastReroute(0);
     parkingData->clear();
     rsuData->clear();
-    broadcastReroute(0);
 }
 // Control: update signal timing for a particular RSU
 void TMC::updateSignalTiming(void) {
@@ -45,12 +46,18 @@ void TMC::updateSignalTiming(void) {
 }
 // Control: tell RSU to broadcast vehicles to reroute
 void TMC::broadcastReroute(int targetRSU) {
-    cMessage *msg = new cMessage("broadcastReroute", RSU_BROADCAST_MSG);
+    int k=0;
+    ParkingReroute *msg = new ParkingReroute("broadcastReroute", RSU_BROADCAST_MSG);
+    msg->setOpenLotArraySize(parkingLotList.size());
+    for(auto lot=parkingLotList.begin(); lot!=parkingLotList.end(); lot++) {
+        msg->setOpenLot(k++, (*lot).c_str());
+    }
     // RSUExampleScenario -> rsu -> appl
     //                   |-> TMC
     cGate *target = getParentModule()->getSubmodule("rsu", targetRSU)->getSubmodule("appl")->gate("TMC_port");  // submodule name must match definition in .ned
 #if TMC_VERBOSE
     std::cout << "Broadcasting new route, gate " << target->getFullName() << " acquired" << endl;
+    std::cout << "Size of open lot list is " << msg->getOpenLotArraySize() << endl;
 #endif
     sendDirect(msg, 1, 0, target);
 }

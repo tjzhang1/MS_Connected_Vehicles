@@ -50,10 +50,9 @@ void RSUApp::finish() {
 void RSUApp::handleMessage(cMessage *msg) {
     switch(msg->getKind()) {
     case RSU_BROADCAST_MSG: {
-        ParkingReroute *wsm = new ParkingReroute(/*set relevant args here*/);
+        ParkingReroute *wsm = dynamic_cast<ParkingReroute*>(msg);
         DemoBaseApplLayer::populateWSM(wsm);
         sendDown(wsm);
-        delete msg;
         break;
     }
     case RSU_SAMPLE_MSG: {

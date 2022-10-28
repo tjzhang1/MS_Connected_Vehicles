@@ -49,7 +49,7 @@ protected:
     // Determine the control output for the system (signal timings, broadcast to reroute)
     void computeAction(void);
     // Control: update signal timing for a particular RSU
-    void updateSignalTiming(void);
+    void updateSignalTiming(int targetRM, double meterRate);
     // Control: tell RSU to broadcast vehicles to reroute
     void broadcastReroute(int targetRSU);
     // Data: sample the availability of registered park n rides

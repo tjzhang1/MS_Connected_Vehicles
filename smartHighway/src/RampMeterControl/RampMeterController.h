@@ -31,6 +31,7 @@ protected:
     void onWSM(BaseFrame1609_4* wsm) override;
     void onWSA(DemoServiceAdvertisment* wsa) override;
     void stringListFromParam(std::vector<std::string> &list, const char *parName);
+    void handleMessage(cMessage* msg) override;
     /* Which traffic light to control */
     TraCITrafficLightInterface* tlInterface;
     int updatePeriodALINEA = 60; //period of time to use the next ALINEA ramp metering rate: [40, 300] seconds
@@ -58,6 +59,7 @@ protected:
 
     std::vector<std::string> highwayInductorsList;
     std::vector<std::string> onRampInductorsList;
+    std::string controlType;
 
     cMessage *measureMsg;
     cMessage *updateMsg;

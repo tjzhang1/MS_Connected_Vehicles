@@ -8,6 +8,7 @@
 #include <RampMeterControl/RampMeterController.h>
 #include <boost/algorithm/string.hpp>
 #include <stdio.h>
+#include "Messaging/UpdateMeteringRate_m.h"
 
 using namespace veins;
 
@@ -26,14 +27,20 @@ void RampMeterController::stringListFromParam(std::vector<std::string> &list, co
 }
 
 RampMeterController::RampMeterController() {
-    measureMsg = new cMessage("ALINEA: measure occupancy", RMC_ALINEA_MEASURE_MSG);
-    updateMsg = new cMessage("ALINEA: update meter rate", RMC_ALINEA_UPDATE_MSG);
+    std::string c = par("controlType");
+    controlType = c;
+    if(controlType.compare("ALINEA") == 0) {
+        measureMsg = new cMessage("ALINEA: measure occupancy", RMC_ALINEA_MEASURE_MSG);
+        updateMsg = new cMessage("ALINEA: update meter rate", RMC_ALINEA_UPDATE_MSG);
+    }
     changePhaseMsg = new cMessage("Set ramp meter to green", RMC_SET_GREEN_MSG);
 }
 
 RampMeterController::~RampMeterController() {
-    cancelAndDelete(measureMsg);
-    cancelAndDelete(updateMsg);
+    if(controlType.compare("ALINEA") == 0) {
+        cancelAndDelete(measureMsg);
+        cancelAndDelete(updateMsg);
+    }
     cancelAndDelete(changePhaseMsg);
 }
 
@@ -48,14 +55,16 @@ void RampMeterController::initialize(int stage) {
             traci = tlInterface->getCommandInterface();
             ASSERT(traci && tlInterface);
         }
-        onRampOccupancy = 0.0;
-        hwyOccupancy = 0.0;
-        meterFlow = 300;
         meterRate = 15.0;
+        if(controlType.compare("ALINEA") == 0) {
+            onRampOccupancy = 0.0;
+            hwyOccupancy = 0.0;
+            meterFlow = 300;
 
-        scheduleAt(simTime() + 1, measureMsg);
-        scheduleAt(simTime() + updatePeriodALINEA, updateMsg);
-        scheduleAt(simTime() + (int)meterRate, changePhaseMsg);
+            scheduleAt(simTime() + 1, measureMsg);
+            scheduleAt(simTime() + updatePeriodALINEA, updateMsg);
+        }
+        scheduleAt(simTime() + meterRate, changePhaseMsg);
 
         // Initialize highwayInductorsList as a list of strings from parameter highwayInductors
         stringListFromParam(highwayInductorsList, "highwayInductors");
@@ -118,6 +127,16 @@ void RampMeterController::handleSelfMsg(cMessage* msg) {
         default:
             DemoBaseApplLayer::handleSelfMsg(msg);
             break;
+    }
+}
+
+void RampMeterController::handleMessage(cMessage * msg) {
+    if(UpdateMeteringRate *newMsg = dynamic_cast<UpdateMeteringRate*>(msg)) {
+        meterRate = newMsg->getMeterRate();
+        delete(msg);
+    }
+    else {
+        DemoBaseApplLayer::handleMessage(msg);
     }
 }
 

@@ -13,21 +13,9 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package smarthighway.RampMeterControl;
-import org.car2x.veins.modules.application.ieee80211p.DemoBaseApplLayer;
-import org.car2x.veins.base.modules.ITrafficLightApplLayer;
-
-// Application for the TrafficLight VEINS module
-
-simple RampMeterController extends DemoBaseApplLayer like ITrafficLightApplLayer
-{
-    parameters:
-        string highwayInductors;
-        string onRampInductors;
-        string controlType = default("ALINEA");
-		@class(veins::RampMeterController);
-    	@display("i=block/app2");
-    gates:
-        inout logic; //connects to logic block
-        input TMC_port @directin; //direct in messages from the TMC
+//
+// TODO generated message class
+//
+message UpdateMeteringRate {
+    double meterRate;
 }

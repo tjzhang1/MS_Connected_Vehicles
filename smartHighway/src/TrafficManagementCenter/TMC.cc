@@ -6,6 +6,7 @@
 #include <boost/algorithm/string.hpp>
 #include "Messaging/RSU_Data_m.h"
 #include "Messaging/ParkingReroute_m.h"
+#include "Messaging/UpdateMeteringRate_m.h"
 
 using namespace veins;
 
@@ -37,12 +38,22 @@ void TMC::finish() {
 // Determine the control output for the system (signal timings, broadcast to reroute)
 void TMC::computeAction(void) {
     broadcastReroute(0);
+    updateSignalTiming(0, 25);
     parkingData->clear();
     rsuData->clear();
 }
 // Control: update signal timing for a particular RSU
-void TMC::updateSignalTiming(void) {
-
+void TMC::updateSignalTiming(int targetRM, double meterRate) {
+    UpdateMeteringRate *msg = new UpdateMeteringRate();
+    msg->setMeterRate(meterRate);
+    // RSUExampleScenario -> rampMeter -> appl
+    //                   |-> TMC
+    cGate *target = getParentModule()->getSubmodule("rampMeter", targetRM)->getSubmodule("appl")->gate("TMC_port");
+#if TMC_VERBOSE
+    std::cout << "Broadcasting new interval, gate " << target->getFullName() << " acquired" << endl;
+    std::cout << "New rate will be " << msg->getMeterRate() << endl;
+#endif
+    sendDirect(msg, 1, 0, target);
 }
 // Control: tell RSU to broadcast vehicles to reroute
 void TMC::broadcastReroute(int targetRSU) {

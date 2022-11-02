@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-11-01 14:38:39 by Eclipse SUMO netedit Version 1.14.1
+<!-- generated on 2022-11-02 11:23:58 by Eclipse SUMO netedit Version 1.14.1
 -->
 
 <additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
@@ -29,62 +29,62 @@
     <e2Detector id="e2_8" lane="23426514.71_1" pos="0.00" length="16.00" period="300.00" file="e2_8.xml"/>
     <e2Detector id="e2_9" lane="399668245_0" pos="0.00" length="34.00" period="300.00" file="e2_9.xml"/>
     <!-- Other additionals -->
-    <rerouter id="rerouter_ATLANTIC_TRIGGS_exit" edges="95049424#1" pos="6596.90,9013.51" probability="0.03">
+    <rerouter id="rerouter_ATLANTIC_TRIGGS_exit" edges="95049424#1" pos="6596.90,9013.51" probability="0.025">
         <interval begin="0.00" end="3600.00">
             <destProbReroute id="exit_to_ATLANTIC_TRIGGS" probability="1.00"/>
         </interval>
     </rerouter>
-    <rerouter id="rerouter_ATLANTIC_exit" edges="32296822-AddedOffRampEdge" pos="7021.71,8578.57" probability="0.03">
+    <rerouter id="rerouter_ATLANTIC_exit" edges="32296822-AddedOffRampEdge" pos="7021.71,8578.57" probability="0.0323">
         <interval begin="0.00" end="3600.00">
             <destProbReroute id="exit_to_ATLANTIC_BLVD" probability="1.00"/>
         </interval>
     </rerouter>
-    <rerouter id="rerouter_CALZONA_exit" edges="881914877-AddedOffRampEdge" pos="3405.85,10238.45" probability="0.01">
+    <rerouter id="rerouter_CALZONA_exit" edges="881914877-AddedOffRampEdge" pos="3405.85,10238.45" probability="0.00707">
         <interval begin="0.00" end="3600.00">
             <destProbReroute id="exit_to_CALZONA_ST" probability="1.00"/>
         </interval>
     </rerouter>
-    <rerouter id="rerouter_DITMAN_exit" edges="864961753-AddedOffRampEdge" pos="3965.09,10179.67" probability="0.04">
+    <rerouter id="rerouter_DITMAN_exit" edges="864961753-AddedOffRampEdge" pos="3965.09,10179.67" probability="0.0392">
         <interval begin="0.00" end="3600.00">
             <destProbReroute id="exit_to_DITMAN_AVE" probability="1.00"/>
         </interval>
     </rerouter>
-    <rerouter id="rerouter_EASTERN_AVE_exit" edges="975003949-AddedOffRampEdge" pos="5821.16,9496.18" probability="0.02">
+    <rerouter id="rerouter_EASTERN_AVE_exit" edges="975003949-AddedOffRampEdge" pos="5821.16,9496.18" probability="0.0204">
         <interval begin="0.00" end="3600.00">
             <destProbReroute id="exit_to_EASTERN_AVE" probability="1.00"/>
         </interval>
     </rerouter>
-    <rerouter id="rerouter_GARFIELD_exit" edges="866203384-AddedOffRampEdge" pos="9048.36,6100.93" probability="0.07">
+    <rerouter id="rerouter_GARFIELD_exit" edges="866203384-AddedOffRampEdge" pos="9048.36,6100.93" probability="0.0650">
         <interval begin="0.00" end="3600.00">
             <destProbReroute id="exit_to_GARFIELD_AVE" probability="1.00"/>
         </interval>
     </rerouter>
-    <rerouter id="rerouter_I605_exit" edges="966664641" pos="12686.15,755.89" probability="0.23">
+    <rerouter id="rerouter_I605_exit" edges="966664641" pos="12686.15,755.89" probability="0.231">
         <interval begin="0.00" end="3600.00">
             <destProbReroute id="exit_to_I605" probability="1.00"/>
         </interval>
     </rerouter>
-    <rerouter id="rerouter_I710_exit" edges="386112525" pos="5713.78,9543.64" probability="0.18">
+    <rerouter id="rerouter_I710_exit" edges="386112525" pos="5713.78,9543.64" probability="0.179">
         <interval begin="0.00" end="3600.00">
             <destProbReroute id="exit_to_I710" probability="1.00"/>
         </interval>
     </rerouter>
-    <rerouter id="rerouter_LAKEWOOD_exit" edges="158724524#1-AddedOffRampEdge" pos="11176.78,2999.28" probability="0.04">
+    <rerouter id="rerouter_LAKEWOOD_exit" edges="158724524#1-AddedOffRampEdge" pos="11176.78,2999.28" probability="0.0435">
         <interval begin="0.00" end="3600.00">
             <destProbReroute id="exit_to_LAKEWOOD" probability="1.00"/>
         </interval>
     </rerouter>
-    <rerouter id="rerouter_PARAMOUNT_exit" edges="866210533-AddedOffRampEdge" pos="10423.09,3662.29" probability="0.05">
+    <rerouter id="rerouter_PARAMOUNT_exit" edges="866210533-AddedOffRampEdge" pos="10423.09,3662.29" probability="0.0490">
         <interval begin="0.00" end="3600.00">
             <destProbReroute id="exit_to_PARAMOUNT_BLVD" probability="1.00"/>
         </interval>
     </rerouter>
-    <rerouter id="rerouter_SLAUSON_exit" edges="32296182#1-AddedOffRampEdge" pos="9875.75,4938.75" probability="0.07">
+    <rerouter id="rerouter_SLAUSON_exit" edges="32296182#1-AddedOffRampEdge" pos="9875.75,4938.75" probability="0.0706">
         <interval begin="0.00" end="3600.00">
             <destProbReroute id="exit_to_SLAUSON_AVE" probability="1.00"/>
         </interval>
     </rerouter>
-    <rerouter id="rerouter_WASHINGTON_exit" edges="862573275#1-AddedOffRampEdge" pos="8022.95,7289.61" probability="0.07">
+    <rerouter id="rerouter_WASHINGTON_exit" edges="862573275#1-AddedOffRampEdge" pos="8022.95,7289.61" probability="0.0694">
         <interval begin="0.00" end="3600.00">
             <destProbReroute id="exit_to_WASHINGTON_BLVD" probability="1.00"/>
         </interval>

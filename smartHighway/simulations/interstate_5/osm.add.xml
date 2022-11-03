@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2022-11-02 16:24:59 by Eclipse SUMO netedit Version 1.14.1
+-->
+
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <!-- StoppingPlaces -->
+    <parkingArea id="pa_0" lane="E0_0" startPos="10.00" endPos="100.00" roadsideCapacity="403" onRoad="1" width="5.00"/>
+    <!-- Detectors -->
+    <e1Detector id="e1_LAKEWOOD_0" lane="866210533_0" pos="13.98" period="300.00" file="e1_3.xml"/>
+    <e1Detector id="e1_LAKEWOOD_1" lane="866210533_1" pos="14.07" period="300.00" file="e1_2.xml"/>
+    <e1Detector id="e1_LAKEWOOD_2" lane="866210533_2" pos="14.58" period="300.00" file="e1_1.xml"/>
+    <e1Detector id="e1_LAKEWOOD_3" lane="866210533_3" pos="14.64" period="300.00" file="e1_0.xml"/>
+    <e2Detector id="e2_16" lane="4370760_0" pos="40.75" length="50.00" period="300.00" file="e2_16.xml"/>
+    <e2Detector id="e2_3" lane="23426514_1" pos="19.50" length="50.00" period="300.00" file="e2_3.xml"/>
+    <e2Detector id="e2_4" lane="23426514_0" pos="19.50" length="50.00" period="300.00" file="e2_4.xml"/>
+    <e2Detector id="e2_7" lane="23426514.71_0" pos="0.00" length="16.00" period="300.00" file="e2_7.xml"/>
+    <e2Detector id="e2_8" lane="23426514.71_1" pos="0.00" length="16.00" period="300.00" file="e2_8.xml"/>
+    <e2Detector id="e2_9" lane="399668245_0" pos="0.00" length="34.00" period="300.00" file="e2_9.xml"/>
+    <e2Detector id="e2_ATLANTIC_TRIGGS_enter_0" lanes="385595003_0 975003948-AddedOnRampEdge_0" pos="0.00" endPos="94.00" period="300.00" file="e2_ATLANTIC_TRIGGS_enter_0.xml"/>
+    <e2Detector id="e2_ATLANTIC_TRIGGS_enter_1" lanes="864952781_0 975003948-AddedOnRampEdge_1" pos="141.25" endPos="94.00" period="300.00" file="e2_ATLANTIC_TRIGGS_enter_1.xml"/>
+    <e2Detector id="e2_ATLANTIC_TRIGGS_enter_2" lanes="864952781_1 975003948-AddedOnRampEdge_2" pos="141.25" endPos="94.00" period="300.00" file="e2_ATLANTIC_TRIGGS_enter_2.xml"/>
+    <e2Detector id="e2_ATLANTIC_TRIGGS_enter_3" lanes="864952781_2 975003948-AddedOnRampEdge_3" pos="141.25" endPos="94.00" period="300.00" file="e2_ATLANTIC_TRIGGS_enter_3.xml"/>
+    <e2Detector id="e2_ATLANTIC_TRIGGS_enter_4" lanes="864952781_3 975003948-AddedOnRampEdge_4" pos="141.25" endPos="94.00" period="300.00" file="e2_ATLANTIC_TRIGGS_enter_4.xml"/>
+    <e2Detector id="e2_ATLANTIC_TRIGGS_exit_0" lanes="95049424#1_0 exit_to_ATLANTIC_TRIGGS_0" pos="0.00" endPos="100.00" period="300.00" file="e2_ATLANTIC_TRIGGS_exit_0.xml"/>
+    <e2Detector id="e2_ATLANTIC_TRIGGS_exit_1" lanes="95049424#1_1 864952781_0" pos="0.00" endPos="100.00" period="300.00" file="e2_ATLANTIC_TRIGGS_exit_1.xml"/>
+    <e2Detector id="e2_ATLANTIC_TRIGGS_exit_2" lanes="95049424#1_2 864952781_1" pos="0.00" endPos="100.00" period="300.00" file="e2_ATLANTIC_TRIGGS_exit_2.xml"/>
+    <e2Detector id="e2_ATLANTIC_TRIGGS_exit_3" lanes="95049424#1_3 864952781_2" pos="0.00" endPos="100.00" period="300.00" file="e2_ATLANTIC_TRIGGS_exit_3.xml"/>
+    <e2Detector id="e2_ATLANTIC_TRIGGS_exit_4" lanes="95049424#1_4 864952781_3" pos="0.00" endPos="100.00" period="300.00" file="e2_ATLANTIC_TRIGGS_exit_4.xml"/>
+    <e2Detector id="e2_ATLANTIC_enter_0" lanes="398193502_0 95049424#1-AddedOnRampEdge_0" pos="71.43" endPos="98.00" period="300.00" file="e2_ATLANTIC_enter_0.xml"/>
+    <e2Detector id="e2_ATLANTIC_enter_1" lanes="864942146_0 95049424#1-AddedOnRampEdge_1" pos="334.24" endPos="98.00" period="300.00" file="e2_ATLANTIC_enter_1.xml"/>
+    <e2Detector id="e2_ATLANTIC_enter_2" lanes="864942146_1 95049424#1-AddedOnRampEdge_2" pos="334.24" endPos="98.00" period="300.00" file="e2_ATLANTIC_enter_2.xml"/>
+    <e2Detector id="e2_ATLANTIC_enter_3" lanes="864942146_2 95049424#1-AddedOnRampEdge_3" pos="334.24" endPos="98.00" period="300.00" file="e2_ATLANTIC_enter_3.xml"/>
+    <e2Detector id="e2_ATLANTIC_enter_4" lanes="864942146_3 95049424#1-AddedOnRampEdge_4" pos="334.24" endPos="98.00" period="300.00" file="e2_ATLANTIC_enter_4.xml"/>
+    <e2Detector id="e2_ATLANTIC_exit_0" lanes="32296822-AddedOffRampEdge_0 exit_to_ATLANTIC_BLVD_0" pos="0.00" endPos="100.00" period="300.00" file="e2_ATLANTIC_exit_0.xml"/>
+    <e2Detector id="e2_ATLANTIC_exit_1" lanes="32296822-AddedOffRampEdge_1 864942146_0" pos="0.00" endPos="100.00" period="300.00" file="e2_ATLANTIC_exit_1.xml"/>
+    <e2Detector id="e2_ATLANTIC_exit_2" lanes="32296822-AddedOffRampEdge_2 864942146_1" pos="0.00" endPos="100.00" period="300.00" file="e2_ATLANTIC_exit_2.xml"/>
+    <e2Detector id="e2_ATLANTIC_exit_3" lanes="32296822-AddedOffRampEdge_3 864942146_2" pos="0.00" endPos="100.00" period="300.00" file="e2_ATLANTIC_exit_3.xml"/>
+    <e2Detector id="e2_ATLANTIC_exit_4" lanes="32296822-AddedOffRampEdge_4 864942146_3" pos="0.00" endPos="100.00" period="300.00" file="e2_ATLANTIC_exit_4.xml"/>
+    <e2Detector id="e2_CALZONA_enter_0" lanes="139639760.97_0 863776290#1-AddedOnRampEdge_0" pos="0.00" endPos="94.00" period="300.00" file="e2_CALZONA_enter_0.xml"/>
+    <e2Detector id="e2_CALZONA_enter_1" lanes="863776290#0_0 863776290#1-AddedOnRampEdge_1" pos="85.00" endPos="94.00" period="300.00" file="e2_CALZONA_enter_1.xml"/>
+    <e2Detector id="e2_CALZONA_enter_2" lanes="863776290#0_1 863776290#1-AddedOnRampEdge_2" pos="85.00" endPos="94.00" period="300.00" file="e2_CALZONA_enter_2.xml"/>
+    <e2Detector id="e2_CALZONA_enter_3" lanes="863776290#0_2 863776290#1-AddedOnRampEdge_3" pos="85.00" endPos="94.00" period="300.00" file="e2_CALZONA_enter_3.xml"/>
+    <e2Detector id="e2_CALZONA_enter_4" lanes="863776290#0_3 863776290#1-AddedOnRampEdge_4" pos="85.00" endPos="94.00" period="300.00" file="e2_CALZONA_enter_4.xml"/>
+    <e2Detector id="e2_CALZONA_enter_5" lanes="863776290#0_4 863776290#1-AddedOnRampEdge_5" pos="85.00" endPos="94.00" period="300.00" file="e2_CALZONA_enter_5.xml"/>
+    <e2Detector id="e2_CALZONA_exit_0" lanes="881914877-AddedOffRampEdge_0 exit_to_CALZONA_ST_0" pos="0.00" endPos="92.00" period="300.00" file="e2_CALZONA_exit_0.xml"/>
+    <e2Detector id="e2_CALZONA_exit_1" lanes="881914877-AddedOffRampEdge_1 863776290#0_0" pos="0.00" endPos="85.00" period="300.00" file="e2_CALZONA_exit_1.xml"/>
+    <e2Detector id="e2_CALZONA_exit_2" lanes="881914877-AddedOffRampEdge_2 863776290#0_1" pos="0.00" endPos="85.00" period="300.00" file="e2_CALZONA_exit_2.xml"/>
+    <e2Detector id="e2_CALZONA_exit_3" lanes="881914877-AddedOffRampEdge_3 863776290#0_2" pos="0.00" endPos="85.00" period="300.00" file="e2_CALZONA_exit_3.xml"/>
+    <e2Detector id="e2_CALZONA_exit_4" lanes="881914877-AddedOffRampEdge_4 863776290#0_3" pos="0.00" endPos="85.00" period="300.00" file="e2_CALZONA_exit_4.xml"/>
+    <e2Detector id="e2_CALZONA_exit_5" lanes="881914877-AddedOffRampEdge_5 863776290#0_4" pos="0.00" endPos="85.00" period="300.00" file="e2_CALZONA_exit_5.xml"/>
+    <e2Detector id="e2_DITMAN_enter_0" lanes="9586207_0 397998296_0" pos="0.00" endPos="26.00" period="300.00" file="e2_DITMAN_enter_0.xml"/>
+    <e2Detector id="e2_DITMAN_enter_1" lanes="864961752_0 397998296_1 881914877_0" pos="85.00" endPos="74.00" period="300.00" file="e2_DITMAN_enter_1.xml"/>
+    <e2Detector id="e2_DITMAN_enter_2" lanes="864961752_1 397998296_2 881914877_1" pos="85.00" endPos="74.00" period="300.00" file="e2_DITMAN_enter_2.xml"/>
+    <e2Detector id="e2_DITMAN_enter_3" lanes="864961752_2 397998296_3 881914877_2" pos="85.00" endPos="74.00" period="300.00" file="e2_DITMAN_enter_3.xml"/>
+    <e2Detector id="e2_DITMAN_enter_4" lanes="864961752_3 397998296_4 881914877_3" pos="85.00" endPos="74.00" period="300.00" file="e2_DITMAN_enter_4.xml"/>
+    <e2Detector id="e2_DITMAN_enter_5" lanes="864961752_4 397998296_5 881914877_4" pos="85.00" endPos="74.00" period="300.00" file="e2_DITMAN_enter_5.xml"/>
+    <e2Detector id="e2_DITMAN_exit_0" lanes="864961753-AddedOffRampEdge_0 exit_to_DITMAN_AVE_0" pos="0.00" endPos="100.00" period="300.00" file="e2_DITMAN_exit_0.xml"/>
+    <e2Detector id="e2_DITMAN_exit_1" lanes="864961753-AddedOffRampEdge_1 864961752_0" pos="0.00" endPos="85.00" period="300.00" file="e2_DITMAN_exit_1.xml"/>
+    <e2Detector id="e2_DITMAN_exit_2" lanes="864961753-AddedOffRampEdge_2 864961752_1" pos="0.00" endPos="85.00" period="300.00" file="e2_DITMAN_exit_2.xml"/>
+    <e2Detector id="e2_DITMAN_exit_3" lanes="864961753-AddedOffRampEdge_3 864961752_2" pos="0.00" endPos="85.00" period="300.00" file="e2_DITMAN_exit_3.xml"/>
+    <e2Detector id="e2_DITMAN_exit_4" lanes="864961753-AddedOffRampEdge_4 864961752_3" pos="0.00" endPos="85.00" period="300.00" file="e2_DITMAN_exit_4.xml"/>
+    <e2Detector id="e2_DITMAN_exit_5" lanes="864961753-AddedOffRampEdge_5 864961752_4" pos="0.00" endPos="85.00" period="300.00" file="e2_DITMAN_exit_5.xml"/>
+    <e2Detector id="e2_DOWNEY_enter_0" lanes="4370760.101_0 864961753-AddedOnRampEdge_0" pos="217.42" endPos="94.00" period="300.00" file="e2_DOWNEY_enter_0.xml"/>
+    <e2Detector id="e2_DOWNEY_enter_1" lanes="94666085_0 864961753-AddedOnRampEdge_1" pos="710.80" endPos="94.00" period="300.00" file="e2_DOWNEY_enter_1.xml"/>
+    <e2Detector id="e2_DOWNEY_enter_2" lanes="94666085_1 864961753-AddedOnRampEdge_2" pos="710.80" endPos="94.00" period="300.00" file="e2_DOWNEY_enter_2.xml"/>
+    <e2Detector id="e2_DOWNEY_enter_3" lanes="94666085_2 864961753-AddedOnRampEdge_3" pos="710.80" endPos="94.00" period="300.00" file="e2_DOWNEY_enter_3.xml"/>
+    <e2Detector id="e2_DOWNEY_enter_4" lanes="94666085_3 864961753-AddedOnRampEdge_4" pos="710.80" endPos="94.00" period="300.00" file="e2_DOWNEY_enter_4.xml"/>
+    <e2Detector id="e2_DOWNEY_enter_5" lanes="94666085_4 864961753-AddedOnRampEdge_5" pos="710.80" endPos="94.00" period="300.00" file="e2_DOWNEY_enter_5.xml"/>
+    <e2Detector id="e2_EASTERN_exit_0" lanes="975003949-AddedOffRampEdge_0 exit_to_EASTERN_AVE_0" pos="0.00" endPos="100.00" period="300.00" file="e2_EASTERN_exit_0.xml"/>
+    <e2Detector id="e2_EASTERN_exit_1" lanes="975003949-AddedOffRampEdge_1 386112525_0" pos="0.00" endPos="50.00" period="300.00" file="e2_EASTERN_exit_1.xml"/>
+    <e2Detector id="e2_EASTERN_exit_2" lanes="975003949-AddedOffRampEdge_2 386112525_1" pos="0.00" endPos="50.00" period="300.00" file="e2_EASTERN_exit_2.xml"/>
+    <e2Detector id="e2_EASTERN_exit_3" lanes="975003949-AddedOffRampEdge_3 386112525_2" pos="0.00" endPos="50.00" period="300.00" file="e2_EASTERN_exit_3.xml"/>
+    <e2Detector id="e2_EASTERN_exit_4" lanes="975003949-AddedOffRampEdge_4 386112525_3" pos="0.00" endPos="50.00" period="300.00" file="e2_EASTERN_exit_4.xml"/>
+    <e2Detector id="e2_EASTERN_exit_5" lanes="975003949-AddedOffRampEdge_5 386112525_4" pos="0.00" endPos="50.00" period="300.00" file="e2_EASTERN_exit_5.xml"/>
+    <e2Detector id="e2_FLORENCE_enter_0" lanes="158716863_0 28050938#1-AddedOnRampEdge_0" pos="156.91" endPos="94.00" period="300.00" file="e2_FLORENCE_enter_0.xml"/>
+    <e2Detector id="e2_FLORENCE_enter_1" lanes="28050938#0_0 28050938#1-AddedOnRampEdge_1" pos="515.22" endPos="94.00" period="300.00" file="e2_FLORENCE_enter_1.xml"/>
+    <e2Detector id="e2_FLORENCE_enter_2" lanes="28050938#0_1 28050938#1-AddedOnRampEdge_2" pos="515.22" endPos="94.00" period="300.00" file="e2_FLORENCE_enter_2.xml"/>
+    <e2Detector id="e2_FLORENCE_enter_3" lanes="28050938#0_2 28050938#1-AddedOnRampEdge_3" pos="515.22" endPos="94.00" period="300.00" file="e2_FLORENCE_enter_3.xml"/>
+    <e2Detector id="e2_FLORENCE_enter_4" lanes="28050938#0_3 28050938#1-AddedOnRampEdge_4" pos="515.22" endPos="94.00" period="300.00" file="e2_FLORENCE_enter_4.xml"/>
+    <e2Detector id="e2_GARFIELD_enter_0" lanes="965816736_0 862573275#1-AddedOnRampEdge_0" pos="0.00" endPos="94.00" period="300.00" file="e2_GARFIELD_enter_0.xml"/>
+    <e2Detector id="e2_GARFIELD_enter_1" lanes="862573275#0_0 862573275#1-AddedOnRampEdge_1" pos="374.96" endPos="94.00" period="300.00" file="e2_GARFIELD_enter_1.xml"/>
+    <e2Detector id="e2_GARFIELD_enter_2" lanes="862573275#0_1 862573275#1-AddedOnRampEdge_2" pos="374.96" endPos="94.00" period="300.00" file="e2_GARFIELD_enter_2.xml"/>
+    <e2Detector id="e2_GARFIELD_enter_3" lanes="862573275#0_2 862573275#1-AddedOnRampEdge_3" pos="374.96" endPos="94.00" period="300.00" file="e2_GARFIELD_enter_3.xml"/>
+    <e2Detector id="e2_GARFIELD_enter_4" lanes="862573275#0_3 862573275#1-AddedOnRampEdge_4" pos="374.96" endPos="94.00" period="300.00" file="e2_GARFIELD_enter_4.xml"/>
+    <e2Detector id="e2_GARFIELD_exit_0" lanes="866203384-AddedOffRampEdge_0 exit_to_GARFIELD_AVE_0" pos="0.00" endPos="100.00" period="300.00" file="e2_GARFIELD_exit_0.xml"/>
+    <e2Detector id="e2_GARFIELD_exit_1" lanes="866203384-AddedOffRampEdge_1 862573275#0_0" pos="0.00" endPos="100.00" period="300.00" file="e2_GARFIELD_exit_1.xml"/>
+    <e2Detector id="e2_GARFIELD_exit_2" lanes="866203384-AddedOffRampEdge_2 862573275#0_1" pos="0.00" endPos="100.00" period="300.00" file="e2_GARFIELD_exit_2.xml"/>
+    <e2Detector id="e2_GARFIELD_exit_3" lanes="866203384-AddedOffRampEdge_3 862573275#0_2" pos="0.00" endPos="100.00" period="300.00" file="e2_GARFIELD_exit_3.xml"/>
+    <e2Detector id="e2_GARFIELD_exit_4" lanes="866203384-AddedOffRampEdge_4 862573275#0_3" pos="0.00" endPos="100.00" period="300.00" file="e2_GARFIELD_exit_4.xml"/>
+    <e2Detector id="e2_I605_NB_enter_0" lanes="399524358_0 124100109-AddedOnRampEdge_0" pos="511.70" endPos="94.00" period="300.00" file="e2_I605_NB_enter_0.xml"/>
+    <e2Detector id="e2_I605_NB_enter_1" lanes="399524358_1 124100109-AddedOnRampEdge_1" pos="511.70" endPos="94.00" period="300.00" file="e2_I605_NB_enter_1.xml"/>
+    <e2Detector id="e2_I605_NB_enter_2" lanes="28050938#1_0 124100109-AddedOnRampEdge_2" pos="43.07" endPos="94.00" period="300.00" file="e2_I605_NB_enter_2.xml"/>
+    <e2Detector id="e2_I605_NB_enter_3" lanes="28050938#1_1 124100109-AddedOnRampEdge_3" pos="43.07" endPos="94.00" period="300.00" file="e2_I605_NB_enter_3.xml"/>
+    <e2Detector id="e2_I605_NB_enter_4" lanes="28050938#1_2 124100109-AddedOnRampEdge_4" pos="43.07" endPos="94.00" period="300.00" file="e2_I605_NB_enter_4.xml"/>
+    <e2Detector id="e2_I605_NB_enter_5" lanes="28050938#1_3 124100109-AddedOnRampEdge_5" pos="43.07" endPos="94.00" period="300.00" file="e2_I605_NB_enter_5.xml"/>
+    <e2Detector id="e2_I605_SB_enter_0" lanes="158726580_0 158724524#1-AddedOnRampEdge_0" pos="267.16" endPos="94.00" period="300.00" file="e2_I605_SB_enter_0.xml"/>
+    <e2Detector id="e2_I605_SB_enter_1" lanes="124100109_0 158724524#1-AddedOnRampEdge_1" pos="27.81" endPos="94.00" period="300.00" file="e2_I605_SB_enter_1.xml"/>
+    <e2Detector id="e2_I605_SB_enter_2" lanes="124100109_1 158724524#1-AddedOnRampEdge_2" pos="27.81" endPos="94.00" period="300.00" file="e2_I605_SB_enter_3.xml"/>
+    <e2Detector id="e2_I605_SB_enter_3" lanes="124100109_2 158724524#1-AddedOnRampEdge_3" pos="27.81" endPos="94.00" period="300.00" file="e2_I605_SB_enter_3.xml"/>
+    <e2Detector id="e2_I605_SB_enter_4" lanes="124100109_3 158724524#1-AddedOnRampEdge_4" pos="27.81" endPos="94.00" period="300.00" file="e2_I605_SB_enter_4.xml"/>
+    <e2Detector id="e2_I605_exit_0" lanes="966664641_0 exit_to_I605_0" pos="416.75" endPos="100.00" period="300.00" file="e2_I605_exit_0"/>
+    <e2Detector id="e2_I605_exit_1" lanes="966664641_1 exit_to_I605_1" pos="416.75" endPos="100.00" period="300.00" file="e2_I605_exit_1"/>
+    <e2Detector id="e2_I605_exit_2" lanes="966664641_2 28050938#0_0" pos="416.75" endPos="100.00" period="300.00" file="e2_I605_exit_2"/>
+    <e2Detector id="e2_I605_exit_3" lanes="966664641_3 28050938#0_1" pos="416.75" endPos="100.00" period="300.00" file="e2_I605_exit_3"/>
+    <e2Detector id="e2_I605_exit_4" lanes="966664641_4 28050938#0_2" pos="416.75" endPos="100.00" period="300.00" file="e2_I605_exit_4"/>
+    <e2Detector id="e2_I605_exit_5" lanes="966664641_5 28050938#0_3" pos="416.75" endPos="100.00" period="300.00" file="e2_I605_exit_5"/>
+    <e2Detector id="e2_I710_enter_0" lanes="386112536_0 94666085_0" pos="659.97" endPos="100.00" period="300.00" file="e2_I710_enter_0.xml"/>
+    <e2Detector id="e2_I710_enter_1" lanes="386112536_1 94666085_1" pos="659.97" endPos="100.00" period="300.00" file="e2_I710_enter_1.xml"/>
+    <e2Detector id="e2_I710_enter_2" lanes="386112536_2 94666085_2" pos="659.97" endPos="100.00" period="300.00" file="e2_I710_enter_2.xml"/>
+    <e2Detector id="e2_I710_enter_3" lanes="386112536_3 94666085_3" pos="659.97" endPos="100.00" period="300.00" file="e2_I710_enter_3.xml"/>
+    <e2Detector id="e2_I710_enter_4" lanes="28895784_0 94666085_4" pos="267.09" endPos="100.00" period="300.00" file="e2_I710_enter_4.xml"/>
+    <e2Detector id="e2_I710_exit_0" lanes="386112525_0 386112536_0" pos="50.00" endPos="100.00" period="300.00" file="e2_I710_exit_0.xml"/>
+    <e2Detector id="e2_I710_exit_1" lanes="386112525_1 386112536_1" pos="50.00" endPos="100.00" period="300.00" file="e2_I710_exit_1.xml"/>
+    <e2Detector id="e2_I710_exit_2" lanes="386112525_2 386112536_2" pos="50.00" endPos="100.00" period="300.00" file="e2_I710_exit_2.xml"/>
+    <e2Detector id="e2_I710_exit_3" lanes="386112525_3 386112536_3" pos="50.00" endPos="100.00" period="300.00" file="e2_I710_exit_3.xml"/>
+    <e2Detector id="e2_I710_exit_4" lanes="386112525_4 exit_to_I710_0" pos="50.00" endPos="100.00" period="300.00" file="e2_I710_exit_4.xml"/>
+    <e2Detector id="e2_LAKEWOOD_NB_enter_0" lanes="399669014_0 32296077_0" pos="0.00" endPos="58.00" period="300.00" file="e2_LAKEWOOD_NB_enter_0.xml"/>
+    <e2Detector id="e2_LAKEWOOD_NB_enter_1" lanes="862063814_0 32296077_1 32296080_0" pos="150.90" endPos="100.00" period="300.00" file="e2_LAKEWOOD_NB_enter_1.xml"/>
+    <e2Detector id="e2_LAKEWOOD_NB_enter_2" lanes="862063814_1 32296077_2 32296080_1" pos="150.90" endPos="100.00" period="300.00" file="e2_LAKEWOOD_NB_enter_2.xml"/>
+    <e2Detector id="e2_LAKEWOOD_NB_enter_3" lanes="862063814_2 32296077_3 32296080_2" pos="150.90" endPos="100.00" period="300.00" file="e2_LAKEWOOD_NB_enter_3.xml"/>
+    <e2Detector id="e2_LAKEWOOD_NB_enter_4" lanes="862063814_3 32296077_4 32296080_3" pos="150.90" endPos="100.00" period="300.00" file="e2_LAKEWOOD_NB_enter_4.xml"/>
+    <e2Detector id="e2_LAKEWOOD_SB_enter_0" lanes="399668245_0 866210533-AddedOnRampEdge_0" pos="133.14" endPos="94.00" period="300.00" file="e2_LAKEWOOD_SB_enter_0.xml"/>
+    <e2Detector id="e2_LAKEWOOD_SB_enter_1" lanes="32296080_0 866210533-AddedOnRampEdge_1" pos="195.91" endPos="94.00" period="300.00" file="e2_LAKEWOOD_SB_enter_1.xml"/>
+    <e2Detector id="e2_LAKEWOOD_SB_enter_2" lanes="32296080_1 866210533-AddedOnRampEdge_2" pos="195.91" endPos="94.00" period="300.00" file="e2_LAKEWOOD_SB_enter_2.xml"/>
+    <e2Detector id="e2_LAKEWOOD_SB_enter_3" lanes="32296080_2 866210533-AddedOnRampEdge_3" pos="195.91" endPos="94.00" period="300.00" file="e2_LAKEWOOD_SB_enter_3.xml"/>
+    <e2Detector id="e2_LAKEWOOD_SB_enter_4" lanes="32296080_3 866210533-AddedOnRampEdge_4" pos="195.91" endPos="94.00" period="300.00" file="e2_LAKEWOOD_SB_enter_4.xml"/>
+    <e2Detector id="e2_LAKEWOOD_exit_0" lanes="158724524#1-AddedOffRampEdge_0 139639762_0" pos="0.00" endPos="100.00" period="300.00" file="e2_LAKEWOOD_exit_0.xml"/>
+    <e2Detector id="e2_LAKEWOOD_exit_1" lanes="158724524#1-AddedOffRampEdge_1 862063814_0" pos="0.00" endPos="100.00" period="300.00" file="e2_LAKEWOOD_exit_1.xml"/>
+    <e2Detector id="e2_LAKEWOOD_exit_2" lanes="158724524#1-AddedOffRampEdge_2 862063814_1" pos="0.00" endPos="100.00" period="300.00" file="e2_LAKEWOOD_exit_2.xml"/>
+    <e2Detector id="e2_LAKEWOOD_exit_3" lanes="158724524#1-AddedOffRampEdge_3 862063814_2" pos="0.00" endPos="100.00" period="300.00" file="e2_LAKEWOOD_exit_3.xml"/>
+    <e2Detector id="e2_LAKEWOOD_exit_4" lanes="158724524#1-AddedOffRampEdge_4 862063814_3" pos="0.00" endPos="100.00" period="300.00" file="e2_LAKEWOOD_exit_4.xml"/>
+    <e2Detector id="e2_PARAMOUNT_enter_0" lanes="399654775_0 32296182#1-AddedOnRampEdge_0" pos="15.00" endPos="94.00" period="300.00" file="e2_PARAMOUNT_enter_0.xml"/>
+    <e2Detector id="e2_PARAMOUNT_enter_1" lanes="866210532_0 32296182#1-AddedOnRampEdge_1" pos="213.87" endPos="94.00" period="300.00" file="e2_PARAMOUNT_enter_1.xml"/>
+    <e2Detector id="e2_PARAMOUNT_enter_2" lanes="866210532_1 32296182#1-AddedOnRampEdge_2" pos="213.87" endPos="94.00" period="300.00" file="e2_PARAMOUNT_enter_2.xml"/>
+    <e2Detector id="e2_PARAMOUNT_enter_3" lanes="866210532_2 32296182#1-AddedOnRampEdge_3" pos="213.87" endPos="94.00" period="300.00" file="e2_PARAMOUNT_enter_3.xml"/>
+    <e2Detector id="e2_PARAMOUNT_enter_4" lanes="866210532_3 32296182#1-AddedOnRampEdge_4" pos="213.87" endPos="94.00" period="300.00" file="e2_PARAMOUNT_enter_4.xml"/>
+    <e2Detector id="e2_PARAMOUNT_exit_0" lanes="866210533-AddedOffRampEdge_0 exit_to_PARAMOUNT_BLVD_0" pos="0.00" endPos="100.00" period="300.00" file="e2_PARAMOUNT_exit_0.xml"/>
+    <e2Detector id="e2_PARAMOUNT_exit_1" lanes="866210533-AddedOffRampEdge_1 866210532_0" pos="0.00" endPos="100.00" period="300.00" file="e2_PARAMOUNT_exit_1.xml"/>
+    <e2Detector id="e2_PARAMOUNT_exit_2" lanes="866210533-AddedOffRampEdge_2 866210532_1" pos="0.00" endPos="100.00" period="300.00" file="e2_PARAMOUNT_exit_2.xml"/>
+    <e2Detector id="e2_PARAMOUNT_exit_3" lanes="866210533-AddedOffRampEdge_3 866210532_2" pos="0.00" endPos="100.00" period="300.00" file="e2_PARAMOUNT_exit_3.xml"/>
+    <e2Detector id="e2_PARAMOUNT_exit_4" lanes="866210533-AddedOffRampEdge_4 866210532_3" pos="0.00" endPos="100.00" period="300.00" file="e2_PARAMOUNT_exit_4.xml"/>
+    <e2Detector id="e2_SLAUSON_exit_0" lanes="32296182#1-AddedOffRampEdge_0 exit_to_SLAUSON_AVE_0" pos="0.00" endPos="100.00" period="300.00" file="e2_SLAUSON_exit_0.xml"/>
+    <e2Detector id="e2_SLAUSON_exit_1" lanes="32296182#1-AddedOffRampEdge_1 866203384_0" pos="0.00" endPos="100.00" period="300.00" file="e2_SLAUSON_exit_1.xml"/>
+    <e2Detector id="e2_SLAUSON_exit_2" lanes="32296182#1-AddedOffRampEdge_2 866203384_1" pos="0.00" endPos="100.00" period="300.00" file="e2_SLAUSON_exit_2.xml"/>
+    <e2Detector id="e2_SLAUSON_exit_3" lanes="32296182#1-AddedOffRampEdge_3 866203384_2" pos="0.00" endPos="100.00" period="300.00" file="e2_SLAUSON_exit_3.xml"/>
+    <e2Detector id="e2_SLAUSON_exit_4" lanes="32296182#1-AddedOffRampEdge_4 866203384_3" pos="0.00" endPos="100.00" period="300.00" file="e2_SLAUSON_exit_4.xml"/>
+    <e2Detector id="e2_WASHINGTON_enter_0" lanes="23394679_0 32296822-AddedOnRampEdge_0" pos="128.67" endPos="94.00" period="300.00" file="e2_WASHINGTON_enter_0.xml"/>
+    <e2Detector id="e2_WASHINGTON_enter_1" lanes="866201289_0 32296822-AddedOnRampEdge_1" pos="492.77" endPos="94.00" period="300.00" file="e2_WASHINGTON_enter_1.xml"/>
+    <e2Detector id="e2_WASHINGTON_enter_2" lanes="866201289_1 32296822-AddedOnRampEdge_2" pos="492.77" endPos="94.00" period="300.00" file="e2_WASHINGTON_enter_2.xml"/>
+    <e2Detector id="e2_WASHINGTON_enter_3" lanes="866201289_2 32296822-AddedOnRampEdge_3" pos="492.77" endPos="94.00" period="300.00" file="e2_WASHINGTON_enter_3.xml"/>
+    <e2Detector id="e2_WASHINGTON_enter_4" lanes="866201289_3 32296822-AddedOnRampEdge_4" pos="492.77" endPos="94.00" period="300.00" file="e2_WASHINGTON_enter_4.xml"/>
+    <e2Detector id="e2_WASHINGTON_exit_0" lanes="862573275#1-AddedOffRampEdge_0 exit_to_WASHINGTON_BLVD_0" pos="0.00" endPos="100.00" period="300.00" file="e2_WASHINGTON_exit_0.xml"/>
+    <e2Detector id="e2_WASHINGTON_exit_1" lanes="862573275#1-AddedOffRampEdge_1 866201289_0" pos="0.00" endPos="100.00" period="300.00" file="e2_WASHINGTON_exit_1.xml"/>
+    <e2Detector id="e2_WASHINGTON_exit_2" lanes="862573275#1-AddedOffRampEdge_2 866201289_1" pos="0.00" endPos="100.00" period="300.00" file="e2_WASHINGTON_exit_2.xml"/>
+    <e2Detector id="e2_WASHINGTON_exit_3" lanes="862573275#1-AddedOffRampEdge_3 866201289_2" pos="0.00" endPos="100.00" period="300.00" file="e2_WASHINGTON_exit_3.xml"/>
+    <e2Detector id="e2_WASHINGTON_exit_4" lanes="862573275#1-AddedOffRampEdge_4 866201289_3" pos="0.00" endPos="100.00" period="300.00" file="e2_WASHINGTON_exit_4.xml"/>
+    <!-- Other additionals -->
+    <rerouter id="rerouter_ATLANTIC_TRIGGS_exit" edges="95049424#1" pos="6596.90,9013.51" probability="0.03">
+        <interval begin="0.00" end="3600.00">
+            <destProbReroute id="exit_to_ATLANTIC_TRIGGS" probability="1.00"/>
+        </interval>
+    </rerouter>
+    <rerouter id="rerouter_ATLANTIC_exit" edges="32296822-AddedOffRampEdge" pos="7021.71,8578.57" probability="0.03">
+        <interval begin="0.00" end="3600.00">
+            <destProbReroute id="exit_to_ATLANTIC_BLVD" probability="1.00"/>
+        </interval>
+    </rerouter>
+    <rerouter id="rerouter_CALZONA_exit" edges="881914877-AddedOffRampEdge" pos="3405.85,10238.45" probability="0.01">
+        <interval begin="0.00" end="3600.00">
+            <destProbReroute id="exit_to_CALZONA_ST" probability="1.00"/>
+        </interval>
+    </rerouter>
+    <rerouter id="rerouter_DITMAN_exit" edges="864961753-AddedOffRampEdge" pos="3965.09,10179.67" probability="0.04">
+        <interval begin="0.00" end="3600.00">
+            <destProbReroute id="exit_to_DITMAN_AVE" probability="1.00"/>
+        </interval>
+    </rerouter>
+    <rerouter id="rerouter_EASTERN_AVE_exit" edges="975003949-AddedOffRampEdge" pos="5821.16,9496.18" probability="0.02">
+        <interval begin="0.00" end="3600.00">
+            <destProbReroute id="exit_to_EASTERN_AVE" probability="1.00"/>
+        </interval>
+    </rerouter>
+    <rerouter id="rerouter_GARFIELD_exit" edges="866203384-AddedOffRampEdge" pos="9048.36,6100.93" probability="0.07">
+        <interval begin="0.00" end="3600.00">
+            <destProbReroute id="exit_to_GARFIELD_AVE" probability="1.00"/>
+        </interval>
+    </rerouter>
+    <rerouter id="rerouter_I605_exit" edges="966664641" pos="12686.15,755.89" probability="0.23">
+        <interval begin="0.00" end="3600.00">
+            <destProbReroute id="exit_to_I605" probability="1.00"/>
+        </interval>
+    </rerouter>
+    <rerouter id="rerouter_I710_exit" edges="386112525" pos="5713.78,9543.64" probability="0.18">
+        <interval begin="0.00" end="3600.00">
+            <destProbReroute id="exit_to_I710" probability="1.00"/>
+        </interval>
+    </rerouter>
+    <rerouter id="rerouter_LAKEWOOD_exit" edges="158724524#1-AddedOffRampEdge" pos="11176.78,2999.28" probability="0.04">
+        <interval begin="0.00" end="3600.00">
+            <destProbReroute id="exit_to_LAKEWOOD" probability="1.00"/>
+        </interval>
+    </rerouter>
+    <rerouter id="rerouter_PARAMOUNT_exit" edges="866210533-AddedOffRampEdge" pos="10423.09,3662.29" probability="0.05">
+        <interval begin="0.00" end="3600.00">
+            <destProbReroute id="exit_to_PARAMOUNT_BLVD" probability="1.00"/>
+        </interval>
+    </rerouter>
+    <rerouter id="rerouter_SLAUSON_exit" edges="32296182#1-AddedOffRampEdge" pos="9875.75,4938.75" probability="0.07">
+        <interval begin="0.00" end="3600.00">
+            <destProbReroute id="exit_to_SLAUSON_AVE" probability="1.00"/>
+        </interval>
+    </rerouter>
+    <rerouter id="rerouter_WASHINGTON_exit" edges="862573275#1-AddedOffRampEdge" pos="8022.95,7289.61" probability="0.07">
+        <interval begin="0.00" end="3600.00">
+            <destProbReroute id="exit_to_WASHINGTON_BLVD" probability="1.00"/>
+        </interval>
+    </rerouter>
+</additional>

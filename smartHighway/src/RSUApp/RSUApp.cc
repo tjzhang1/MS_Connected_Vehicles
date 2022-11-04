@@ -144,7 +144,7 @@ void RSUApp::stringListFromParam(std::vector<std::string> &list, const char *par
     std::string s = par(parName);
     boost::split(list, s, boost::is_any_of(", "), boost::token_compress_on);
 #if RSU_VERBOSE
-    std::cout << parName << ": ";
+    std::cout << getParentModule()->getFullName() << " " << parName << ": ";
     for(auto i = list.begin(); i!=list.end(); i++) {
         std::cout << *i << " ";
     }

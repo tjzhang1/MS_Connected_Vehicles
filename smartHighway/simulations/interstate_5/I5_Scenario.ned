@@ -29,7 +29,7 @@ import org.car2x.veins.nodes.TrafficLight;
 network I5_Scenario extends Scenario
 {
     submodules:
-        rsu[9]: RSU {
+        rsu[26]: RSU {
             @display("p=150,140;i=veins/sign/yellowdiamond;is=vs");
         }
 		TMC: smarthighway.TrafficManagementCenter.TMC {

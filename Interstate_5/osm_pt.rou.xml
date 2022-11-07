@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-11-02 11:28:07 by Eclipse SUMO netedit Version 1.14.1
+<!-- generated on 2022-11-07 11:50:06 by Eclipse SUMO netedit Version 1.14.1
 -->
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
@@ -17,19 +17,19 @@
     <vType id="pt_tram" vClass="tram"/>
     <vType id="pt_trolleybus" vClass="bus"/>
     <!-- Vehicles, persons and containers (sorted by depart) -->
-    <flow id="flow_ATLANTIC_BLVD" begin="0.00" from="4004150" to="destination_edge" number="310" period="exp(0.0891)"/>
-    <flow id="flow_ATLANTIC_TRIGGS" begin="0.00" from="385595003" to="destination_edge" number="129" period="exp(0.0358)"/>
-    <flow id="flow_CALZONA" begin="0.00" from="139639760.97" to="destination_edge" number="69" period="exp(0.0192)"/>
-    <flow id="flow_DITMAN" begin="0.00" from="1047801943" to="destination_edge" number="127" period="exp(0.0353)"/>
-    <flow id="flow_DOWNEY" begin="0.00" from="4370760" to="destination_edge" number="163" period="exp(0.0453)"/>
-    <flow id="flow_FLORENCE_AVE" begin="0.00" from="399524360#1" to="destination_edge" number="205" period="exp(0.0569)"/>
-    <flow id="flow_I710" begin="0.00" from="28895784" to="destination_edge" number="1125" period="exp(0.3125)"/>
-    <flow id="flow_NB_LAKEWOOD" begin="0.00" from="13275783" to="destination_edge" number="209" period="exp(0.0581)"/>
-    <flow id="flow_PARAMOUNT_BLVD" begin="0.00" from="178116793" to="destination_edge" number="289" period="exp(0.0803)"/>
-    <flow id="flow_SB_605" begin="0.00" from="13261575-AddedOffRampEdge" to="destination_edge" number="380" period="exp(0.106)"/>
-    <flow id="flow_SB_LAKEWOOD" begin="0.00" from="399669559#0" to="destination_edge" number="165" period="exp(0.0458)"/>
-    <flow id="flow_STUDEBAKER" begin="0.00" from="399524358" to="destination_edge" number="1274" period="exp(0.354)"/>
-    <flow id="flow_TELEGRAPH_GARFIELD" begin="0.00" from="965816736-AddedOnRampEdge" to="destination_edge" number="363" period="exp(0.101)"/>
-    <flow id="flow_TELGRAPH_WASHINGTON" begin="0.00" from="23394679" to="destination_edge" number="435" period="exp(0.121)"/>
-    <flow id="flow_THROUGH" begin="0.00" from="966664641" to="destination_edge" number="8712" period="exp(2.48)"/>
+    <flow id="flow_ATLANTIC_BLVD" begin="0.00" departLane="free" from="4004150" to="destination_edge" number="310" period="exp(0.09)"/>
+    <flow id="flow_ATLANTIC_TRIGGS" begin="0.00" from="385595003" to="destination_edge" number="129" period="exp(0.04)"/>
+    <flow id="flow_CALZONA" begin="0.00" from="139639760.97" to="destination_edge" number="69" period="exp(0.02)"/>
+    <flow id="flow_DITMAN" begin="0.00" from="1047801943" to="destination_edge" number="127" period="exp(0.04)"/>
+    <flow id="flow_DOWNEY" begin="0.00" from="4370760" to="destination_edge" number="163" period="exp(0.05)"/>
+    <flow id="flow_FLORENCE_AVE" begin="0.00" departLane="free" departSpeed="speedLimit" from="399524360#1" to="destination_edge" number="205" period="exp(0.06)"/>
+    <flow id="flow_I710" begin="0.00" from="28895784" to="destination_edge" number="1125" period="exp(0.31)"/>
+    <flow id="flow_NB_LAKEWOOD" begin="0.00" departLane="free" from="13275783" to="destination_edge" number="209" period="exp(0.06)"/>
+    <flow id="flow_PARAMOUNT_BLVD" begin="0.00" departLane="free" from="178116793" to="destination_edge" number="289" period="exp(0.08)"/>
+    <flow id="flow_SB_605" begin="0.00" from="13261575-AddedOffRampEdge" to="destination_edge" number="380" period="exp(0.11)"/>
+    <flow id="flow_SB_LAKEWOOD" begin="0.00" departLane="allowed" from="399669559#0" to="destination_edge" number="165" period="exp(0.05)"/>
+    <flow id="flow_STUDEBAKER" begin="0.00" from="399524358" to="destination_edge" number="1274" period="exp(0.35)"/>
+    <flow id="flow_TELEGRAPH_GARFIELD" begin="0.00" departLane="free" from="965816736-AddedOnRampEdge" to="destination_edge" number="363" period="exp(0.10)"/>
+    <flow id="flow_TELGRAPH_WASHINGTON" begin="0.00" from="23394679" to="destination_edge" number="435" period="exp(0.12)"/>
+    <flow id="flow_THROUGH" begin="0.00" departLane="free" departSpeed="speedLimit" from="966664641" to="destination_edge" end="3600.00" period="exp(2.48)"/>
 </routes>

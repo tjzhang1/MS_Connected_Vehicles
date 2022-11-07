@@ -29,5 +29,5 @@ simple RampMeterController extends DemoBaseApplLayer like ITrafficLightApplLayer
     	@display("i=block/app2");
     gates:
         inout logic; //connects to logic block
-        input TMC_port @directin; //direct in messages from the TMC
+        input TMC_port @directIn; //direct in messages from the TMC
 }

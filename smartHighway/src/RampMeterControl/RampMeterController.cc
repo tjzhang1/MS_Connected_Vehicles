@@ -27,12 +27,6 @@ void RampMeterController::stringListFromParam(std::vector<std::string> &list, co
 }
 
 RampMeterController::RampMeterController() {
-    std::string c = par("controlType");
-    controlType = c;
-    if(controlType.compare("ALINEA") == 0) {
-        measureMsg = new cMessage("ALINEA: measure occupancy", RMC_ALINEA_MEASURE_MSG);
-        updateMsg = new cMessage("ALINEA: update meter rate", RMC_ALINEA_UPDATE_MSG);
-    }
     changePhaseMsg = new cMessage("Set ramp meter to green", RMC_SET_GREEN_MSG);
 }
 
@@ -50,20 +44,23 @@ void RampMeterController::initialize(int stage) {
     // to tell the controller to initialize itself after 0.1s
     if(stage == 0)
     {
+        std::string c = par("controlType");
+        controlType = c;
+        if(controlType.compare("ALINEA") == 0) {
+            measureMsg = new cMessage("ALINEA: measure occupancy", RMC_ALINEA_MEASURE_MSG);
+            updateMsg = new cMessage("ALINEA: update meter rate", RMC_ALINEA_UPDATE_MSG);
+            onRampOccupancy = 0.0;
+            hwyOccupancy = 0.0;
+            meterFlow = 300;
+            scheduleAt(simTime() + 1, measureMsg);
+            scheduleAt(simTime() + updatePeriodALINEA, updateMsg);
+        }
         if (FindModule<TraCITrafficLightInterface*>::findSubModule(getParentModule())) {
             tlInterface = TraCITrafficLightInterfaceAccess().get(getParentModule());
             traci = tlInterface->getCommandInterface();
             ASSERT(traci && tlInterface);
         }
         meterRate = 15.0;
-        if(controlType.compare("ALINEA") == 0) {
-            onRampOccupancy = 0.0;
-            hwyOccupancy = 0.0;
-            meterFlow = 300;
-
-            scheduleAt(simTime() + 1, measureMsg);
-            scheduleAt(simTime() + updatePeriodALINEA, updateMsg);
-        }
         scheduleAt(simTime() + meterRate, changePhaseMsg);
 
         // Initialize highwayInductorsList as a list of strings from parameter highwayInductors

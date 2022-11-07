@@ -11,4 +11,10 @@
         <additional-files value="osm.add.xml"/>
     </input>
 
+    <output>
+	<emission-output value="emissions.xml" />
+	<full-output value="fullOut.xml" />
+	<tripinfo-output value="tripInfo.xml" />
+    </output>
+
 </configuration>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-11-07 11:50:06 by Eclipse SUMO netedit Version 1.14.1
+<!-- generated on 2022-11-07 14:12:13 by Eclipse SUMO netedit Version 1.14.1
 -->
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
@@ -31,5 +31,5 @@
     <flow id="flow_STUDEBAKER" begin="0.00" from="399524358" to="destination_edge" number="1274" period="exp(0.35)"/>
     <flow id="flow_TELEGRAPH_GARFIELD" begin="0.00" departLane="free" from="965816736-AddedOnRampEdge" to="destination_edge" number="363" period="exp(0.10)"/>
     <flow id="flow_TELGRAPH_WASHINGTON" begin="0.00" from="23394679" to="destination_edge" number="435" period="exp(0.12)"/>
-    <flow id="flow_THROUGH" begin="0.00" departLane="free" departSpeed="speedLimit" from="966664641" to="destination_edge" end="3600.00" period="exp(2.48)"/>
+    <flow id="flow_THROUGH" begin="0.00" departLane="free" departSpeed="avg" from="966664641" to="destination_edge" end="3600.00" period="exp(2.48)"/>
 </routes>

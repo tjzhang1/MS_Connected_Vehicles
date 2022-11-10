@@ -35,6 +35,18 @@ void TMC::finish() {
     // Does nothing at sim end
 }
 
+//double TMC::computeReward(void) {
+//
+//}
+//
+//void TMC::computeObservation(void) {
+//
+//}
+//
+//veinsgym::proto::Request TMC::serializeObservation(void) {
+//
+//}
+
 // Determine the control output for the system (signal timings, broadcast to reroute)
 void TMC::computeAction(void) {
     broadcastReroute(0);

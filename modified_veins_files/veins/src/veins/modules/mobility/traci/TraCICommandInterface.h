@@ -151,6 +151,7 @@ public:
         std::string getRouteId();
         void changeRoute(std::string roadId, simtime_t travelTime);
         void stopAt(std::string roadId, double pos, uint8_t laneid, simtime_t waittime, uint8_t flags);
+        void insertStop(uint32_t nextStopIndex, std::string stopId, double pos, uint8_t laneIndex, simtime_t duration, uint8_t flags);
         int32_t getLaneIndex();
         std::string getTypeId();
         bool changeVehicleRoute(const std::list<std::string>& roads);
@@ -394,7 +395,7 @@ public:
         int getLastStepVehicleNumber();
         double getLastStepMeanSpeed();
         std::list<std::string> getLastStepVehicleIDs();
-        int getLastStepOccupancy();
+        double getLastStepOccupancy();
         int getLastStepHaltingVehiclesNumber();
         int getLastStepJamLengthInNumber();
         int getLastStepJamLengthInMeters();

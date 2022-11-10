@@ -553,6 +553,14 @@ void TraCICommandInterface::Vehicle::stopAt(std::string roadId, double pos, uint
     ASSERT(buf.eof());
 }
 
+void TraCICommandInterface::Vehicle::insertStop(uint32_t nextStopIndex, std::string stopId, double pos, uint8_t laneIndex, simtime_t duration, uint8_t flags)
+{
+    uint8_t variableType = TYPE_COMPOUND;
+    int32_t count = 4;
+    TraCIBuffer buf = connection->query(CMD_SET_VEHICLE_VARIABLE, TraCIBuffer() << CMD_INSERTSTOP << nodeId << variableType << count << nextStopIndex << stopId << pos << laneIndex << duration << flags);
+    ASSERT(buf.eof());
+}
+
 std::pair<std::string, double> TraCICommandInterface::Vehicle::getLeader(const double distance)
 {
     TraCIBuffer request = TraCIBuffer() << VAR_LEADER << nodeId << TYPE_DOUBLE << distance;
@@ -1177,9 +1185,9 @@ std::list<std::string> TraCICommandInterface::LaneAreaDetector::getLastStepVehic
     return traci->genericGetStringList(CMD_GET_LANEAREA_VARIABLE, laneAreaDetectorId, LAST_STEP_VEHICLE_ID_LIST, RESPONSE_GET_LANEAREA_VARIABLE);
 }
 
-int TraCICommandInterface::LaneAreaDetector::getLastStepOccupancy()
+double TraCICommandInterface::LaneAreaDetector::getLastStepOccupancy()
 {
-    return traci->genericGetInt(CMD_GET_LANEAREA_VARIABLE, laneAreaDetectorId, LAST_STEP_OCCUPANCY, RESPONSE_GET_LANEAREA_VARIABLE);
+    return traci->genericGetDouble(CMD_GET_LANEAREA_VARIABLE, laneAreaDetectorId, LAST_STEP_OCCUPANCY, RESPONSE_GET_LANEAREA_VARIABLE);
 }
 
 int TraCICommandInterface::LaneAreaDetector::getLastStepHaltingVehiclesNumber()

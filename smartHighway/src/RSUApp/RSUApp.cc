@@ -77,7 +77,7 @@ void RSUApp::populateData(RSU_Data *data, std::list<std::string> &vehicleIDs) {
     std::cout << "Recorded vehicle IDs: ";
 #endif
     // Allocate enough space for vehicles
-    data->setVehiclesArraySize(sizeof(vehicleIDs));
+    data->setVehiclesArraySize(vehicleIDs.size());
     // Iterate through the vehicle list
     int k = 0;
     for(auto veh=vehicleIDs.begin(); veh!=vehicleIDs.end(); veh++) {
@@ -97,6 +97,17 @@ void RSUApp::populateData(RSU_Data *data, std::list<std::string> &vehicleIDs) {
 #if RSU_VERBOSE
     std::cout << endl;
 #endif
+    double accumulateOccupancy = 0.0;
+    double accumulateMeanSpeed = 0.0;
+    for(auto area=areaDetectorList.begin(); area!=areaDetectorList.end(); area++) {
+        TraCICommandInterface::LaneAreaDetector sensor = traci->laneAreaDetector(*area);
+        // Get last step occupancy
+        accumulateOccupancy += sensor.getLastStepOccupancy();
+        // Get last stepMeanSpeed
+        accumulateMeanSpeed += sensor.getLastStepMeanSpeed();
+    }
+    data->setLastStepOccupancy(accumulateOccupancy / areaDetectorList.size());
+    data->setLastStepMeanSpeed(accumulateMeanSpeed / areaDetectorList.size());
 }
 
 void RSUApp::sendToTMC(std::list<std::string> &vehicleIDs) {

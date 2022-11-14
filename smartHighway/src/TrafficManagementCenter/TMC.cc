@@ -43,9 +43,25 @@ void TMC::finish() {
 //
 //}
 //
-//veinsgym::proto::Request TMC::serializeObservation(void) {
-//
-//}
+veinsgym::proto::Request TMC::serializeObservation(double reward) {
+    veinsgym::proto::Request request;
+    request.set_id(1);
+    // Add observation
+    // Pointer field to spaces
+    auto *spaces = request.mutable_step()->mutable_observation()->mutable_tuple()->mutable_values();
+    for(omnetpp::cQueue::Iterator iter=omnetpp::cQueue::Iterator(*rsuData); iter.end(); iter++) {
+        auto *message = dynamic_cast<RSU_Data *>(*iter);
+        auto *element = spaces->Add();
+        auto *data = element->mutable_box();
+        data->add_values(message->getLastStepOccupancy());
+        data->add_values(message->getLastStepMeanSpeed());
+        data->add_values((double)message->getVehiclesArraySize());
+    }
+    // Add reward
+    request.mutable_step()->mutable_reward()->mutable_box()->mutable_values()->Add();
+    request.mutable_step()->mutable_reward()->mutable_box()->set_values(0, reward);
+    return request;
+}
 
 // Determine the control output for the system (signal timings, broadcast to reroute)
 void TMC::computeAction(void) {

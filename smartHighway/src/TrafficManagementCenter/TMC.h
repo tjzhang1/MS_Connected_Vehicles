@@ -3,6 +3,7 @@
 
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
 #include "Messaging/RSU_Data_m.h"
+#include "protobuf/veinsgym.pb.h"
 
 // Expected message types
 enum {
@@ -54,6 +55,8 @@ protected:
     void broadcastReroute(int targetRSU);
     // Data: sample the availability of registered park n rides
     void parkingLotStatus(void);
+    // Format rsuData and parkingData information into protobuf
+    veinsgym::proto::Request serializeObservation(double reward);
 
 private:
     // need some sort of queue to hold RSU data

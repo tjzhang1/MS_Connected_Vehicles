@@ -27,6 +27,6 @@ message RSU_Data {
     string rsuId;
     double lastStepOccupancy;
     double lastStepMeanSpeed;
-    int lastStepHaltingVehiclesNumber;  //unimplemented
+    int lastStepHaltingVehiclesNumber;
     VehicleData vehicles[];
 }

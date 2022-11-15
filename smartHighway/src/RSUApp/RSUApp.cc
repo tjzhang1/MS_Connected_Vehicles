@@ -99,15 +99,18 @@ void RSUApp::populateData(RSU_Data *data, std::list<std::string> &vehicleIDs) {
 #endif
     double accumulateOccupancy = 0.0;
     double accumulateMeanSpeed = 0.0;
+    int haltingVehicles = 0;
     for(auto area=areaDetectorList.begin(); area!=areaDetectorList.end(); area++) {
         TraCICommandInterface::LaneAreaDetector sensor = traci->laneAreaDetector(*area);
         // Get last step occupancy
         accumulateOccupancy += sensor.getLastStepOccupancy();
         // Get last stepMeanSpeed
         accumulateMeanSpeed += sensor.getLastStepMeanSpeed();
+        haltingVehicles += sensor.getLastStepHaltingVehiclesNumber();
     }
     data->setLastStepOccupancy(accumulateOccupancy / areaDetectorList.size());
     data->setLastStepMeanSpeed(accumulateMeanSpeed / areaDetectorList.size());
+    data->setLastStepHaltingVehiclesNumber(haltingVehicles);
 }
 
 void RSUApp::sendToTMC(std::list<std::string> &vehicleIDs) {

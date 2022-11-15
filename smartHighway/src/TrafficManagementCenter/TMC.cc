@@ -35,38 +35,54 @@ void TMC::finish() {
     // Does nothing at sim end
 }
 
-//double TMC::computeReward(void) {
-//
-//}
-//
-//void TMC::computeObservation(void) {
-//
-//}
-//
-veinsgym::proto::Request TMC::serializeObservation(double reward) {
+veinsgym::proto::Request TMC::serializeObservation(void) {
     veinsgym::proto::Request request;
     request.set_id(1);
     // Add observation
     // Pointer field to spaces
-    auto *spaces = request.mutable_step()->mutable_observation()->mutable_tuple()->mutable_values();
-    for(omnetpp::cQueue::Iterator iter=omnetpp::cQueue::Iterator(*rsuData); iter.end(); iter++) {
-        auto *message = dynamic_cast<RSU_Data *>(*iter);
-        auto *element = spaces->Add();
-        auto *data = element->mutable_box();
-        data->add_values(message->getLastStepOccupancy());
-        data->add_values(message->getLastStepMeanSpeed());
-        data->add_values((double)message->getVehiclesArraySize());
+    auto *observation_space = request.mutable_step()->mutable_observation()->mutable_tuple()->mutable_values();
+    // Insert the parking space data and calculate the corresponding reward
+    double parking_penalty = 0.0;
+    for(cQueue::Iterator iter=cQueue::Iterator(*parkingData); iter.end(); iter++) {
+        auto *data = dynamic_cast<parkingLotData *>(*iter);
+        // Add a space to observation tuple and create a box there
+        auto *data_box = observation_space->Add()->mutable_box();
+        double occ = data->occupancy;
+        double cap = data->capacity;
+        data_box->add_values(occ);
+        data_box->add_values(cap);
+        // accumulate rewards
+        parking_penalty += (occ/cap);
     }
+    parking_penalty *= PARKING_PENALTY_WEIGHT;
+    // Insert the rsu data and calculate the corresponding rewards
+    double speed_reward = 0.0;
+    double stoppage_penalty = 0.0;
+    for(cQueue::Iterator iter=cQueue::Iterator(*rsuData); iter.end(); iter++) {
+        auto *data = dynamic_cast<RSU_Data *>(*iter);
+        // Add a space to observation tuple and create a box there
+        auto *data_box = observation_space->Add()->mutable_box();
+        data_box->add_values(data->getLastStepOccupancy());
+        data_box->add_values(data->getLastStepMeanSpeed());
+        data_box->add_values((double)data->getLastStepHaltingVehiclesNumber());
+        data_box->add_values((double)data->getVehiclesArraySize());
+        // accumulate rewards
+        speed_reward += data->getLastStepMeanSpeed();
+        stoppage_penalty += data->getLastStepHaltingVehiclesNumber();
+    }
+    speed_reward *= SPEED_REWARD_WEIGHT;
+    stoppage_penalty *= STOPPING_PENALTY_WEIGHT;
     // Add reward
     request.mutable_step()->mutable_reward()->mutable_box()->mutable_values()->Add();
-    request.mutable_step()->mutable_reward()->mutable_box()->set_values(0, reward);
+    request.mutable_step()->mutable_reward()->mutable_box()->set_values(0, speed_reward - parking_penalty - stoppage_penalty);
     return request;
 }
 
 // Determine the control output for the system (signal timings, broadcast to reroute)
 void TMC::computeAction(void) {
-    broadcastReroute(0);
-    updateSignalTiming(0, 25);
+    veinsgym::proto::Request request = serializeObservation();
+//    broadcastReroute(0);
+//    updateSignalTiming(0, 25);
     parkingData->clear();
     rsuData->clear();
 }

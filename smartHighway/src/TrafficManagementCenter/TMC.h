@@ -12,6 +12,9 @@ enum {
 };
 #define RL_INTERVAL 1  // Time between receiving RSU data and performing a computation
 #define TMC_VERBOSE 1
+#define PARKING_PENALTY_WEIGHT 1
+#define SPEED_REWARD_WEIGHT 1
+#define STOPPING_PENALTY_WEIGHT 0.5
 
 class parkingLotData : public cObject {
 public:
@@ -56,7 +59,7 @@ protected:
     // Data: sample the availability of registered park n rides
     void parkingLotStatus(void);
     // Format rsuData and parkingData information into protobuf
-    veinsgym::proto::Request serializeObservation(double reward);
+    veinsgym::proto::Request serializeObservation(void);
 
 private:
     // need some sort of queue to hold RSU data

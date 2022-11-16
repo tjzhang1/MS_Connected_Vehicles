@@ -35,4 +35,7 @@ network I5_Scenario extends Scenario
 		TMC: smarthighway.TrafficManagementCenter.TMC {
 		    @display("p=6500,6500;i=veins/sign/yellowdiamond;is=vs");
 		}
+		GymConnection: smarthighway.VeinsGym.GymConnection {
+		    @display("p=6550,6550;i=veins/sign/yellowdiamond;is=vs");
+		}
 }

@@ -46,11 +46,10 @@ veinsgym::proto::Request TMC::serializeObservation(void) {
     for(cQueue::Iterator iter=cQueue::Iterator(*parkingData); iter.end(); iter++) {
         auto *data = dynamic_cast<parkingLotData *>(*iter);
         // Add a space to observation tuple and create a box there
-        auto *data_box = observation_space->Add()->mutable_box();
+        auto *data_box = observation_space->Add()->mutable_discrete();
         double occ = data->occupancy;
         double cap = data->capacity;
-        data_box->add_values(occ);
-        data_box->add_values(cap);
+        data_box->set_value(occ);
         // accumulate rewards
         parking_penalty += (occ/cap);
     }
@@ -64,7 +63,7 @@ veinsgym::proto::Request TMC::serializeObservation(void) {
         auto *data_box = observation_space->Add()->mutable_box();
         data_box->add_values(data->getLastStepOccupancy());
         data_box->add_values(data->getLastStepMeanSpeed());
-        data_box->add_values((double)data->getLastStepHaltingVehiclesNumber());
+//        data_box->add_values((double)data->getLastStepHaltingVehiclesNumber());
         data_box->add_values((double)data->getVehiclesArraySize());
         // accumulate rewards
         speed_reward += data->getLastStepMeanSpeed();

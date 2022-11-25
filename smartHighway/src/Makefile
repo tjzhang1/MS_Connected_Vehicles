@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for smartHighway
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -KVEINS_PROJ=/home/tjzhang/programs/veins-veins-5.2 -DVEINS_IMPORT -I. -I$$\(VEINS_PROJ\)/src -L$$\(VEINS_PROJ\)/src -lveins$$\(D\)
+#  opp_makemake -f --deep -KVEINS_PROJ=/home/veins/src/veins -DVEINS_IMPORT -I. -I$$\(VEINS_PROJ\)/src -L$$\(VEINS_PROJ\)/src -lveins$$\(D\)
 #
 
 # Name of target to be created (-o option)
@@ -37,24 +37,26 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 OBJS = \
     $O/BadCarApp/BadCarApp.o \
     $O/CarApplication/CarApp.o \
-    $O/RSUApp/RSUApp.o \
     $O/RampMeterControl/RampMeterController.o \
-    $O/TrafficManagementCenter/TMC.o \
+    $O/Messaging/ParkingReroute_m.o \
     $O/Messaging/ProbeDataManagement_m.o \
     $O/Messaging/ProbeVehicleData_m.o \
-    $O/Messaging/RSU_Data_m.o
+    $O/Messaging/RSU_Data_m.o \
+    $O/Messaging/UpdateMeteringRate_m.o
 
 # Message files
 MSGFILES = \
+    Messaging/ParkingReroute.msg \
     Messaging/ProbeDataManagement.msg \
     Messaging/ProbeVehicleData.msg \
-    Messaging/RSU_Data.msg
+    Messaging/RSU_Data.msg \
+    Messaging/UpdateMeteringRate.msg
 
 # SM files
 SMFILES =
 
 # Other makefile variables (-K)
-VEINS_PROJ=/home/tjzhang/programs/veins-veins-5.2
+VEINS_PROJ=/home/veins/src/veins
 
 #------------------------------------------------------------------------------
 

@@ -4,6 +4,27 @@
 -->
 
 <additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <!-- Traffic Light logic -->
+    <tlLogic id="J0" type="static" programID="0" offset="0">
+        <phase duration="1000"  state="r"/>
+        <phase duration="1" state="G"/>
+        <phase duration="1"  state="y"/>
+    </tlLogic>
+    <tlLogic id="J1" type="static" programID="0" offset="0">
+        <phase duration="1000"  state="r"/>
+        <phase duration="1" state="G"/>
+        <phase duration="1"  state="y"/>
+    </tlLogic>
+    <tlLogic id="J2" type="static" programID="0" offset="0">
+        <phase duration="1000"  state="r"/>
+        <phase duration="1" state="G"/>
+        <phase duration="1"  state="y"/>
+    </tlLogic>
+    <tlLogic id="J3" type="static" programID="0" offset="0">
+        <phase duration="1000"  state="r"/>
+        <phase duration="1" state="G"/>
+        <phase duration="1"  state="y"/>
+    </tlLogic>
     <!-- StoppingPlaces -->
     <parkingArea id="pa_0" lane="E0_0" startPos="10.00" endPos="100.00" roadsideCapacity="403" onRoad="1" width="5.00"/>
     <!-- Detectors -->

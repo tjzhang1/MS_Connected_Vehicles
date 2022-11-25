@@ -1,2 +1,0 @@
-# Run this to compile C++ header and src files
-protoc -I=../protobuf/ --cpp_out=../protobuf/ veinsgym.proto

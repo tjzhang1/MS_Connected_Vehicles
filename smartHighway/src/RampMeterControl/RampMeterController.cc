@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include "Messaging/UpdateMeteringRate_m.h"
 
+
 using namespace veins;
 
 Define_Module(veins::RampMeterController);
@@ -60,12 +61,12 @@ void RampMeterController::initialize(int stage) {
             scheduleAt(simTime() + updatePeriodALINEA, updateMsg);
         }
         else {
-           updateTMC_msg = new cMessage("RSU: send data to TMC", RSU_UPDATE_TMC_MSG);
-            sampleMsg = new cMessage("RSU: accumulate data", RSU_SAMPLE_MSG);
+            updateTMC_msg = new cMessage("RSU: send data to TMC", RMC_RL_UPDATE_TMC_MSG);
+            sampleMsg = new cMessage("RSU: accumulate data", RMC_RL_SAMPLE_MSG);
             stringListFromParam(areaDetectorList, "areaDetectors");
-        resetStatistics();
-        scheduleAt(simTime() + UPDATE_TMC_PERIOD, updateTMC_msg);  // Instead of using fixed time, use a poisson process to determine next time?
-        scheduleAt(simTime() + ACCUM_DATA_PERIOD, sampleMsg);
+            resetStatistics();
+            scheduleAt(simTime() + UPDATE_TMC_PERIOD, updateTMC_msg);  // Instead of using fixed time, use a poisson process to determine next time?
+            scheduleAt(simTime() + ACCUM_DATA_PERIOD, sampleMsg);
         }
         if (FindModule<TraCITrafficLightInterface*>::findSubModule(getParentModule())) {
             tlInterface = TraCITrafficLightInterfaceAccess().get(getParentModule());
@@ -85,14 +86,6 @@ void RampMeterController::initialize(int stage) {
 void RampMeterController::handleSelfMsg(cMessage* msg) {
     switch(msg->getKind()) {
         case RMC_ALINEA_MEASURE_MSG: { //received init message
-//            // Read which traffic light to control from omnetpp.ini file
-//            trafficLightID = hasPar("rampMeterID") ? par("rampMeterID").stringValue() : "";
-//            if(!trafficLightID.empty())
-//            {
-//                // obtain control of Traci commands for traffic light
-//                (traci->trafficlight(trafficLightID)).setProgram("my_program");
-//            }
-//            std::cerr << "Received init message\n";
             if (traci)
             {
                 for(auto inductorPtr = onRampInductorsList.begin(); inductorPtr!=onRampInductorsList.end(); inductorPtr++) {
@@ -133,33 +126,6 @@ void RampMeterController::handleSelfMsg(cMessage* msg) {
             scheduleAt(simTime() + meterRate, msg);
             break;
         }
-        case RMC_RL_SAMPLE_MSG: {
-        if(!traci) {
-            TraCIScenarioManager *manager = TraCIScenarioManagerAccess().get();
-            traci = manager->getCommandInterface();
-        }
-        for(auto area=areaDetectorList.begin(); area!=areaDetectorList.end(); area++) {
-            TraCICommandInterface::LaneAreaDetector sensor = traci->laneAreaDetector(*area);
-            // Get last step occupancy
-            accum_occupancy += sensor.getLastStepOccupancy();
-            // Get last stepMeanSpeed
-            accum_speed += sensor.getLastStepMeanSpeed();
-            accum_halting_vehicles += sensor.getLastStepHaltingVehiclesNumber();
-        }
-        samplesCount++;
-        scheduleAt(simTime() + ACCUM_DATA_PERIOD, msg);
-        break; 
-        }
-        case RMC_RL_UPDATE_TMC_MSG: {
-        if(!traci) {
-            TraCIScenarioManager *manager = TraCIScenarioManagerAccess().get();
-            traci = manager->getCommandInterface();
-        }
-        std::list<std::string> vehicleIDs = getVehicleIDs();
-        sendToTMC(vehicleIDs);
-        scheduleAt(simTime() + UPDATE_TMC_PERIOD, msg);
-        break;
-        }
         default:
             DemoBaseApplLayer::handleSelfMsg(msg);
             break;
@@ -176,42 +142,6 @@ void RampMeterController::handleMessage(cMessage * msg) {
     }
 }
 
-void RampMeterController::populateData(RSU_Data *data, std::list<std::string> &vehicleIDs) {
-    data->setRsuId(getParentModule()->getFullName());
-#if RMC_VERBOSE
-    std::cout << "From " << getParentModule()->getFullName() << " - ";
-    std::cout << "Recorded vehicle IDs: ";
-#endif
-    // Allocate enough space for vehicles
-    data->setVehiclesArraySize(vehicleIDs.size());
-    // Iterate through the vehicle list
-    int k = 0;
-    for(auto veh=vehicleIDs.begin(); veh!=vehicleIDs.end(); veh++) {
-        TraCICommandInterface::Vehicle vehicleConnection = traci->vehicle(*veh);
-        VehicleData vehicle;
-        vehicle.vehicleId = (omnetpp::opp_string)*veh;
-        vehicle.vehicleTypeId = vehicleConnection.getVType();
-        vehicle.speed = vehicleConnection.getSpeed();
-        Coord pos = vehicleConnection.getPosition();
-        vehicle.position[0] = pos.x;
-        vehicle.position[1] = pos.y;
-        data->setVehicles(k++, vehicle);  // Insert vehicle at position k
-#if RMC_VERBOSE
-        std::cout << *veh << " ";
-#endif
-    }
-#if RMC_VERBOSE
-    std::cout << endl;
-#endif
-    // Add accumulated statistics
-    double areaDetectorsCount = areaDetectorList.size();  // get average across all lanes 
-    data->setLastStepOccupancy(accum_occupancy / (samplesCount*areaDetectorsCount))
-    data->setLastStepMeanSpeed(accum_speed / (samplesCount*areaDetectorsCount));
-    data->setLastStepHaltingVehiclesNumber(accum_halting_vehicles / samplesCount);
-    // Reset sampled data values after using
-    resetStatistics();
-}
-
 void RampMeterController::resetStatistics() {
     accum_occupancy = 0.0;
     accum_speed = 0.0;
@@ -219,15 +149,6 @@ void RampMeterController::resetStatistics() {
     samplesCount = 0;
 }
 
-void RampMeterController::sendToTMC(std::list<std::string> &vehicleIDs) {
-    RSU_Data *data = new RSU_Data("Collected vehicle data", TMC_DATA_MSG);  // inherited from cMessage class
-    populateData(data, vehicleIDs);
-    // RSUExampleScenario -> TrafficLight -> RampMeterController
-    //                   |-> TMC
-    /******** Change these ************/
-    cModule *target = getParentModule()->getParentModule()->getSubmodule("TMC");
-    sendDirect(data, target, "RSU_port");
-}
 
 std::list<std::string> RampMeterController::getVehicleIDs() {
     std::list<std::string> vehicleIDs;

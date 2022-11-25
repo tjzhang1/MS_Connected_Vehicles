@@ -10,6 +10,7 @@
 
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
 #include "veins/modules/world/traci/trafficLight/TraCITrafficLightInterface.h"
+#include "Messaging/RSU_Data_m.h"
 
 enum {
     RMC_ALINEA_MEASURE_MSG = 100,  // for ALINEA algorithm, accumulate on ramp and highway occupancies
@@ -20,6 +21,8 @@ enum {
 };
 
 #define RMC_VERBOSE 1
+#define UPDATE_TMC_PERIOD 50
+#define ACCUM_DATA_PERIOD 5
 
 namespace veins {
 
@@ -36,7 +39,6 @@ protected:
     void handleMessage(cMessage* msg) override;
     void sendToTMC(std::list<std::string> &vehicleIDs);
     std::list<std::string> getVehicleIDs(void);
-    void populateData(RSU_Data *data, std::list<std::string> &vehicleIDs);
     // Reset the measured network statistics
     void resetStatistics(void);
 private:

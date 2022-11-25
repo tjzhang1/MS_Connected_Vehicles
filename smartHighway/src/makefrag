@@ -66,5 +66,3 @@ ifeq ($(WITH_OSG), yes)
   OMNETPP_LIBS += $(OSG_LIBS)
 endif
 
-# Flags needed for compilation with external libraries
-LIBS += -lzmq -pthread -lprotobuf

@@ -12,9 +12,11 @@
 #include "veins/modules/world/traci/trafficLight/TraCITrafficLightInterface.h"
 
 enum {
-    RMC_ALINEA_MEASURE_MSG = 100,
-    RMC_ALINEA_UPDATE_MSG = 101,
-    RMC_SET_GREEN_MSG = 102,
+    RMC_ALINEA_MEASURE_MSG = 100,  // for ALINEA algorithm, accumulate on ramp and highway occupancies
+    RMC_ALINEA_UPDATE_MSG = 101,   // for ALINEA algorithm, update the flow rate
+    RMC_SET_GREEN_MSG = 102,       // turn the light green
+    RMC_RL_SAMPLE_MSG = 103,       // for RL, accumulate data on ramp
+    RMC_RL_UPDATE_TMC_MSG = 104,   // for RL, send collected data to TMC
 };
 
 #define RMC_VERBOSE 1
@@ -32,6 +34,12 @@ protected:
     void onWSA(DemoServiceAdvertisment* wsa) override;
     void stringListFromParam(std::vector<std::string> &list, const char *parName);
     void handleMessage(cMessage* msg) override;
+    void sendToTMC(std::list<std::string> &vehicleIDs);
+    std::list<std::string> getVehicleIDs(void);
+    void populateData(RSU_Data *data, std::list<std::string> &vehicleIDs);
+    // Reset the measured network statistics
+    void resetStatistics(void);
+private:
     /* Which traffic light to control */
     TraCITrafficLightInterface* tlInterface;
     int updatePeriodALINEA = 60; //period of time to use the next ALINEA ramp metering rate: [40, 300] seconds
@@ -64,6 +72,15 @@ protected:
     cMessage *measureMsg;
     cMessage *updateMsg;
     cMessage *changePhaseMsg;
+    
+    /* Used for RL */
+    std::vector<std::string> areaDetectorList;
+    cMessage *updateTMC_msg, *sampleMsg;
+    // Measured statistics
+    double accum_occupancy;
+    double accum_speed;
+    int accum_halting_vehicles;
+    int samplesCount;
 };
 
 }

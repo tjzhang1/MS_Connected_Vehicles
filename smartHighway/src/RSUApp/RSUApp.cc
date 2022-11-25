@@ -27,11 +27,13 @@ using namespace veins;
 Define_Module(veins::RSUApp);
 
 RSUApp::RSUApp() {
-    samplingMsg = new cMessage("RSU: send data to TMC", RSU_SAMPLE_MSG);
+    updateTMC_msg = new cMessage("RSU: send data to TMC", RSU_UPDATE_TMC_MSG);
+    sampleMsg = new cMessage("RSU: accumulate data", RSU_SAMPLE_MSG);
 }
 
 RSUApp::~RSUApp() {
-    cancelAndDelete(samplingMsg);
+    cancelAndDelete(updateTMC_msg);
+    cancelAndDelete(sampleMsg);
 }
 
 void RSUApp::initialize(int stage) {
@@ -39,12 +41,21 @@ void RSUApp::initialize(int stage) {
     if(stage == 0) {
         traci = NULL;
         stringListFromParam(areaDetectorList, "areaDetectors");
-        scheduleAt(simTime() + SAMPLING_PERIOD, samplingMsg);  // Instead of using SAMPLING_PERIOD, use a poisson process to determine next time
+        resetStatistics();
+        scheduleAt(simTime() + UPDATE_TMC_PERIOD, updateTMC_msg);  // Instead of using fixed time, use a poisson process to determine next time?
+        scheduleAt(simTime() + ACCUM_DATA_PERIOD, sampleMsg);
     }
 }
 
 void RSUApp::finish() {
     DemoBaseApplLayer::finish();
+}
+
+void RSUApp::resetStatistics() {
+    accum_occupancy = 0.0;
+    accum_speed = 0.0;
+    accum_halting_vehicles = 0;
+    samplesCount = 0;
 }
 
 void RSUApp::handleMessage(cMessage *msg) {
@@ -55,15 +66,32 @@ void RSUApp::handleMessage(cMessage *msg) {
         sendDown(wsm);
         break;
     }
+    case RSU_UPDATE_TMC_MSG: {
+        if(!traci) {
+            TraCIScenarioManager *manager = TraCIScenarioManagerAccess().get();
+            traci = manager->getCommandInterface();
+        }
+        std::list<std::string> vehicleIDs = getVehicleIDs();
+        sendToTMC(vehicleIDs);
+        scheduleAt(simTime() + UPDATE_TMC_PERIOD, msg);
+        break;
+    }
     case RSU_SAMPLE_MSG: {
         if(!traci) {
             TraCIScenarioManager *manager = TraCIScenarioManagerAccess().get();
             traci = manager->getCommandInterface();
         }
-        std::list<std::string> vehicleIDs = sampleAreaDetectors();
-        sendToTMC(vehicleIDs);
-        scheduleAt(simTime() + SAMPLING_PERIOD, msg);
-        break;
+        for(auto area=areaDetectorList.begin(); area!=areaDetectorList.end(); area++) {
+            TraCICommandInterface::LaneAreaDetector sensor = traci->laneAreaDetector(*area);
+            // Get last step occupancy
+            accum_occupancy += sensor.getLastStepOccupancy();
+            // Get last stepMeanSpeed
+            accum_speed += sensor.getLastStepMeanSpeed();
+            accum_halting_vehicles += sensor.getLastStepHaltingVehiclesNumber();
+        }
+        samplesCount++;
+        scheduleAt(simTime() + ACCUM_DATA_PERIOD, msg);
+        break; 
     }
     default:
         DemoBaseApplLayer::handleMessage(msg);
@@ -97,20 +125,13 @@ void RSUApp::populateData(RSU_Data *data, std::list<std::string> &vehicleIDs) {
 #if RSU_VERBOSE
     std::cout << endl;
 #endif
-    double accumulateOccupancy = 0.0;
-    double accumulateMeanSpeed = 0.0;
-    int haltingVehicles = 0;
-    for(auto area=areaDetectorList.begin(); area!=areaDetectorList.end(); area++) {
-        TraCICommandInterface::LaneAreaDetector sensor = traci->laneAreaDetector(*area);
-        // Get last step occupancy
-        accumulateOccupancy += sensor.getLastStepOccupancy();
-        // Get last stepMeanSpeed
-        accumulateMeanSpeed += sensor.getLastStepMeanSpeed();
-        haltingVehicles += sensor.getLastStepHaltingVehiclesNumber();
-    }
-    data->setLastStepOccupancy(accumulateOccupancy / areaDetectorList.size());
-    data->setLastStepMeanSpeed(accumulateMeanSpeed / areaDetectorList.size());
-    data->setLastStepHaltingVehiclesNumber(haltingVehicles);
+    // Add accumulated statistics
+    double areaDetectorsCount = areaDetectorList.size();  // get average across all lanes 
+    data->setLastStepOccupancy(accum_occupancy / (samplesCount*areaDetectorsCount))
+    data->setLastStepMeanSpeed(accum_speed / (samplesCount*areaDetectorsCount));
+    data->setLastStepHaltingVehiclesNumber(accum_halting_vehicles / samplesCount);
+    // Reset sampled data values after using
+    resetStatistics();
 }
 
 void RSUApp::sendToTMC(std::list<std::string> &vehicleIDs) {
@@ -122,7 +143,7 @@ void RSUApp::sendToTMC(std::list<std::string> &vehicleIDs) {
     sendDirect(data, target, "RSU_port");
 }
 
-std::list<std::string> RSUApp::sampleAreaDetectors() {
+std::list<std::string> RSUApp::getVehicleIDs() {
     std::list<std::string> vehicleIDs;
     for(auto area=areaDetectorList.begin(); area!=areaDetectorList.end(); area++) {
         TraCICommandInterface::LaneAreaDetector LAD = traci->laneAreaDetector(*area);  // Acquire connection to corresponding laneAreaDetector

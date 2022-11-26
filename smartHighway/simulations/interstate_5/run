@@ -22,4 +22,5 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-exec ../../bin/veins_run "$@"
+#exec ../../bin/veins_run "$@"
+exec ../../src/smartHighway -r 0 -m -u Cmdenv -n ..:../../src:../../../../src/veins/examples/veins:../../../../src/veins/src/veins --image-path=../../../../src/veins/images -l ../../../../src/veins/src/veins omnetpp.ini

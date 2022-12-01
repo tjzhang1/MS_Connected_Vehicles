@@ -19,6 +19,7 @@
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
 #include "Messaging/RSU_Data_m.h"
 
+#define DATA_SUMMARY 0  // print out sampled data
 #define RSU_VERBOSE 1
 #define UPDATE_TMC_PERIOD 50  // How often to send data to TMC
 #define ACCUM_DATA_PERIOD 5  // How often to accumulate network data, must be < UPDATE_TMC_PERIOD

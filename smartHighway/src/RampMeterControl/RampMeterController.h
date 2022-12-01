@@ -24,6 +24,7 @@ enum {
 #define RMC_VERBOSE 1
 #define ACCUM_DATA_PERIOD 5
 #define UPDATE_TMC_PERIOD 50
+#define DATA_SUMMARY 0
 
 namespace veins {
 

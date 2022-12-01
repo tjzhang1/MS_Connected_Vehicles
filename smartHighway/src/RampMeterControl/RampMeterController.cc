@@ -18,6 +18,7 @@ void RampMeterController::stringListFromParam(std::vector<std::string> &list, co
     std::string s = par(parName);
     boost::split(list, s, boost::is_any_of(", "), boost::token_compress_on);
 #if RMC_VERBOSE
+    std::cout << getParentModule()->getFullName() << " " << parName << ": ";
     std::cout << parName << ": ";
     for(auto i = list.begin(); i!=list.end(); i++) {
         std::cout << *i << " ";
@@ -56,16 +57,20 @@ void RampMeterController::initialize(int stage) {
             onRampOccupancy = 0.0;
             hwyOccupancy = 0.0;
             meterFlow = 300;
+            // Initialize highwayInductorsList as a list of strings from parameter highwayInductors
+            stringListFromParam(highwayInductorsList, "highwayInductors");
+            // Initialize onRampInductorsList as a list of strings from parameter onRampInductors
+            stringListFromParam(onRampInductorsList, "onRampInductors");
             scheduleAt(simTime() + 1, measureMsg);
             scheduleAt(simTime() + updatePeriodALINEA, updateMsg);
         }
         else {
-           updateTMC_msg = new cMessage("RSU: send data to TMC", RMC_RL_UPDATE_TMC_MSG);
+            updateTMC_msg = new cMessage("RSU: send data to TMC", RMC_RL_UPDATE_TMC_MSG);
             sampleMsg = new cMessage("RSU: accumulate data", RMC_RL_SAMPLE_MSG);
             stringListFromParam(areaDetectorList, "areaDetectors");
-        resetStatistics();
-        scheduleAt(simTime() + UPDATE_TMC_PERIOD, updateTMC_msg);  // Instead of using fixed time, use a poisson process to determine next time?
-        scheduleAt(simTime() + ACCUM_DATA_PERIOD, sampleMsg);
+            resetStatistics();
+            scheduleAt(simTime() + UPDATE_TMC_PERIOD, updateTMC_msg);  // Instead of using fixed time, use a poisson process to determine next time?
+            scheduleAt(simTime() + ACCUM_DATA_PERIOD, sampleMsg);
         }
         if (FindModule<TraCITrafficLightInterface*>::findSubModule(getParentModule())) {
             tlInterface = TraCITrafficLightInterfaceAccess().get(getParentModule());
@@ -74,11 +79,6 @@ void RampMeterController::initialize(int stage) {
         }
         meterRate = 15.0;
         scheduleAt(simTime() + meterRate, changePhaseMsg);
-
-        // Initialize highwayInductorsList as a list of strings from parameter highwayInductors
-        stringListFromParam(highwayInductorsList, "highwayInductors");
-        // Initialize onRampInductorsList as a list of strings from parameter onRampInductors
-        stringListFromParam(onRampInductorsList, "onRampInductors");
     }
 }
 
@@ -193,8 +193,8 @@ void RampMeterController::handleMessage(cMessage * msg) {
 void RampMeterController::populateData(RSU_Data *data, std::list<std::string> &vehicleIDs) {
     data->setRsuId(getParentModule()->getFullName());
 #if RMC_VERBOSE
-    std::cout << "From " << getParentModule()->getFullName() << " - ";
-    std::cout << "Recorded vehicle IDs: ";
+//    std::cout << "From " << getParentModule()->getFullName() << " - ";
+//    std::cout << "Recorded vehicle IDs: ";
 #endif
     // Allocate enough space for vehicles
     data->setVehiclesArraySize(vehicleIDs.size());
@@ -211,11 +211,11 @@ void RampMeterController::populateData(RSU_Data *data, std::list<std::string> &v
         vehicle.position[1] = pos.y;
         data->setVehicles(k++, vehicle);  // Insert vehicle at position k
 #if RMC_VERBOSE
-        std::cout << *veh << " ";
+//        std::cout << *veh << " ";
 #endif
     }
 #if RMC_VERBOSE
-    std::cout << endl;
+//    std::cout << endl;
 #endif
     // Add accumulated statistics
     double areaDetectorsCount = areaDetectorList.size();  // get average across all lanes 
@@ -240,7 +240,7 @@ void RampMeterController::resetStatistics() {
 void RampMeterController::sendToTMC(std::list<std::string> &vehicleIDs) {
     RSU_Data *data = new RSU_Data("Collected vehicle data", TMC_DATA_MSG);  // inherited from cMessage class
     populateData(data, vehicleIDs);
-    // RSUExampleScenario -> TrafficLight -> RampMeterController
+    // RSUExampleScenario -> rampMeter -> appl
     //                   |-> TMC
     /******** Change these ************/
     cModule *target = getParentModule()->getParentModule()->getSubmodule("TMC");

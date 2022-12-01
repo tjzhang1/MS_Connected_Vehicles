@@ -108,8 +108,8 @@ void TMC::updateSignalTiming(int targetRM, double meterRate) {
     //                   |-> TMC
     cGate *target = getParentModule()->getSubmodule("rampMeter", targetRM)->getSubmodule("appl")->gate("TMC_port");
 #if TMC_VERBOSE
-    std::cout << "Broadcasting new interval, gate " << target->getFullName() << " acquired" << endl;
-    std::cout << "New rate will be " << msg->getMeterRate() << endl;
+    std::cout << "Broadcasting new interval to " << target->getOwnerModule()->getParentModule()->getFullName() << ", ";
+    std::cout << "new rate will be " << msg->getMeterRate() << endl;
 #endif
     sendDirect(msg, 1, 0, target);
 }
@@ -125,8 +125,8 @@ void TMC::broadcastReroute(int targetRSU) {
     //                   |-> TMC
     cGate *target = getParentModule()->getSubmodule("rsu", targetRSU)->getSubmodule("appl")->gate("TMC_port");  // submodule name must match definition in .ned
 #if TMC_VERBOSE
-    std::cout << "Broadcasting new route, gate " << target->getFullName() << " acquired" << endl;
-    std::cout << "Size of open lot list is " << msg->getOpenLotArraySize() << endl;
+    std::cout << "Broadcasting new route to " << target->getOwnerModule()->getParentModule()->getFullName() << ", ";
+    std::cout << "size of open lot list is " << msg->getOpenLotArraySize() << endl;
 #endif
     sendDirect(msg, 1, 0, target);
 }

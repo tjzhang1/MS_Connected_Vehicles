@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-11-07 14:10:24 by Eclipse SUMO netedit Version 1.14.1
+<!-- generated on 2022-11-30 22:59:40 by Eclipse SUMO netedit Version 1.15.0
 -->
 
 <additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
@@ -81,6 +81,7 @@
     <e2Detector id="e2_DOWNEY_enter_3" lanes="94666085_2 864961753-AddedOnRampEdge_3" pos="710.80" endPos="94.00" period="300.00" file="e2_DOWNEY_enter_3.xml"/>
     <e2Detector id="e2_DOWNEY_enter_4" lanes="94666085_3 864961753-AddedOnRampEdge_4" pos="710.80" endPos="94.00" period="300.00" file="e2_DOWNEY_enter_4.xml"/>
     <e2Detector id="e2_DOWNEY_enter_5" lanes="94666085_4 864961753-AddedOnRampEdge_5" pos="710.80" endPos="94.00" period="300.00" file="e2_DOWNEY_enter_5.xml"/>
+    <e2Detector id="e2_DOWNEY_on_ramp_0" lanes="4370760_0 4370760.101_0" pos="42.18" endPos="55.01" period="300.00" file="e2_DOWNEY_on_ramp_0.xml"/>
     <e2Detector id="e2_EASTERN_exit_0" lanes="975003949-AddedOffRampEdge_0 exit_to_EASTERN_AVE_0" pos="0.00" endPos="100.00" period="300.00" file="e2_EASTERN_exit_0.xml"/>
     <e2Detector id="e2_EASTERN_exit_1" lanes="975003949-AddedOffRampEdge_1 386112525_0" pos="0.00" endPos="50.00" period="300.00" file="e2_EASTERN_exit_1.xml"/>
     <e2Detector id="e2_EASTERN_exit_2" lanes="975003949-AddedOffRampEdge_2 386112525_1" pos="0.00" endPos="50.00" period="300.00" file="e2_EASTERN_exit_2.xml"/>
@@ -134,11 +135,15 @@
     <e2Detector id="e2_LAKEWOOD_NB_enter_2" lanes="862063814_1 32296077_2 32296080_1" pos="150.90" endPos="100.00" period="300.00" file="e2_LAKEWOOD_NB_enter_2.xml"/>
     <e2Detector id="e2_LAKEWOOD_NB_enter_3" lanes="862063814_2 32296077_3 32296080_2" pos="150.90" endPos="100.00" period="300.00" file="e2_LAKEWOOD_NB_enter_3.xml"/>
     <e2Detector id="e2_LAKEWOOD_NB_enter_4" lanes="862063814_3 32296077_4 32296080_3" pos="150.90" endPos="100.00" period="300.00" file="e2_LAKEWOOD_NB_enter_4.xml"/>
+    <e2Detector id="e2_LAKEWOOD_NB_on_ramp_0" lanes="13275783_0 13275783.140_0" pos="27.46" endPos="10.56" period="300.00" file="e2_LAKEWOOD_NB_on_ramp_0.xml"/>
+    <e2Detector id="e2_LAKEWOOD_NB_on_ramp_1" lanes="13275783_1 13275783.140_1" pos="30.43" endPos="10.06" period="300.00" file="e2_LAKEWOOD_NB_on_ramp_1.xml"/>
     <e2Detector id="e2_LAKEWOOD_SB_enter_0" lanes="399668245_0 866210533-AddedOnRampEdge_0" pos="133.14" endPos="94.00" period="300.00" file="e2_LAKEWOOD_SB_enter_0.xml"/>
     <e2Detector id="e2_LAKEWOOD_SB_enter_1" lanes="32296080_0 866210533-AddedOnRampEdge_1" pos="195.91" endPos="94.00" period="300.00" file="e2_LAKEWOOD_SB_enter_1.xml"/>
     <e2Detector id="e2_LAKEWOOD_SB_enter_2" lanes="32296080_1 866210533-AddedOnRampEdge_2" pos="195.91" endPos="94.00" period="300.00" file="e2_LAKEWOOD_SB_enter_2.xml"/>
     <e2Detector id="e2_LAKEWOOD_SB_enter_3" lanes="32296080_2 866210533-AddedOnRampEdge_3" pos="195.91" endPos="94.00" period="300.00" file="e2_LAKEWOOD_SB_enter_3.xml"/>
     <e2Detector id="e2_LAKEWOOD_SB_enter_4" lanes="32296080_3 866210533-AddedOnRampEdge_4" pos="195.91" endPos="94.00" period="300.00" file="e2_LAKEWOOD_SB_enter_4.xml"/>
+    <e2Detector id="e2_LAKEWOOD_SB_on_ramp_0" lanes="23426514_0 23426514.71_0" pos="6.69" endPos="14.10" period="300.00" file="e2_LAKEWOOD_SB_on_ramp_0.xml"/>
+    <e2Detector id="e2_LAKEWOOD_SB_on_ramp_1" lanes="23426514_1 23426514.71_1" pos="9.30" endPos="13.43" period="300.00" file="e2_LAKEWOOD_SB_on_ramp_1.xml"/>
     <e2Detector id="e2_LAKEWOOD_exit_0" lanes="158724524#1-AddedOffRampEdge_0 139639762_0" pos="0.00" endPos="100.00" period="300.00" file="e2_LAKEWOOD_exit_0.xml"/>
     <e2Detector id="e2_LAKEWOOD_exit_1" lanes="158724524#1-AddedOffRampEdge_1 862063814_0" pos="0.00" endPos="100.00" period="300.00" file="e2_LAKEWOOD_exit_1.xml"/>
     <e2Detector id="e2_LAKEWOOD_exit_2" lanes="158724524#1-AddedOffRampEdge_2 862063814_1" pos="0.00" endPos="100.00" period="300.00" file="e2_LAKEWOOD_exit_2.xml"/>
@@ -154,6 +159,8 @@
     <e2Detector id="e2_PARAMOUNT_exit_2" lanes="866210533-AddedOffRampEdge_2 866210532_1" pos="0.00" endPos="100.00" period="300.00" file="e2_PARAMOUNT_exit_2.xml"/>
     <e2Detector id="e2_PARAMOUNT_exit_3" lanes="866210533-AddedOffRampEdge_3 866210532_2" pos="0.00" endPos="100.00" period="300.00" file="e2_PARAMOUNT_exit_3.xml"/>
     <e2Detector id="e2_PARAMOUNT_exit_4" lanes="866210533-AddedOffRampEdge_4 866210532_3" pos="0.00" endPos="100.00" period="300.00" file="e2_PARAMOUNT_exit_4.xml"/>
+    <e2Detector id="e2_PARAMOUNT_on_ramp_0" lanes="178116793_0 178116793.68_0" pos="10.51" endPos="3.50" period="300.00" file="e2_PARAMOUNT_on_ramp_0.xml"/>
+    <e2Detector id="e2_PARAMOUNT_on_ramp_1" lanes="178116793_1 178116793.68_1" pos="11.84" endPos="4.95" period="300.00" file="e2_PARAMOUNT_on_ramp_1.xml"/>
     <e2Detector id="e2_SLAUSON_exit_0" lanes="32296182#1-AddedOffRampEdge_0 exit_to_SLAUSON_AVE_0" pos="0.00" endPos="100.00" period="300.00" file="e2_SLAUSON_exit_0.xml"/>
     <e2Detector id="e2_SLAUSON_exit_1" lanes="32296182#1-AddedOffRampEdge_1 866203384_0" pos="0.00" endPos="100.00" period="300.00" file="e2_SLAUSON_exit_1.xml"/>
     <e2Detector id="e2_SLAUSON_exit_2" lanes="32296182#1-AddedOffRampEdge_2 866203384_1" pos="0.00" endPos="100.00" period="300.00" file="e2_SLAUSON_exit_2.xml"/>

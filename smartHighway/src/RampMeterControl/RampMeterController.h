@@ -10,6 +10,8 @@
 
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
 #include "veins/modules/world/traci/trafficLight/TraCITrafficLightInterface.h"
+#include "Messaging/RSU_Data_m.h"
+#include "TrafficManagementCenter/TMC.h"
 
 enum {
     RMC_ALINEA_MEASURE_MSG = 100,  // for ALINEA algorithm, accumulate on ramp and highway occupancies
@@ -20,6 +22,8 @@ enum {
 };
 
 #define RMC_VERBOSE 1
+#define ACCUM_DATA_PERIOD 5
+#define UPDATE_TMC_PERIOD 50
 
 namespace veins {
 

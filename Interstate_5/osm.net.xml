@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-11-07 14:30:39 by Eclipse SUMO netedit Version 1.14.1
+<!-- generated on 2022-11-29 00:00:29 by Eclipse SUMO netedit Version 1.15.0
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
@@ -16,24 +16,19 @@
         <geometry.min-radius.fix.railways value="false"/>
         <geometry.max-grade.fix value="false"/>
         <offset.disable-normalization value="true"/>
-        <lefthand value="false"/>
+        <lefthand value="0"/>
     </processing>
 
     <junctions>
         <no-turnarounds value="true"/>
         <junctions.corner-detail value="5"/>
-        <junctions.limit-turn-speed value="5.5"/>
-        <rectangular-lane-cut value="false"/>
+        <junctions.limit-turn-speed value="5.50"/>
+        <rectangular-lane-cut value="0"/>
     </junctions>
 
     <pedestrian>
-        <walkingareas value="false"/>
+        <walkingareas value="0"/>
     </pedestrian>
-
-    <netedit>
-        <additional-files value="/home/tjzhang/Documents/VEINS_Connected_Vehicles/Interstate_5/osm.add.xml"/>
-        <route-files value="/home/tjzhang/Documents/VEINS_Connected_Vehicles/Interstate_5/osm_pt.rou.xml"/>
-    </netedit>
 
 </configuration>
 -->
@@ -7618,24 +7613,48 @@
     </edge>
 
     <tlLogic id="J0" type="static" programID="0" offset="0">
-        <phase duration="5"  state="GG"/>
-        <phase duration="5"  state="yy"/>
-        <phase duration="5"  state="rr"/>
+        <phase duration="1"  state="GG"/>
+        <phase duration="1000" state="rr"/>
+    </tlLogic>
+    <tlLogic id="J0" type="static" programID="1" offset="0">
+        <phase duration="1000" state="GG"/>
+    </tlLogic>
+    <tlLogic id="J0" type="static" programID="2" offset="0">
+        <phase duration="1"  state="GG"/>
+        <phase duration="4"  state="rr"/>
     </tlLogic>
     <tlLogic id="J1" type="static" programID="0" offset="0">
-        <phase duration="5"  state="GG"/>
-        <phase duration="5"  state="yy"/>
-        <phase duration="5"  state="rr"/>
+        <phase duration="1"  state="GG"/>
+        <phase duration="1000" state="rr"/>
+    </tlLogic>
+    <tlLogic id="J1" type="static" programID="1" offset="0">
+        <phase duration="1000" state="GG"/>
+    </tlLogic>
+    <tlLogic id="J1" type="static" programID="2" offset="0">
+        <phase duration="1"  state="GG"/>
+        <phase duration="4"  state="rr"/>
     </tlLogic>
     <tlLogic id="J2" type="static" programID="0" offset="0">
-        <phase duration="5"  state="GG"/>
-        <phase duration="5"  state="yy"/>
-        <phase duration="5"  state="rr"/>
+        <phase duration="1"  state="GG"/>
+        <phase duration="1000" state="rr"/>
+    </tlLogic>
+    <tlLogic id="J2" type="static" programID="1" offset="0">
+        <phase duration="1000" state="GG"/>
+    </tlLogic>
+    <tlLogic id="J2" type="static" programID="2" offset="0">
+        <phase duration="1"  state="GG"/>
+        <phase duration="4"  state="rr"/>
     </tlLogic>
     <tlLogic id="J3" type="static" programID="0" offset="0">
-        <phase duration="5"  state="G"/>
-        <phase duration="5"  state="y"/>
-        <phase duration="5"  state="r"/>
+        <phase duration="1"  state="G"/>
+        <phase duration="1000" state="r"/>
+    </tlLogic>
+    <tlLogic id="J3" type="static" programID="1" offset="0">
+        <phase duration="1000" state="G"/>
+    </tlLogic>
+    <tlLogic id="J3" type="static" programID="2" offset="0">
+        <phase duration="1"  state="G"/>
+        <phase duration="4"  state="r"/>
     </tlLogic>
 
     <junction id="10565341" type="dead_end" x="5387.06" y="10509.89" incLanes="" intLanes="" shape="5388.61,10509.50 5376.21,10512.65"/>

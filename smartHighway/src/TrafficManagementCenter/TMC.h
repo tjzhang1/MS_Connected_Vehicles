@@ -4,6 +4,7 @@
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
 #include "Messaging/RSU_Data_m.h"
 #include "protobuf/veinsgym.pb.h"
+#include "VeinsGym/GymConnection.h"
 
 // Expected message types
 enum {
@@ -68,6 +69,7 @@ private:
     cQueue *parkingData;
     std::vector<std::string> parkingLotList;
     cMessage *control_timer;  // Recurring self message for control updates
+    GymConnection *gymCon = nullptr;
 };
 
 }

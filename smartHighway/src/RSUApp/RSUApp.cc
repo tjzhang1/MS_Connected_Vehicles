@@ -101,8 +101,8 @@ void RSUApp::handleMessage(cMessage *msg) {
 void RSUApp::populateData(RSU_Data *data, std::list<std::string> &vehicleIDs) {
     data->setRsuId(getParentModule()->getFullName());
 #if RSU_VERBOSE
-    std::cout << "From " << getParentModule()->getFullName() << " - ";
-    std::cout << "Recorded vehicle IDs: ";
+//    std::cout << "From " << getParentModule()->getFullName() << " - ";
+//    std::cout << "Recorded vehicle IDs: ";
 #endif
     // Allocate enough space for vehicles
     data->setVehiclesArraySize(vehicleIDs.size());
@@ -119,15 +119,15 @@ void RSUApp::populateData(RSU_Data *data, std::list<std::string> &vehicleIDs) {
         vehicle.position[1] = pos.y;
         data->setVehicles(k++, vehicle);  // Insert vehicle at position k
 #if RSU_VERBOSE
-        std::cout << *veh << " ";
+//        std::cout << *veh << " ";
 #endif
     }
 #if RSU_VERBOSE
-    std::cout << endl;
+//    std::cout << endl;
 #endif
     // Add accumulated statistics
     double areaDetectorsCount = areaDetectorList.size();  // get average across all lanes 
-    data->setLastStepOccupancy(accum_occupancy / (samplesCount*areaDetectorsCount))
+    data->setLastStepOccupancy(accum_occupancy / (samplesCount*areaDetectorsCount));
     data->setLastStepMeanSpeed(accum_speed / (samplesCount*areaDetectorsCount));
     data->setLastStepHaltingVehiclesNumber(accum_halting_vehicles / samplesCount);
     // Reset sampled data values after using

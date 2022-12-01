@@ -60,8 +60,8 @@ void RampMeterController::initialize(int stage) {
             scheduleAt(simTime() + updatePeriodALINEA, updateMsg);
         }
         else {
-           updateTMC_msg = new cMessage("RSU: send data to TMC", RSU_UPDATE_TMC_MSG);
-            sampleMsg = new cMessage("RSU: accumulate data", RSU_SAMPLE_MSG);
+           updateTMC_msg = new cMessage("RSU: send data to TMC", RMC_RL_UPDATE_TMC_MSG);
+            sampleMsg = new cMessage("RSU: accumulate data", RMC_RL_SAMPLE_MSG);
             stringListFromParam(areaDetectorList, "areaDetectors");
         resetStatistics();
         scheduleAt(simTime() + UPDATE_TMC_PERIOD, updateTMC_msg);  // Instead of using fixed time, use a poisson process to determine next time?
@@ -205,7 +205,7 @@ void RampMeterController::populateData(RSU_Data *data, std::list<std::string> &v
 #endif
     // Add accumulated statistics
     double areaDetectorsCount = areaDetectorList.size();  // get average across all lanes 
-    data->setLastStepOccupancy(accum_occupancy / (samplesCount*areaDetectorsCount))
+    data->setLastStepOccupancy(accum_occupancy / (samplesCount*areaDetectorsCount));
     data->setLastStepMeanSpeed(accum_speed / (samplesCount*areaDetectorsCount));
     data->setLastStepHaltingVehiclesNumber(accum_halting_vehicles / samplesCount);
     // Reset sampled data values after using

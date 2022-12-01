@@ -20,8 +20,8 @@
 #include "Messaging/RSU_Data_m.h"
 
 #define RSU_VERBOSE 1
-#define UPDATE_TMC_PERIOD 8  // How often to send data to TMC
-#define ACCUM_DATA_PERIOD 2  // How often to accumulate network data, must be < UPDATE_TMC_PERIOD
+#define UPDATE_TMC_PERIOD 50  // How often to send data to TMC
+#define ACCUM_DATA_PERIOD 5  // How often to accumulate network data, must be < UPDATE_TMC_PERIOD
 enum RSU_MSG_types {
     RSU_BROADCAST_MSG,    // Tells RSU to broadcast an advisory to cars
     RSU_SAMPLE_MSG,       // Tells RSU to accumulate information from area detectors

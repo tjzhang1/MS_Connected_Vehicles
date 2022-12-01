@@ -22,4 +22,6 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-exec ../../bin/veins_run "$@"
+# exec ../../bin/veins_run "$@"
+cd /home/tjzhang/Research/VEINS_Connected_Vehicles/smartHighway/simulations/interstate_5
+exec ../../src/smartHighway -r 0 -m -u Cmdenv -n ..:../../src:../../../../../programs/veins-veins-5.2/examples/veins:../../../../../programs/veins-veins-5.2/src/veins --image-path=../../../../../programs/veins-veins-5.2/images -l ../../../../../programs/veins-veins-5.2/src/veins omnetpp.ini

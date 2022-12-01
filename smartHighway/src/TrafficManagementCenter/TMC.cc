@@ -22,12 +22,20 @@ TMC::~TMC() {
     delete rsuData;
     delete parkingData;
     cancelAndDelete(control_timer);
+    if (gymCon) {
+        veinsgym::proto::Request request;
+        request.set_id(1);
+        *(request.mutable_shutdown()) = {};
+        auto response = gymCon->communicate(request);
+    }
 }
 
 void TMC::initialize(int stage) {
     if(stage == 0)
     {
         stringListFromParam(parkingLotList, "parkingLots");
+        gymCon = veins::FindModule<GymConnection*>::findGlobalModule();
+        ASSERT(gymCon);
     }
 }
 
@@ -37,17 +45,16 @@ void TMC::finish() {
 
 veinsgym::proto::Request TMC::serializeObservation(void) {
     veinsgym::proto::Request request;
-    request.set_id(1);
+    request.set_id(12);
     // Add observation
-    // Pointer field to spaces
-    auto *observation_space = request.mutable_step()->mutable_observation()->mutable_tuple()->mutable_values();
+    auto *observation_space = request.mutable_step()->mutable_observation()->mutable_tuple();
     // Insert the parking space data and calculate the corresponding reward
     double parking_penalty = 0.0;
-    for(cQueue::Iterator iter=cQueue::Iterator(*parkingData); iter.end(); iter++) {
+    for(cQueue::Iterator iter=cQueue::Iterator(*parkingData); iter.end()==false; iter++) {
         auto *data = dynamic_cast<parkingLotData *>(*iter);
         // Add a space to observation tuple and create a box there
-        auto *data_box = observation_space->Add()->mutable_discrete();
-        double occ = data->occupancy;
+        auto *data_box = observation_space->add_values()->mutable_discrete();
+        int occ = data->occupancy;
         double cap = data->capacity;
         data_box->set_value(occ);
         // accumulate rewards
@@ -57,10 +64,10 @@ veinsgym::proto::Request TMC::serializeObservation(void) {
     // Insert the rsu data and calculate the corresponding rewards
     double speed_reward = 0.0;
     double stoppage_penalty = 0.0;
-    for(cQueue::Iterator iter=cQueue::Iterator(*rsuData); iter.end(); iter++) {
+    for(cQueue::Iterator iter=cQueue::Iterator(*rsuData); iter.end()==false; iter++) {
         auto *data = dynamic_cast<RSU_Data *>(*iter);
         // Add a space to observation tuple and create a box there
-        auto *data_box = observation_space->Add()->mutable_box();
+        auto *data_box = observation_space->add_values()->mutable_box();
         data_box->add_values(data->getLastStepOccupancy());
         data_box->add_values(data->getLastStepMeanSpeed());
 //        data_box->add_values((double)data->getLastStepHaltingVehiclesNumber());
@@ -72,14 +79,20 @@ veinsgym::proto::Request TMC::serializeObservation(void) {
     speed_reward *= SPEED_REWARD_WEIGHT;
     stoppage_penalty *= STOPPING_PENALTY_WEIGHT;
     // Add reward
-    request.mutable_step()->mutable_reward()->mutable_box()->mutable_values()->Add();
-    request.mutable_step()->mutable_reward()->mutable_box()->set_values(0, speed_reward - parking_penalty - stoppage_penalty);
+    request.mutable_step()->mutable_reward()->mutable_box()->add_values(speed_reward - parking_penalty - stoppage_penalty);
     return request;
 }
 
 // Determine the control output for the system (signal timings, broadcast to reroute)
 void TMC::computeAction(void) {
     veinsgym::proto::Request request = serializeObservation();
+#if TMC_VERBOSE
+    std::cout << "Sending observation" << endl;
+#endif
+    veinsgym::proto::Reply response = gymCon->communicate(request);
+#if TMC_VERBOSE
+    std::cout << "response acquired" << endl;
+#endif
 //    broadcastReroute(0);
 //    updateSignalTiming(0, 25);
     parkingData->clear();

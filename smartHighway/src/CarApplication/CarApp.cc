@@ -2,6 +2,7 @@
 
 #include "veins/modules/application/traci/TraCIDemo11pMessage_m.h"
 #include "Messaging/ParkingReroute_m.h"
+#include <random>
 
 using namespace veins;
 
@@ -45,19 +46,24 @@ void CarApp::onWSM(BaseFrame1609_4* frame)
     }
     // Can add more functionality here
     else if(ParkingReroute *wsm = dynamic_cast<ParkingReroute*>(frame)) {
-        for(int k=0; k<wsm->getOpenLotArraySize(); k++) {
-            const char *lotId = wsm->getOpenLot(k);
-            try {
-                traciVehicle->changeTarget("offRamp");
+        std::random_device dev;
+        std::mt19937 rng(dev());
+        std::uniform_int_distribution<std::mt19937::result_type> dist100(1,100); // distribution in range [1, 6]
+        if(dist100(rng) > 5) {
+            for(int k=0; k<wsm->getOpenLotArraySize(); k++) {
+                const char *lotId = wsm->getOpenLot(k);
                 try {
-                    traciVehicle->stopAt(lotId, 70, 0, (simtime_t)5, (uint8_t)64);
+                    traciVehicle->changeTarget(std::string(lotId) + std::string("_dest_edge"));  // edge ID here (not lane ID)
+                    try {
+                        traciVehicle->stopAt(lotId, 70, 0, (simtime_t)5, (uint8_t)64);
+                    }
+                    catch(cRuntimeError &e) {
+                        std::cerr << e.what() << endl;
+                    }
                 }
-                catch(cRuntimeError &e) {
+                catch(cRuntimeError &e){
                     std::cerr << e.what() << endl;
                 }
-            }
-            catch(cRuntimeError &e){
-                std::cerr << e.what() << endl;
             }
         }
     }

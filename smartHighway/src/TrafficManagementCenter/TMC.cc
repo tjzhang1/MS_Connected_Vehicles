@@ -86,15 +86,17 @@ veinsgym::proto::Request TMC::serializeObservation(void) {
 // Determine the control output for the system (signal timings, broadcast to reroute)
 void TMC::computeAction(void) {
     veinsgym::proto::Request request = serializeObservation();
-#if TMC_VERBOSE
-    std::cout << "Sending observation" << endl;
-#endif
     veinsgym::proto::Reply response = gymCon->communicate(request);
-#if TMC_VERBOSE
-    std::cout << "response acquired" << endl;
-#endif
-//    broadcastReroute(0);
-//    updateSignalTiming(0, 25);
+    auto rmc_timings = response.mutable_action()->mutable_tuple()->values(0);
+    auto broadcast_switch = response.mutable_action()->mutable_tuple()->values(1);
+    // Update the signal timings
+    for(int i=0; i<rmc_timings.mutable_box()->values_size(); i++) {
+        updateSignalTiming(i, rmc_timings.mutable_box()->values(i));
+    }
+    // tell RSUs to broadcast
+    for(int i=0; i<broadcast_switch.mutable_multi_binary()->values_size(); i++) {
+        broadcastReroute(i);
+    }
     parkingData->clear();
     rsuData->clear();
 }

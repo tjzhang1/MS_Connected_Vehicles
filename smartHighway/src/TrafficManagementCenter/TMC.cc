@@ -12,9 +12,22 @@ using namespace veins;
 
 Define_Module(veins::TMC);
 
+// Make sure the RSU messages are sorted for observation
+int rsuDataCompare(cObject *a, cObject *b) {
+    parkingLotData *a_converted = dynamic_cast<RSU_Data *>(a);
+    parkingLotData *b_converted = dynamic_cast<RSU_Data *>(b);
+    return std::strcmp(a_converted->getRsuId(), b_converted->getRsuId());
+}
+// Make sure the parking info are sorted for observation
+int parkingCompare(cObject *a, cObject *b) {
+    parkingLotData *a_converted = dynamic_cast<parkingLotData *>(a);
+    parkingLotData *b_converted = dynamic_cast<parkingLotData *>(b);
+    return std::strcmp(a_converted->lotID.c_str(), b_converted->lotID.c_str());
+}
+
 TMC::TMC() {
-    rsuData = new cQueue("rsuData");
-    parkingData = new cQueue("parkingData");
+    rsuData = new cQueue("rsuData", &rsuDataCompare);
+    parkingData = new cQueue("parkingData", &parkingCompare);
     control_timer = new cMessage("TMC_CONTROL_TIMER", TMC_TIMER_MSG);
 }
 
@@ -154,7 +167,7 @@ void TMC::handleMessage(cMessage *msg) {
     // Can receive self messages as a timer for updating control plan
     switch(msg->getKind()) {
     case TMC_DATA_MSG: {
-        rsuData->insert(static_cast<RSU_Data *>(msg));
+        rsuData->insert(dynamic_cast<RSU_Data *>(msg));
         // Doesn't cause issues if multiple RSUs feed data at once
         if(control_timer->isScheduled() == false) {
             scheduleAt(simTime() + RL_INTERVAL, control_timer);

@@ -7704,19 +7704,37 @@
         <phase duration="4"  state="rr"/>
     </tlLogic>
     <tlLogic id="J10" type="static" programID="0" offset="0">
-        <phase duration="80" state="G"/>
-        <phase duration="5"  state="y"/>
-        <phase duration="5"  state="r"/>
+        <phase duration="1"  state="GG"/>
+        <phase duration="1000" state="rr"/>
+    </tlLogic>
+    <tlLogic id="J10" type="static" programID="1" offset="0">
+        <phase duration="1000" state="GG"/>
+    </tlLogic>
+    <tlLogic id="J10" type="static" programID="2" offset="0">
+        <phase duration="1"  state="GG"/>
+        <phase duration="4"  state="rr"/>
     </tlLogic>
     <tlLogic id="J11" type="static" programID="0" offset="0">
-        <phase duration="80" state="G"/>
-        <phase duration="5"  state="y"/>
-        <phase duration="5"  state="r"/>
+        <phase duration="1"  state="GG"/>
+        <phase duration="1000" state="rr"/>
+    </tlLogic>
+    <tlLogic id="J11" type="static" programID="1" offset="0">
+        <phase duration="1000" state="GG"/>
+    </tlLogic>
+    <tlLogic id="J11" type="static" programID="2" offset="0">
+        <phase duration="1"  state="GG"/>
+        <phase duration="4"  state="rr"/>
     </tlLogic>
     <tlLogic id="J12" type="static" programID="0" offset="0">
-        <phase duration="80" state="G"/>
-        <phase duration="5"  state="y"/>
-        <phase duration="5"  state="r"/>
+        <phase duration="1"  state="GG"/>
+        <phase duration="1000" state="rr"/>
+    </tlLogic>
+    <tlLogic id="J12" type="static" programID="1" offset="0">
+        <phase duration="1000" state="GG"/>
+    </tlLogic>
+    <tlLogic id="J12" type="static" programID="2" offset="0">
+        <phase duration="1"  state="GG"/>
+        <phase duration="4"  state="rr"/>
     </tlLogic>
     <tlLogic id="J2" type="static" programID="0" offset="0">
         <phase duration="1"  state="GG"/>
@@ -7741,19 +7759,39 @@
         <phase duration="4"  state="r"/>
     </tlLogic>
     <tlLogic id="J7" type="static" programID="0" offset="0">
-        <phase duration="80" state="GG"/>
-        <phase duration="5"  state="yy"/>
-        <phase duration="5"  state="rr"/>
+        <phase duration="1"  state="GG"/>
+        <phase duration="1000" state="rr"/>
     </tlLogic>
+    <tlLogic id="J7" type="static" programID="1" offset="0">
+        <phase duration="1000" state="GG"/>
+    </tlLogic>
+    <tlLogic id="J7" type="static" programID="2" offset="0">
+        <phase duration="1"  state="GG"/>
+        <phase duration="4"  state="rr"/>
+    </tlLogic>
+
     <tlLogic id="J8" type="static" programID="0" offset="0">
-        <phase duration="80" state="G"/>
-        <phase duration="5"  state="y"/>
-        <phase duration="5"  state="r"/>
+        <phase duration="1"  state="GG"/>
+        <phase duration="1000" state="rr"/>
     </tlLogic>
+    <tlLogic id="J8" type="static" programID="1" offset="0">
+        <phase duration="1000" state="GG"/>
+    </tlLogic>
+    <tlLogic id="J8" type="static" programID="2" offset="0">
+        <phase duration="1"  state="GG"/>
+        <phase duration="4"  state="rr"/>
+    </tlLogic>
+
     <tlLogic id="J9" type="static" programID="0" offset="0">
-        <phase duration="80" state="GG"/>
-        <phase duration="5"  state="yy"/>
-        <phase duration="5"  state="rr"/>
+        <phase duration="1"  state="GG"/>
+        <phase duration="1000" state="rr"/>
+    </tlLogic>
+    <tlLogic id="J9" type="static" programID="1" offset="0">
+        <phase duration="1000" state="GG"/>
+    </tlLogic>
+    <tlLogic id="J9" type="static" programID="2" offset="0">
+        <phase duration="1"  state="GG"/>
+        <phase duration="4"  state="rr"/>
     </tlLogic>
 
     <junction id="10565341" type="dead_end" x="5387.06" y="10509.89" incLanes="" intLanes="" shape="5388.61,10509.50 5376.21,10512.65"/>

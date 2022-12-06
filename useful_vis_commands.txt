@@ -1,0 +1,2 @@
+# For tripInfo.xml, plot duration over time for vehicles with destinations at the parking edge or highway end
+python $SUMO_HOME/tools/visualization/plotXMLAttributes.py -i arrivalLane --filter-ids destination_edge_0,pa_0_dest_edge_0 -x depart -y duration --scatterplot --xlabel "depart time [s]" --ylabel "duration [s]"  tripInfo.xml --show

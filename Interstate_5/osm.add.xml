@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-12-04 20:41:53 by Eclipse SUMO netedit Version 1.15.0
+<!-- generated on 2022-12-05 16:32:52 by Eclipse SUMO netedit Version 1.15.0
 -->
 
 <additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
-    <!-- StoppingPlaces -->
-    <parkingArea id="pa_0" lane="E0_0" startPos="10.00" endPos="100.00" roadsideCapacity="403" onRoad="1" width="5.00"/>
     <!-- Detectors -->
     <e1Detector id="e1_DOWNEY_on_ramp_0" lane="4370760_0" pos="72.06" period="300.00" file="e1_DOWNEY_on_ramp_0.xml"/>
     <e1Detector id="e1_DOWNEY_upstream_0" lane="864961753_0" pos="40.03" period="300.00" file="e1_DOWNEY_upstream_0.xml"/>
@@ -52,7 +50,7 @@
     <e2Detector id="e2_ATLANTIC_exit_2" lanes="32296822-AddedOffRampEdge_2 864942146_1" pos="0.00" endPos="100.00" period="300.00" file="e2_ATLANTIC_exit_2.xml"/>
     <e2Detector id="e2_ATLANTIC_exit_3" lanes="32296822-AddedOffRampEdge_3 864942146_2" pos="0.00" endPos="100.00" period="300.00" file="e2_ATLANTIC_exit_3.xml"/>
     <e2Detector id="e2_ATLANTIC_exit_4" lanes="32296822-AddedOffRampEdge_4 864942146_3" pos="0.00" endPos="100.00" period="300.00" file="e2_ATLANTIC_exit_4.xml"/>
-    <e2Detector id="e2_ATLANTIC_on_ramp_0" lanes="4004150_0 4004150.47_0" pos="3" endPos="9" period="300.00" file="e2_ATLANTIC_on_ramp_0.xml"/>
+    <e2Detector id="e2_ATLANTIC_on_ramp_0" lanes="4004150_0 4004150.47_0" pos="3.00" endPos="9.00" period="300.00" file="e2_ATLANTIC_on_ramp_0.xml"/>
     <e2Detector id="e2_ATLANTIC_on_ramp_1" lanes="4004150_1 4004150.47_1 398193502_0" pos="4.35" endPos="51.37" period="300.00" file="e2_ATLANTIC_on_ramp_1.xml"/>
     <e2Detector id="e2_CALZONA_enter_0" lanes="139639760.97.66_0 863776290#1-AddedOnRampEdge_0" pos="0.00" endPos="94.00" period="300.00" file="e2_CALZONA_enter_0.xml"/>
     <e2Detector id="e2_CALZONA_enter_1" lanes="863776290#0_0 863776290#1-AddedOnRampEdge_1" pos="85.00" endPos="94.00" period="300.00" file="e2_CALZONA_enter_1.xml"/>
@@ -233,6 +231,11 @@
     <rerouter id="rerouter_PARAMOUNT_exit" edges="866210533" pos="10423.09,3662.29" probability="0.05">
         <interval begin="0.00" end="7200.00">
             <destProbReroute id="exit_to_PARAMOUNT_BLVD" probability="1.00"/>
+        </interval>
+    </rerouter>
+    <rerouter id="rerouter_PARKING" edges="158724524#1" pos="11341.82,2884.12" probability="0.50">
+        <interval begin="3000.00" end="7200.00">
+            <destProbReroute id="exit_to_LAKEWOOD" probability="1.00"/>
         </interval>
     </rerouter>
     <rerouter id="rerouter_SLAUSON_exit" edges="32296182#1" pos="9875.75,4938.75" probability="0.07">

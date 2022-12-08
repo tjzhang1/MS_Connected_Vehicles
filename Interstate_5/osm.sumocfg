@@ -11,10 +11,19 @@
         <additional-files value="osm.add.xml"/>
     </input>
 
+    <time>
+        <end value="4800"/>
+    </time>
+
+    <processing>
+        <scale value="5"/>
+    </processing>
+
     <output>
-	<emission-output value="emissions.xml" />
-	<!--full-output value="fullOut.xml" /-->
-	<tripinfo-output value="tripInfo.xml" />
+	     <!--emission-output value="emissions.xml" /-->
+	     <!--full-output value="fullOut.xml" /-->
+	     <tripinfo-output value="tripInfo.xml" />
+        <device.emissions.probability value="1.0" />
     </output>
 
 </configuration>

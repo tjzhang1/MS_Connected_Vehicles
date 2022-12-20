@@ -12,7 +12,7 @@ enum {
     TMC_TIMER_MSG = 1,
 };
 #define RL_INTERVAL 1  // Time between receiving RSU data and performing a computation
-#define TMC_VERBOSE 1
+#define TMC_VERBOSE 0
 #define PARKING_PENALTY_WEIGHT 1
 #define SPEED_REWARD_WEIGHT 1
 #define STOPPING_PENALTY_WEIGHT 0.5
@@ -34,6 +34,12 @@ public:
     int occupancy;
 };
 
+typedef struct {
+    int hwyThroughput;
+    double accumTravelTime;
+    double accumCO2Emissions;
+} rewards_t;
+
 namespace veins {
 
 
@@ -45,6 +51,11 @@ class TMC : public cSimpleModule {
 public:
     TMC(void);
     ~TMC(void);
+
+    rewards_t globalReward;
+    rewards_t bufferedHOVReward;
+    rewards_t bufferedVehReward;
+
 protected:
     void initialize(int stage) override;
     void handleMessage(cMessage *msg) override;

@@ -14,8 +14,8 @@ Define_Module(veins::TMC);
 
 // Make sure the RSU messages are sorted for observation
 int rsuDataCompare(cObject *a, cObject *b) {
-    parkingLotData *a_converted = dynamic_cast<RSU_Data *>(a);
-    parkingLotData *b_converted = dynamic_cast<RSU_Data *>(b);
+    RSU_Data *a_converted = dynamic_cast<RSU_Data *>(a);
+    RSU_Data *b_converted = dynamic_cast<RSU_Data *>(b);
     return std::strcmp(a_converted->getRsuId(), b_converted->getRsuId());
 }
 // Make sure the parking info are sorted for observation

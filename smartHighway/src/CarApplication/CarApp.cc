@@ -14,7 +14,39 @@ void CarApp::initialize(int stage) {
         sentMessage = false;
         lastDroveAt = simTime();
         currentSubscribedServiceId = -1;
+        spawnTime = simTime();
+        TMC_connection = getParentModule()->getParentModule()->getSubmodule("TMC");
+        if(strcmp(traciVehicle->getTypeId(), "HOV") == 0)
+            payloadReward = TMC_connection->globalReward;
     }
+}
+
+/* Called when vehicle exits the simulation, will be used to update global rewards */
+void CarApp::finish() {
+    std::cout << "finish" << endl;
+    // traciVehicle declared in DemoBaseApplLayer.h
+    // Handle end of mainline case
+    if(strcmp(traciVehicle->getLaneId(), "destination") == 0 || strcmp(traciVehicle->getTypeId(), "HOV") == 0 || strcmp(traciVehicle->nodeId, "continuingVeh") == 0) {
+        TMC_connection->globalReward.hwyThroughput++;
+        TMC_connection->globalReward.accumTravelTime+=(simTime() - spawnTime);
+        TMC_connection->globalReward.accumCO2Emissions+=traciVehicle->getCO2Emissions();
+        // Add additional payload
+        TMC_connection->globalReward.hwyThroughput += payloadReward.hwyThroughput;
+        TMC_connection->globalReward.accumTravelTime += payloadReward.accumTravelTime;
+        TMC_connection->globalReward.accumCO2Emissions += payloadReward.accumCO2Emissions;
+    }
+    // If vehicle leaves to park and there's a spot available, add values to buffered reward to be delivered as a payload for the next HOV
+    else if(strcmp(traciVehicle->getLaneId(), "parking_destination") == 0 && TMC_connection->parkingSpaces > 0) {
+        TMC_connection->bufferedHOVReward.hwyThroughput++;
+        TMC_connection->bufferedHOVReward.accumTravelTime+=(simTime() - spawnTime + wait_time + random);
+        TMC_connection->bufferedHOVReward.accumCO2Emissions+=traciVehicle->getCO2Emissions();
+        TMC_connection->parkingSpaces--;
+    }
+    // If vehicle leaves to park and there's no spots left, add a vehicle at the next spawn point
+    else if(strcmp(traciVehicle->getLaneId(), "parking_destination") == 0 && TMC_connection->parkingSpaces == 0) {
+
+    }
+    DemoBaseApplLayer::finish();
 }
 
 void CarApp::onWSA(DemoServiceAdvertisment* wsa)

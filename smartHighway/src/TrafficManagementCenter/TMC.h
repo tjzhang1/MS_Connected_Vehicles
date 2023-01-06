@@ -2,14 +2,19 @@
 #define TMC_H_
 
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
-#include "Messaging/RSU_Data_m.h"
 #include "protobuf/veinsgym.pb.h"
 #include "VeinsGym/GymConnection.h"
+#include "Messaging/RSU_Data_m.h"
+#include "Messaging/ParkingReroute_m.h"
+#include "Messaging/UpdateMeteringRate_m.h"
+#include "Messaging/PayloadReward_m.h"
+#include "Messaging/ProbeVehicleData_m.h"
 
 // Expected message types
 enum {
     TMC_DATA_MSG = 0,
     TMC_TIMER_MSG = 1,
+    TMC_BUFFERED_RWD_MSG = 2,
 };
 #define RL_INTERVAL 1  // Time between receiving RSU data and performing a computation
 #define TMC_VERBOSE 0
@@ -36,7 +41,7 @@ public:
 
 typedef struct {
     int hwyThroughput;
-    double accumTravelTime;
+    simtime_t accumTravelTime;
     double accumCO2Emissions;
 } rewards_t;
 
@@ -55,6 +60,7 @@ public:
     rewards_t globalReward;
     rewards_t bufferedHOVReward;
     rewards_t bufferedVehReward;
+    int parkingSpaces;
 
 protected:
     void initialize(int stage) override;
@@ -72,6 +78,8 @@ protected:
     void parkingLotStatus(void);
     // Format rsuData and parkingData information into protobuf
     veinsgym::proto::Request serializeObservation(void);
+    // Reward: vehicle has exited to park and needs to schedule a reward accordingly
+    void handleBufferedReward(PayloadReward *msg);
 
 private:
     // need some sort of queue to hold RSU data

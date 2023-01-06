@@ -1,12 +1,8 @@
 #include "TMC.h"
 #include "RSUApp/RSUApp.h"
-#include "Messaging/ProbeVehicleData_m.h"
 #include "veins/modules/mobility/traci/TraCIScenarioManager.h"
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
 #include <boost/algorithm/string.hpp>
-#include "Messaging/RSU_Data_m.h"
-#include "Messaging/ParkingReroute_m.h"
-#include "Messaging/UpdateMeteringRate_m.h"
 
 using namespace veins;
 
@@ -162,9 +158,22 @@ void TMC::parkingLotStatus(void) {
     }
 }
 
+void TMC::handleBufferedReward(PayloadReward *msg) {
+    if(msg->getVType() == HOV) {
+        bufferedHOVReward.hwyThroughput++;
+        bufferedHOVReward.accumTravelTime+=msg->getTravelTime();
+        bufferedHOVReward.accumCO2Emissions+=msg->getCO2Emissions();
+    }
+    else {
+        // Spawn vehicle with extra characteristics
+        // Get access to CarApp appl and add payload values
+    }
+}
+
 void TMC::handleMessage(cMessage *msg) {
     // Can receive messages from gate for RSU data
     // Can receive self messages as a timer for updating control plan
+    // Can receive messages from vehicles to assign payload rewards
     switch(msg->getKind()) {
     case TMC_DATA_MSG: {
         rsuData->insert(dynamic_cast<RSU_Data *>(msg));
@@ -177,6 +186,11 @@ void TMC::handleMessage(cMessage *msg) {
     case TMC_TIMER_MSG: {
         parkingLotStatus();
         computeAction();
+        break;
+    }
+    case TMC_BUFFERED_RWD_MSG: {
+        handleBufferedReward(dynamic_cast<PayloadReward *>(msg));
+        delete msg;
         break;
     }
     default: {

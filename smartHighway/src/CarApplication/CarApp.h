@@ -21,7 +21,7 @@ static const std::vector<std::string> exitList = { // Exit no:
         "destination_edge"          // B
 };
 
-// Travel time to park and ride in seconds
+// Travel time to park and ride in seconds (estimated from Google Maps)
 static const std::vector<int> travelTimeList = {
         300,                        // exit_to_I605
         30,                         // exit_to_LAKEWOOD
@@ -77,11 +77,8 @@ namespace veins {
         void redirect(void);
 
     protected:
-        simtime_t lastDroveAt;
-        bool sentMessage;
-        int currentSubscribedServiceId;
         TMC *TMC_connection;
-        rewards_t payloadReward = {0};
+        rewards_t payloadReward = {0,SimTime::ZERO,0};
         // Important vehicle metadata
         simtime_t spawnTime;  // When vehicle was placed onto road
         uint8_t exitNo = UNASSIGNED;  // If redirected to park and ride,
@@ -90,11 +87,7 @@ namespace veins {
         double CO2Emissions = 0.0;
         std::string vType;
 
-    protected:
         void onWSM(BaseFrame1609_4* wsm) override;
-        void onWSA(DemoServiceAdvertisment* wsa) override;
-
-        void handleSelfMsg(cMessage* msg) override;
         void handlePositionUpdate(cObject* obj) override;
     };
 }

@@ -24,9 +24,10 @@ struct VehicleData {
 }
 
 message RSU_Data {
-    string rsuId;
+    int rsuId;
     double lastStepOccupancy;
     double lastStepMeanSpeed;
     int lastStepHaltingVehiclesNumber;
+    int vehiclesNumber;
     VehicleData vehicles[];
 }

@@ -191,7 +191,7 @@ void RampMeterController::handleMessage(cMessage * msg) {
 }
 
 void RampMeterController::populateData(RSU_Data *data, std::list<std::string> &vehicleIDs) {
-    data->setRsuId(getParentModule()->getFullName());
+    data->setRsuId(getParentModule()->getIndex());
 #if RMC_VERBOSE
 //    std::cout << "From " << getParentModule()->getFullName() << " - ";
 //    std::cout << "Recorded vehicle IDs: ";

@@ -12,9 +12,6 @@ Define_Module(veins::CarApp);
 void CarApp::initialize(int stage) {
     DemoBaseApplLayer::initialize(stage);
     if (stage == 0) {
-        sentMessage = false;
-        lastDroveAt = simTime();
-        currentSubscribedServiceId = -1;
         spawnTime = simTime();
         TMC_connection = dynamic_cast<TMC *>(getParentModule()->getParentModule()->getSubmodule("TMC"));
 
@@ -56,8 +53,6 @@ void CarApp::finish() {
     }
     // If vehicle leaves to park and there's a spot available, add values to buffered reward to be delivered as a payload for the next HOV
     else if(exitNo != UNASSIGNED && TMC_connection->parkingSpaces > 0) {
-//        simtime_t arrival_time = (simTime() + getTravelTime(exitNo) + SimTime(normal(0.0, 30.0)));
-//        simtime_t wait_time = SimTime(fmod(arrival_time.dbl(), 15.0));  // based on HOV interval
         double travel_time = abs( normal(getTravelTime(exitNo), getTravelTime(exitNo)/4) );
         double wait_time = fmod(simTime().dbl() + travel_time, 15.0);  // based on HOV interval
         PayloadReward *msg = new PayloadReward("HOV_reward", TMC_BUFFERED_RWD_MSG);
@@ -75,8 +70,7 @@ void CarApp::finish() {
     }
     // If vehicle leaves to park and there's no spots left, add a vehicle at the next spawn point
     else if(exitNo != UNASSIGNED && TMC_connection->parkingSpaces == 0) {
-        double travel_time = abs( normal(2*getTravelTime(exitNo), getTravelTime(exitNo)/4) );
-//        simtime_t return_time = (simTime() + getTravelTime(exitNo) + SimTime(normal(0.0, getTravelTime(exitNo).dbl()/4.0)) + getTravelTime(exitNo));
+        double travel_time = abs( normal(2*getTravelTime(exitNo), getTravelTime(exitNo)/4) );  // Roughly twice the time it takes to get to the PAR (perhaps should not be 2x, but time taken to PAR + reentering at nearest ramp
         PayloadReward *msg = new PayloadReward("Continuing_VEH_reward", TMC_BUFFERED_RWD_MSG);
         msg->setVType(CONTINUING_VEH);
         msg->setTravelTime(SimTime(travel_time) + simTime() - spawnTime);
@@ -86,18 +80,6 @@ void CarApp::finish() {
         sendDirect(msg, SimTime(travel_time), 0, target, "RSU_port");
     }
     DemoBaseApplLayer::finish();
-}
-
-void CarApp::onWSA(DemoServiceAdvertisment* wsa)
-{
-    if (currentSubscribedServiceId == -1) {
-        mac->changeServiceChannel(static_cast<Channel>(wsa->getTargetChannel()));
-        currentSubscribedServiceId = wsa->getPsid();
-        if (currentOfferedServiceId != wsa->getPsid()) {
-            stopService();
-            startService(static_cast<Channel>(wsa->getTargetChannel()), wsa->getPsid(), "Mirrored Traffic Service");
-        }
-    }
 }
 
 void CarApp::redirect(void) {
@@ -121,21 +103,7 @@ void CarApp::redirect(void) {
 
 void CarApp::onWSM(BaseFrame1609_4* frame)
 {
-    if ( TraCIDemo11pMessage* wsm = dynamic_cast<TraCIDemo11pMessage*>(frame) )
-    {
-        findHost()->getDisplayString().setTagArg("i", 1, "green");
-
-        if (mobility->getRoadId()[0] != ':') traciVehicle->changeRoute(wsm->getDemoData(), 9999);
-        if (!sentMessage) {
-            sentMessage = true;
-            // repeat the received traffic update once in 2 seconds plus some random delay
-            wsm->setSenderAddress(myId);
-            wsm->setSerial(3);
-            scheduleAt(simTime() + 2 + uniform(0.01, 0.2), wsm->dup());
-        }
-    }
-    // Can add more functionality here
-    else if(ParkingReroute *wsm = dynamic_cast<ParkingReroute*>(frame)) {
+    if(ParkingReroute *wsm = dynamic_cast<ParkingReroute*>(frame)) {
         redirect();
 //        std::random_device dev;
 //        std::mt19937 rng(dev());
@@ -160,34 +128,6 @@ void CarApp::onWSM(BaseFrame1609_4* frame)
     }
 }
 
-void CarApp::handleSelfMsg(cMessage* msg)
-{
-    if (TraCIDemo11pMessage* wsm = dynamic_cast<TraCIDemo11pMessage*>(msg)) {
-        // send this message on the service channel until the counter is 3 or higher.
-        // this code only runs when channel switching is enabled
-        sendDown(wsm->dup());
-        wsm->setSerial(wsm->getSerial() + 1);
-        if (wsm->getSerial() >= 3) {
-            // stop service advertisements
-            stopService();
-            delete (wsm);
-        }
-        else {
-            scheduleAt(simTime() + 1, wsm);
-        }
-    }
-    else {
-        switch(msg->getKind()) {
-        case PARKNRIDE_MSG: {
-            // Handle reroute to parking structure
-            break;
-        }
-        default: {
-            DemoBaseApplLayer::handleSelfMsg(msg);
-        }
-        }
-    }
-}
 
 void CarApp::handlePositionUpdate(cObject* obj)
 {

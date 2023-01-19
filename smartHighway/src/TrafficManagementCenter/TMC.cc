@@ -12,7 +12,7 @@ Define_Module(veins::TMC);
 int rsuDataCompare(cObject *a, cObject *b) {
     RSU_Data *a_converted = dynamic_cast<RSU_Data *>(a);
     RSU_Data *b_converted = dynamic_cast<RSU_Data *>(b);
-    return std::strcmp(a_converted->getRsuId(), b_converted->getRsuId());
+    return a_converted->getRsuId() - b_converted->getRsuId();
 }
 // Make sure the parking info are sorted for observation
 int parkingCompare(cObject *a, cObject *b) {
@@ -59,6 +59,7 @@ veinsgym::proto::Request TMC::serializeObservation(void) {
     auto *observation_space = request.mutable_step()->mutable_observation()->mutable_tuple();
     // Insert the parking space data and calculate the corresponding reward
     observation_space->add_values()->mutable_discrete()->set_value(parkingSpaces);
+/* May include again if simulating parking structures beyond just spaces
 //    double parking_penalty = 0.0;
 //    for(cQueue::Iterator iter=cQueue::Iterator(*parkingData); iter.end()==false; iter++) {
 //        auto *data = dynamic_cast<parkingLotData *>(*iter);
@@ -71,23 +72,15 @@ veinsgym::proto::Request TMC::serializeObservation(void) {
 //        parking_penalty += (occ/cap);
 //    }
 //   double parking_penalty *= PARKING_PENALTY_WEIGHT;
-    // Insert the rsu data and calculate the corresponding rewards
-//    double speed_reward = 0.0;
-//    double stoppage_penalty = 0.0;
+ */
     for(cQueue::Iterator iter=cQueue::Iterator(*rsuData); iter.end()==false; iter++) {
         auto *data = dynamic_cast<RSU_Data *>(*iter);
         // Add a space to observation tuple and create a box there
         auto *data_box = observation_space->add_values()->mutable_box();
         data_box->add_values(data->getLastStepOccupancy());
         data_box->add_values(data->getLastStepMeanSpeed());
-//        data_box->add_values((double)data->getLastStepHaltingVehiclesNumber());
-        data_box->add_values((double)data->getVehiclesArraySize());
-//        // accumulate rewards
-//        speed_reward += data->getLastStepMeanSpeed();
-//        stoppage_penalty += data->getLastStepHaltingVehiclesNumber();
+        data_box->add_values((double)data->getVehiclesNumber());
     }
-//    speed_reward *= SPEED_REWARD_WEIGHT;
-//    stoppage_penalty *= STOPPING_PENALTY_WEIGHT;
     // Add reward
     request.mutable_step()->mutable_reward()->mutable_box()->add_values(calculateReward());
     return request;
@@ -107,16 +100,19 @@ double TMC::calculateReward() {
 void TMC::computeAction(void) {
     veinsgym::proto::Request request = serializeObservation();
     veinsgym::proto::Reply response = gymCon->communicate(request);
+    auto broadcast_switch = response.mutable_action();
+/* May include again if need to adjust ramp meter timings
 //    auto rmc_timings = response.mutable_action()->mutable_tuple()->values(0);
 //    auto broadcast_switch = response.mutable_action()->mutable_tuple()->values(1);
-    auto broadcast_switch = response.mutable_action();
-    // Update the signal timings
 //    for(int i=0; i<rmc_timings.mutable_box()->values_size(); i++) {
 //        updateSignalTiming(i, rmc_timings.mutable_box()->values(i));
 //    }
+ */
     // tell RSUs to broadcast
     for(int i=0; i<broadcast_switch->mutable_multi_binary()->values_size(); i++) {
-        broadcastReroute(i);
+        if(broadcast_switch->mutable_multi_binary()->values(i) == true) {
+            broadcastReroute(i);
+        }
     }
     parkingData->clear();
     rsuData->clear();
@@ -136,12 +132,14 @@ void TMC::updateSignalTiming(int targetRM, double meterRate) {
 }
 // Control: tell RSU to broadcast vehicles to reroute
 void TMC::broadcastReroute(int targetRSU) {
-    int k=0;
     ParkingReroute *msg = new ParkingReroute("broadcastReroute", RSU_BROADCAST_MSG);
-    msg->setOpenLotArraySize(parkingLotList.size());
-    for(auto lot=parkingLotList.begin(); lot!=parkingLotList.end(); lot++) {
-        msg->setOpenLot(k++, (*lot).c_str());
-    }
+/* May include again if simulating parking structures in SUMO
+//    int k=0;
+//    msg->setOpenLotArraySize(parkingLotList.size());
+//    for(auto lot=parkingLotList.begin(); lot!=parkingLotList.end(); lot++) {
+//        msg->setOpenLot(k++, (*lot).c_str());
+//    }
+*/
     // RSUExampleScenario -> rsu -> appl
     //                   |-> TMC
     cGate *target = getParentModule()->getSubmodule("rsu", targetRSU)->getSubmodule("appl")->gate("TMC_port");  // submodule name must match definition in .ned

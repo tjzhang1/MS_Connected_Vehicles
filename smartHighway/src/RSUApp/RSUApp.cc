@@ -42,8 +42,8 @@ void RSUApp::initialize(int stage) {
         traci = NULL;
         stringListFromParam(areaDetectorList, "areaDetectors");
         resetStatistics();
-        scheduleAt(simTime() + UPDATE_TMC_PERIOD, updateTMC_msg);  // Instead of using fixed time, use a poisson process to determine next time?
-        scheduleAt(simTime() + ACCUM_DATA_PERIOD, sampleMsg);
+        scheduleAt(simTime() + EQUILIBRIUM_PERIOD, updateTMC_msg);
+        scheduleAt(simTime() + EQUILIBRIUM_PERIOD, sampleMsg);
     }
 }
 
@@ -113,7 +113,9 @@ void RSUApp::handleMessage(cMessage *msg) {
 }
 
 void RSUApp::populateData(RSU_Data *data, std::list<std::string> &vehicleIDs) {
-    data->setRsuId(getParentModule()->getFullName());
+    data->setRsuId(getParentModule()->getIndex());
+    data->setVehiclesNumber(vehicleIDs.size());
+/*  May reuse this code if necessary to include detailed vehicle positions
 #if RSU_VERBOSE
 //    std::cout << "From " << getParentModule()->getFullName() << " - ";
 //    std::cout << "Recorded vehicle IDs: ";
@@ -139,11 +141,19 @@ void RSUApp::populateData(RSU_Data *data, std::list<std::string> &vehicleIDs) {
 #if RSU_VERBOSE
 //    std::cout << endl;
 #endif
+*/
     // Add accumulated statistics
     double areaDetectorsCount = areaDetectorList.size();  // get average across all lanes 
-    data->setLastStepOccupancy(accum_occupancy / (samplesCount*areaDetectorsCount));
-    data->setLastStepMeanSpeed(accum_speed / samplesCount);
-    data->setLastStepHaltingVehiclesNumber(accum_halting_vehicles / samplesCount);
+    if(samplesCount > 0 && areaDetectorsCount > 0.0) {  // Avoid dividing by 0
+        data->setLastStepOccupancy(accum_occupancy / (samplesCount*areaDetectorsCount));
+        data->setLastStepMeanSpeed(accum_speed / samplesCount);
+        data->setLastStepHaltingVehiclesNumber(accum_halting_vehicles / samplesCount);
+    }
+    else {
+        data->setLastStepOccupancy(0.0);
+        data->setLastStepMeanSpeed(0.0);
+        data->setLastStepHaltingVehiclesNumber(0);
+    }
 #if RSU_VERBOSE && DATA_SUMMARY
     std::cout << "From " << getParentModule()->getFullName() << " - ";
     std::cout << "(occupancy, speed, haltingVehicles): " << accum_occupancy / (samplesCount*areaDetectorsCount) << ", " << accum_speed / (samplesCount) << ", " << accum_halting_vehicles / samplesCount << endl;

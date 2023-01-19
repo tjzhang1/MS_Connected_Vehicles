@@ -5,10 +5,11 @@ from veins_gym import veinsgym_pb2
 def serialize_action(actions):
     """Serialize a list of floats into an action."""
     reply = veinsgym_pb2.Reply()
-    trafficLightCtl = reply.action.tuple.values.add()
-    RSUBroadcastCtl = reply.action.tuple.values.add()
-    trafficLightCtl.box.values.extend(actions[0])
-    RSUBroadcastCtl.multi_binary.values.extend(actions[1])
+#    trafficLightCtl = reply.action.tuple.values.add()
+#    RSUBroadcastCtl = reply.action.tuple.values.add()
+#    trafficLightCtl.box.values.extend(actions[0])
+#    RSUBroadcastCtl.multi_binary.values.extend(actions)
+    reply.action.multi_binary.values.extend(actions)
     return reply.SerializeToString()
 
 gym.register(

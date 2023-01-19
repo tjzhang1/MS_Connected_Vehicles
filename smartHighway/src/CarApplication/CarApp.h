@@ -57,10 +57,10 @@ const std::string getExit(int exitNo) {
     return "destination_edge";
 }
 
-simtime_t getTravelTime(int exitNo) {
+int getTravelTime(int exitNo) {
     if(exitNo >= 0 && exitNo < 11)
-        return SimTime(travelTimeList[exitNo], SIMTIME_S);
-    return SimTime();
+        return travelTimeList[exitNo];
+    return 0;
 }
 
 namespace veins {
@@ -69,16 +69,26 @@ namespace veins {
     public:
         void initialize(int stage) override;
         void finish() override;
+        /*
+         * Command to tell vehicle to redirect to the park and ride structure using the next exit
+         * Each road is labeled as "ne<exitNo>_<road_name>", and the exitNo dictates which exit
+         * the vehicle will take. exitNo may be (0,1,2...9,A,B).
+         */
+        void redirect(void);
 
     protected:
         simtime_t lastDroveAt;
         bool sentMessage;
         int currentSubscribedServiceId;
         TMC *TMC_connection;
-        simtime_t spawnTime;
         rewards_t payloadReward = {0};
-        uint8_t exitNo = UNASSIGNED;
+        // Important vehicle metadata
+        simtime_t spawnTime;  // When vehicle was placed onto road
+        uint8_t exitNo = UNASSIGNED;  // If redirected to park and ride,
         bool mainline_veh = false;
+        std::string currentRoad;
+        double CO2Emissions = 0.0;
+        std::string vType;
 
     protected:
         void onWSM(BaseFrame1609_4* wsm) override;

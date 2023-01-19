@@ -18,9 +18,12 @@ enum {
 };
 #define RL_INTERVAL 1  // Time between receiving RSU data and performing a computation
 #define TMC_VERBOSE 0
-#define PARKING_PENALTY_WEIGHT 1
-#define SPEED_REWARD_WEIGHT 1
-#define STOPPING_PENALTY_WEIGHT 0.5
+//#define PARKING_PENALTY_WEIGHT 1
+//#define SPEED_REWARD_WEIGHT 1
+//#define STOPPING_PENALTY_WEIGHT 0.5
+#define THROUGHPUT_WEIGHT 20
+#define DELAY_WEIGHT 0.1
+#define CO2_WEIGHT 0.001
 
 class parkingLotData : public cObject {
 public:
@@ -57,10 +60,10 @@ public:
     TMC(void);
     ~TMC(void);
 
-    rewards_t globalReward;
-    rewards_t bufferedHOVReward;
-    rewards_t bufferedVehReward;
-    int parkingSpaces;
+    rewards_t globalReward = {0,SimTime::ZERO,0};
+    rewards_t bufferedHOVReward = {0,SimTime::ZERO,0};
+    rewards_t bufferedVehReward = {0,SimTime::ZERO,0};
+    int parkingSpaces = 100;
 
 protected:
     void initialize(int stage) override;
@@ -78,6 +81,8 @@ protected:
     void parkingLotStatus(void);
     // Format rsuData and parkingData information into protobuf
     veinsgym::proto::Request serializeObservation(void);
+    // Add reward
+    double calculateReward(void);
     // Reward: vehicle has exited to park and needs to schedule a reward accordingly
     void handleBufferedReward(PayloadReward *msg);
 
@@ -89,6 +94,7 @@ private:
     std::vector<std::string> parkingLotList;
     cMessage *control_timer;  // Recurring self message for control updates
     GymConnection *gymCon = nullptr;
+    int spawnCounter = 0;
 };
 
 }

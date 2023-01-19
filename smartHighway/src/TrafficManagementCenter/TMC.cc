@@ -58,21 +58,22 @@ veinsgym::proto::Request TMC::serializeObservation(void) {
     // Add observation
     auto *observation_space = request.mutable_step()->mutable_observation()->mutable_tuple();
     // Insert the parking space data and calculate the corresponding reward
-    double parking_penalty = 0.0;
-    for(cQueue::Iterator iter=cQueue::Iterator(*parkingData); iter.end()==false; iter++) {
-        auto *data = dynamic_cast<parkingLotData *>(*iter);
-        // Add a space to observation tuple and create a box there
-        auto *data_box = observation_space->add_values()->mutable_discrete();
-        int occ = data->occupancy;
-        double cap = data->capacity;
-        data_box->set_value(occ);
-        // accumulate rewards
-        parking_penalty += (occ/cap);
-    }
-    parking_penalty *= PARKING_PENALTY_WEIGHT;
+    observation_space->add_values()->mutable_discrete()->set_value(parkingSpaces);
+//    double parking_penalty = 0.0;
+//    for(cQueue::Iterator iter=cQueue::Iterator(*parkingData); iter.end()==false; iter++) {
+//        auto *data = dynamic_cast<parkingLotData *>(*iter);
+//        // Add a space to observation tuple and create a box there
+//        auto *data_box = observation_space->add_values()->mutable_discrete();
+//        int occ = data->occupancy;
+//        double cap = data->capacity;
+//        data_box->set_value(occ);
+//        // accumulate rewards
+//        parking_penalty += (occ/cap);
+//    }
+//   double parking_penalty *= PARKING_PENALTY_WEIGHT;
     // Insert the rsu data and calculate the corresponding rewards
-    double speed_reward = 0.0;
-    double stoppage_penalty = 0.0;
+//    double speed_reward = 0.0;
+//    double stoppage_penalty = 0.0;
     for(cQueue::Iterator iter=cQueue::Iterator(*rsuData); iter.end()==false; iter++) {
         auto *data = dynamic_cast<RSU_Data *>(*iter);
         // Add a space to observation tuple and create a box there
@@ -81,29 +82,40 @@ veinsgym::proto::Request TMC::serializeObservation(void) {
         data_box->add_values(data->getLastStepMeanSpeed());
 //        data_box->add_values((double)data->getLastStepHaltingVehiclesNumber());
         data_box->add_values((double)data->getVehiclesArraySize());
-        // accumulate rewards
-        speed_reward += data->getLastStepMeanSpeed();
-        stoppage_penalty += data->getLastStepHaltingVehiclesNumber();
+//        // accumulate rewards
+//        speed_reward += data->getLastStepMeanSpeed();
+//        stoppage_penalty += data->getLastStepHaltingVehiclesNumber();
     }
-    speed_reward *= SPEED_REWARD_WEIGHT;
-    stoppage_penalty *= STOPPING_PENALTY_WEIGHT;
+//    speed_reward *= SPEED_REWARD_WEIGHT;
+//    stoppage_penalty *= STOPPING_PENALTY_WEIGHT;
     // Add reward
-    request.mutable_step()->mutable_reward()->mutable_box()->add_values(speed_reward - parking_penalty - stoppage_penalty);
+    request.mutable_step()->mutable_reward()->mutable_box()->add_values(calculateReward());
     return request;
+}
+
+double TMC::calculateReward() {
+    double reward = 0.0;
+    reward += THROUGHPUT_WEIGHT * globalReward.hwyThroughput;
+    reward += DELAY_WEIGHT * globalReward.accumTravelTime.dbl();
+    reward += CO2_WEIGHT * globalReward.accumCO2Emissions;
+    // Reset reward after reporting to ML script
+    globalReward = {0,SimTime::ZERO,0};
+    return reward;
 }
 
 // Determine the control output for the system (signal timings, broadcast to reroute)
 void TMC::computeAction(void) {
     veinsgym::proto::Request request = serializeObservation();
     veinsgym::proto::Reply response = gymCon->communicate(request);
-    auto rmc_timings = response.mutable_action()->mutable_tuple()->values(0);
-    auto broadcast_switch = response.mutable_action()->mutable_tuple()->values(1);
+//    auto rmc_timings = response.mutable_action()->mutable_tuple()->values(0);
+//    auto broadcast_switch = response.mutable_action()->mutable_tuple()->values(1);
+    auto broadcast_switch = response.mutable_action();
     // Update the signal timings
-    for(int i=0; i<rmc_timings.mutable_box()->values_size(); i++) {
-        updateSignalTiming(i, rmc_timings.mutable_box()->values(i));
-    }
+//    for(int i=0; i<rmc_timings.mutable_box()->values_size(); i++) {
+//        updateSignalTiming(i, rmc_timings.mutable_box()->values(i));
+//    }
     // tell RSUs to broadcast
-    for(int i=0; i<broadcast_switch.mutable_multi_binary()->values_size(); i++) {
+    for(int i=0; i<broadcast_switch->mutable_multi_binary()->values_size(); i++) {
         broadcastReroute(i);
     }
     parkingData->clear();
@@ -166,7 +178,13 @@ void TMC::handleBufferedReward(PayloadReward *msg) {
     }
     else {
         // Spawn vehicle with extra characteristics
-        // Get access to CarApp appl and add payload values
+        TraCIScenarioManager *manager = TraCIScenarioManagerAccess().get();
+        TraCICommandInterface *traci = manager->getCommandInterface();
+        traci->addVehicle("continuingVehicle" + std::to_string(spawnCounter++), "continuingVehicle", "continuingRoute", simTime());
+        bufferedVehReward.hwyThroughput++;
+        bufferedVehReward.accumTravelTime+=msg->getTravelTime();
+        bufferedVehReward.accumCO2Emissions+=msg->getCO2Emissions();
+//        std::cout<<"spawning new continuing vehicle"<<endl;
     }
 }
 
@@ -184,7 +202,6 @@ void TMC::handleMessage(cMessage *msg) {
         break;
     }
     case TMC_TIMER_MSG: {
-        parkingLotStatus();
         computeAction();
         break;
     }

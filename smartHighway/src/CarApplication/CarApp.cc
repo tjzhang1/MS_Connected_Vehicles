@@ -18,17 +18,19 @@ void CarApp::initialize(int stage) {
         spawnTime = simTime();
         TMC_connection = dynamic_cast<TMC *>(getParentModule()->getParentModule()->getSubmodule("TMC"));
 
-        std::string vType = traciVehicle->getTypeId();
+        vType = traciVehicle->getTypeId();
         // Setup payload rewards and determine if vehicle data should be recorded when exiting
-        if(vType.compare("HOV") == 0) {
+        if(vType.compare("pt_bus") == 0) {
             payloadReward = TMC_connection->bufferedHOVReward;
-            TMC_connection->bufferedHOVReward = {0};
+            TMC_connection->bufferedHOVReward = {0,SimTime::ZERO,0};
             mainline_veh = true;
+//            std::cout << "Entered HOV" << getParentModule()->getFullName() << endl;
         }
-        else if(vType.compare("continuingVeh") == 0) {
+        else if(vType.compare("continuingVehicle") == 0) {
             payloadReward = TMC_connection->bufferedVehReward;
-            TMC_connection->bufferedVehReward = {0};
+            TMC_connection->bufferedVehReward = {0,SimTime::ZERO,0};
             mainline_veh = true;
+//            std::cout << "Entered continuing vehicle" << endl;
         }
         // If type is DEFAULT_VEH but spawns at mainline source
         if(traciVehicle->getRoadId().compare("ne0_source") == 0) {
@@ -39,46 +41,49 @@ void CarApp::initialize(int stage) {
 
 /* Called when vehicle exits the simulation, will be used to update global rewards */
 void CarApp::finish() {
-    std::cout << "finish" << endl;
     // traciVehicle declared in DemoBaseApplLayer.h
     // Handle end of mainline case - reaches end of mainline, is a mainline vehicle
-    if(traciVehicle->getRoadId().compare("destination") == 0 && mainline_veh) {
+    if(currentRoad.compare("destination_edge") == 0 && mainline_veh) {
         TMC_connection->globalReward.hwyThroughput++;
         TMC_connection->globalReward.accumTravelTime+=(simTime() - spawnTime);
-        TMC_connection->globalReward.accumCO2Emissions+=traciVehicle->getCO2Emissions();
+        TMC_connection->globalReward.accumCO2Emissions+=CO2Emissions;
         // Add additional payload
         TMC_connection->globalReward.hwyThroughput += payloadReward.hwyThroughput;
         TMC_connection->globalReward.accumTravelTime += payloadReward.accumTravelTime;
         TMC_connection->globalReward.accumCO2Emissions += payloadReward.accumCO2Emissions;
+        std::cout<<"Exited a "<<vType<<" with travel time " << (simTime()-spawnTime).str() << "s and emissions " << CO2Emissions <<"\t";
+        std::cout<<"THROUGHPUT: "<<TMC_connection->globalReward.hwyThroughput<<", "<<"TIME: "<<TMC_connection->globalReward.accumTravelTime.str()<<", "<<"Emissions: "<<TMC_connection->globalReward.accumCO2Emissions<<endl;
     }
     // If vehicle leaves to park and there's a spot available, add values to buffered reward to be delivered as a payload for the next HOV
     else if(exitNo != UNASSIGNED && TMC_connection->parkingSpaces > 0) {
-        simtime_t arrival_time = (simTime() + getTravelTime(exitNo) + SimTime(normal(0.0, 30.0)));
-        simtime_t wait_time = SimTime(fmod(arrival_time.dbl(), 15.0));  // based on HOV interval
-//        TMC_connection->bufferedHOVReward.hwyThroughput++;
+//        simtime_t arrival_time = (simTime() + getTravelTime(exitNo) + SimTime(normal(0.0, 30.0)));
+//        simtime_t wait_time = SimTime(fmod(arrival_time.dbl(), 15.0));  // based on HOV interval
+        double travel_time = abs( normal(getTravelTime(exitNo), getTravelTime(exitNo)/4) );
+        double wait_time = fmod(simTime().dbl() + travel_time, 15.0);  // based on HOV interval
         PayloadReward *msg = new PayloadReward("HOV_reward", TMC_BUFFERED_RWD_MSG);
         // Populate msg with this vehicle's rewards
         msg->setVType(HOV);
-        msg->setTravelTime(arrival_time - spawnTime + wait_time);
-        msg->setCO2Emissions(traciVehicle->getCO2Emissions());
+        msg->setTravelTime(SimTime(travel_time + wait_time) + simTime() - spawnTime);
+        msg->setCO2Emissions(CO2Emissions);
         // Reserve parking space
         TMC_connection->parkingSpaces--;
         // Schedule a message to update the rewards payload in the future
         // RSUExampleScenario -> node -> appl
         //                   |-> TMC
         cModule *target = getParentModule()->getParentModule()->getSubmodule("TMC");
-        sendDirect(msg, arrival_time - simTime(), 0, target, "RSU_port");
+        sendDirect(msg, SimTime(travel_time + wait_time), 0, target, "RSU_port");
     }
     // If vehicle leaves to park and there's no spots left, add a vehicle at the next spawn point
     else if(exitNo != UNASSIGNED && TMC_connection->parkingSpaces == 0) {
-        simtime_t return_time = (simTime() + getTravelTime(exitNo) + SimTime(normal(0.0, 60.0)) + getTravelTime(exitNo));
+        double travel_time = abs( normal(2*getTravelTime(exitNo), getTravelTime(exitNo)/4) );
+//        simtime_t return_time = (simTime() + getTravelTime(exitNo) + SimTime(normal(0.0, getTravelTime(exitNo).dbl()/4.0)) + getTravelTime(exitNo));
         PayloadReward *msg = new PayloadReward("Continuing_VEH_reward", TMC_BUFFERED_RWD_MSG);
         msg->setVType(CONTINUING_VEH);
-        msg->setTravelTime(return_time - spawnTime);
-        msg->setCO2Emissions(traciVehicle->getCO2Emissions());
+        msg->setTravelTime(SimTime(travel_time) + simTime() - spawnTime);
+        msg->setCO2Emissions(CO2Emissions);
         // Schedule a message to spawn a vehicle in the future
         cModule *target = getParentModule()->getParentModule()->getSubmodule("TMC");
-        sendDirect(msg, return_time - simTime(), 0, target, "RSU_port");
+        sendDirect(msg, SimTime(travel_time), 0, target, "RSU_port");
     }
     DemoBaseApplLayer::finish();
 }
@@ -91,6 +96,25 @@ void CarApp::onWSA(DemoServiceAdvertisment* wsa)
         if (currentOfferedServiceId != wsa->getPsid()) {
             stopService();
             startService(static_cast<Channel>(wsa->getTargetChannel()), wsa->getPsid(), "Mirrored Traffic Service");
+        }
+    }
+}
+
+void CarApp::redirect(void) {
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist100(1,100); // distribution in range [1, 6]
+    if(exitNo == UNASSIGNED && vType.compare("DEFAULT_VEHTYPE") == 0 && dist100(rng) < 5 && traciVehicle->getPlannedRoadIds().back().compare("destination_edge")==0) {
+        char exitCode[2] = {currentRoad[2], '\0'};
+        exitNo = strtol(exitCode, NULL, 16);
+//            std::cout << "Rerouting vehicle " << getParentModule()->getFullName();
+//            std::cout << " to exit " << exitCode;
+//            std::cout << " = " << getExit(exitNo) << endl;
+        try {
+            traciVehicle->changeTarget(getExit(exitNo));
+        }
+        catch(cRuntimeError &e){
+            std::cerr << e.what() << endl;
         }
     }
 }
@@ -112,10 +136,11 @@ void CarApp::onWSM(BaseFrame1609_4* frame)
     }
     // Can add more functionality here
     else if(ParkingReroute *wsm = dynamic_cast<ParkingReroute*>(frame)) {
-        std::random_device dev;
-        std::mt19937 rng(dev());
-        std::uniform_int_distribution<std::mt19937::result_type> dist100(1,100); // distribution in range [1, 6]
-        if(exitNo == UNASSIGNED && dist100(rng) > 5 && traciVehicle->getPlannedRoadIds().back().compare("destination")==0) {
+        redirect();
+//        std::random_device dev;
+//        std::mt19937 rng(dev());
+//        std::uniform_int_distribution<std::mt19937::result_type> dist100(1,100); // distribution in range [1, 6]
+//        if(dist100(rng) > 5) {
 //            for(int k=0; k<wsm->getOpenLotArraySize(); k++) {
 //                const char *lotId = wsm->getOpenLot(k);
 //                try {
@@ -131,15 +156,7 @@ void CarApp::onWSM(BaseFrame1609_4* frame)
 //                    std::cerr << e.what() << endl;
 //                }
 //            }
-            char exitCode[2] = {traciVehicle->getLaneId()[2], '\0'};
-            exitNo = strtol(exitCode, NULL, 16);
-            try {
-                traciVehicle->changeTarget(getExit(exitNo));
-            }
-            catch(cRuntimeError &e){
-                std::cerr << e.what() << endl;
-            }
-        }
+//        }
     }
 }
 
@@ -174,6 +191,11 @@ void CarApp::handleSelfMsg(cMessage* msg)
 
 void CarApp::handlePositionUpdate(cObject* obj)
 {
+    currentRoad = traciVehicle->getRoadId();
+    CO2Emissions += traciVehicle->getCO2Emissions();
+//    std::string result;
+//    traciVehicle->getParameter("device.emissions.CO2_abs", result);
+//    std::cout<<result<<endl;
     DemoBaseApplLayer::handlePositionUpdate(obj);
 }
 

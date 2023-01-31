@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-12-30 11:03:40 by Eclipse SUMO netedit Version 1.15.0
+<!-- generated on 2023-01-31 00:36:29 by Eclipse SUMO netedit Version 1.15.0
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
@@ -31,7 +31,6 @@
     </pedestrian>
 
     <netedit>
-        <additional-files value="/home/tjzhang/Research/VEINS_Connected_Vehicles/Interstate_5/osm.add.xml"/>
         <route-files value="/home/tjzhang/Research/VEINS_Connected_Vehicles/Interstate_5/osm_pt.rou.xml"/>
     </netedit>
 
@@ -4158,11 +4157,6 @@
             <param key="origId" value="28895773 28895774 28895775 28895780"/>
         </lane>
     </edge>
-    <edge id="28895784" from="317627455" to="807656158" priority="9" type="highway.motorway_link" spreadType="center" shape="5353.03,9708.66 5333.44,9728.61 5293.84,9758.63 5247.16,9790.75 5224.35,9805.94 5163.99,9844.37 5046.94,9918.80">
-        <lane id="28895784_0" index="0" allow="private emergency authority army vip passenger hov taxi bus coach delivery truck trailer motorcycle evehicle custom1 custom2" speed="22.22" length="367.09" shape="5350.51,9711.22 5333.44,9728.61 5293.84,9758.63 5247.16,9790.75 5224.35,9805.94 5163.99,9844.37 5048.04,9918.10">
-            <param key="origId" value="28895784 66668864 66668842"/>
-        </lane>
-    </edge>
     <edge id="28897127" from="317639773" to="317640150" name="Pomona Freeway" priority="14" type="highway.motorway" spreadType="center" shape="1178.50,11175.18 1262.13,11172.97 1329.91,11171.52 1371.19,11171.74 1426.11,11173.23 1484.79,11175.70 1526.80,11176.77 1564.84,11176.32 1602.85,11173.51 1641.63,11168.32 1673.46,11161.06 1700.11,11155.00 1744.34,11141.86 1782.23,11128.78 1875.59,11085.31">
         <lane id="28897127_0" index="0" allow="private emergency authority army vip passenger hov taxi bus coach delivery truck trailer motorcycle evehicle custom1 custom2" speed="39.44" length="710.83" shape="1179.69,11171.95 1262.05,11169.77 1329.88,11168.32 1371.24,11168.54 1426.22,11170.03 1484.90,11172.50 1526.82,11173.57 1564.70,11173.12 1602.52,11170.33 1641.06,11165.17 1672.75,11157.94 1699.30,11151.90 1743.36,11138.81 1781.03,11125.81 1873.63,11082.69">
             <param key="origId" value="28897127 148257364 28897137 28897155"/>
@@ -7625,6 +7619,11 @@
             <param key="origId" value="13261575 399698515 49012475 399698517"/>
         </lane>
     </edge>
+    <edge id="source_I710" from="317627455" to="807656158" priority="9" type="highway.motorway_link" spreadType="center" shape="5353.03,9708.66 5333.44,9728.61 5293.84,9758.63 5247.16,9790.75 5224.35,9805.94 5163.99,9844.37 5046.94,9918.80">
+        <lane id="source_I710_0" index="0" allow="private emergency authority army vip passenger hov taxi bus coach delivery truck trailer motorcycle evehicle custom1 custom2" speed="22.22" length="367.09" shape="5350.51,9711.22 5333.44,9728.61 5293.84,9758.63 5247.16,9790.75 5224.35,9805.94 5163.99,9844.37 5048.04,9918.10">
+            <param key="origId" value="28895784 66668864 66668842"/>
+        </lane>
+    </edge>
     <edge id="source_NB_LAKEWOOD" from="122527750" to="J0" priority="9" type="highway.motorway_link" spreadType="center" shape="10960.22,3186.89 10973.30,3206.63 10985.35,3218.09 10992.47,3222.36 11000.89,3225.77 11008.97,3226.36 11017.00,3225.84 11024.97,3223.42 11032.31,3219.62 11041.05,3211.18 11046.33,3200.57 11048.27,3187.53 11046.39,3174.66">
         <lane id="source_NB_LAKEWOOD_0" index="0" allow="private emergency authority army vip passenger hov taxi bus coach delivery truck trailer motorcycle evehicle custom1 custom2" speed="22.22" length="127.63" shape="10968.45,3196.41 10974.53,3205.60 10986.32,3216.81 10993.19,3220.92 11001.26,3224.19 11008.98,3224.76 11016.71,3224.26 11024.36,3221.93 11031.37,3218.31 11039.74,3210.22 11044.78,3200.08 11046.65,3187.53 11044.88,3175.40">
             <param key="origId" value="13275783"/>
@@ -9284,7 +9283,7 @@
         <request index="4" response="000000" foes="000000" cont="0"/>
         <request index="5" response="000000" foes="000000" cont="0"/>
     </junction>
-    <junction id="807656158" type="priority" x="5046.94" y="9918.80" incLanes="28895784_0 ne9_386112536_0 ne9_386112536_1 ne9_386112536_2 ne9_386112536_3" intLanes=":807656158_0_0 :807656158_1_0 :807656158_1_1 :807656158_1_2 :807656158_1_3" shape="5055.74,9930.21 5047.18,9916.75 5045.13,9917.98 5052.88,9931.97">
+    <junction id="807656158" type="priority" x="5046.94" y="9918.80" incLanes="source_I710_0 ne9_386112536_0 ne9_386112536_1 ne9_386112536_2 ne9_386112536_3" intLanes=":807656158_0_0 :807656158_1_0 :807656158_1_1 :807656158_1_2 :807656158_1_3" shape="5055.74,9930.21 5047.18,9916.75 5045.13,9917.98 5052.88,9931.97">
         <request index="0" response="00000" foes="00000" cont="0"/>
         <request index="1" response="00000" foes="00000" cont="0"/>
         <request index="2" response="00000" foes="00000" cont="0"/>
@@ -10116,8 +10115,7 @@
     <connection from="28895675" to="162436012" fromLane="1" toLane="0" via=":317626559_0_0" dir="s" state="M"/>
     <connection from="28895675" to="162436012" fromLane="2" toLane="1" via=":317626559_0_1" dir="s" state="M"/>
     <connection from="28895675" to="162436012" fromLane="3" toLane="2" via=":317626559_0_2" dir="s" state="M"/>
-    <connection from="28895773" to="28895784" fromLane="1" toLane="0" via=":317627455_0_0" dir="s" state="M"/>
-    <connection from="28895784" to="ne9_94666085" fromLane="0" toLane="4" via=":807656158_0_0" dir="s" state="M"/>
+    <connection from="28895773" to="source_I710" fromLane="1" toLane="0" via=":317627455_0_0" dir="s" state="M"/>
     <connection from="28897130" to="28897149-AddedOnRampEdge" fromLane="0" toLane="2" via=":317639953_2_0" dir="s" state="M"/>
     <connection from="28897130" to="28897149-AddedOnRampEdge" fromLane="1" toLane="3" via=":317639953_2_1" dir="s" state="M"/>
     <connection from="28897149" to="148257343" fromLane="0" toLane="0" via=":317651166_0_0" dir="s" state="M"/>
@@ -10977,6 +10975,7 @@
     <connection from="source_I605_SB" to="158726580" fromLane="0" toLane="0" via=":1708767942_0_0" dir="s" state="M"/>
     <connection from="source_I605_SB" to="158720678" fromLane="1" toLane="0" via=":1708767942_1_0" dir="s" state="M"/>
     <connection from="source_I605_SB" to="158720678" fromLane="2" toLane="1" via=":1708767942_1_1" dir="s" state="M"/>
+    <connection from="source_I710" to="ne9_94666085" fromLane="0" toLane="4" via=":807656158_0_0" dir="s" state="M"/>
     <connection from="source_NB_LAKEWOOD" to="13275783.140" fromLane="0" toLane="0" via=":J0_0_0" tl="J0" linkIndex="0" dir="s" state="O"/>
     <connection from="source_NB_LAKEWOOD" to="13275783.140" fromLane="1" toLane="1" via=":J0_0_1" tl="J0" linkIndex="1" dir="s" state="O"/>
     <connection from="source_PARAMOUNT_BLVD" to="178116793.68" fromLane="0" toLane="0" via=":J2_0_0" tl="J2" linkIndex="0" dir="s" state="O"/>
@@ -11550,7 +11549,7 @@
     <connection from=":317626559_0" to="162436012" fromLane="2" toLane="2" dir="s" state="M"/>
     <connection from=":317627005_0" to="66668866" fromLane="0" toLane="0" dir="s" state="M"/>
     <connection from=":317627005_0" to="66668866" fromLane="1" toLane="1" dir="s" state="M"/>
-    <connection from=":317627455_0" to="28895784" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":317627455_0" to="source_I710" fromLane="0" toLane="0" dir="s" state="M"/>
     <connection from=":317627710_0" to="162520773" fromLane="0" toLane="0" dir="s" state="M"/>
     <connection from=":317627710_1" to="864558638" fromLane="0" toLane="0" dir="L" state="M"/>
     <connection from=":317627710_1" to="864558638" fromLane="1" toLane="1" dir="L" state="M"/>

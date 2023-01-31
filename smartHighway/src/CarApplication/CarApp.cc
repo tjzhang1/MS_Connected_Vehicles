@@ -83,6 +83,7 @@ void CarApp::finish() {
 }
 
 void CarApp::redirect(void) {
+    consideredRerouting = true;
     std::random_device dev;
     std::mt19937 rng(dev());
     std::uniform_int_distribution<std::mt19937::result_type> dist100(1,100); // distribution in range [1, 6]
@@ -128,6 +129,13 @@ void CarApp::onWSM(BaseFrame1609_4* frame)
     }
 }
 
+//void CarApp::onWSA(DemoServiceAdvertisment* wsa) {
+//    std::cout << "veh received wsa" << endl;
+//    if (wsa->getPsid() == 30) {
+////        mac->changeServiceChannel(static_cast<Channel>(wsa->getTargetChannel()))
+//        redirect();
+//    }
+//}
 
 void CarApp::handlePositionUpdate(cObject* obj)
 {

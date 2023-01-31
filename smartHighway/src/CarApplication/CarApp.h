@@ -86,8 +86,10 @@ namespace veins {
         std::string currentRoad;
         double CO2Emissions = 0.0;
         std::string vType;
+        bool consideredRerouting = false;
 
         void onWSM(BaseFrame1609_4* wsm) override;
+//        void onWSA(DemoServiceAdvertisment* wsa) override;
         void handlePositionUpdate(cObject* obj) override;
     };
 }

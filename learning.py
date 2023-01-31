@@ -1,14 +1,45 @@
 import gym
 import veins_gym
 from veins_gym import veinsgym_pb2
+from torch import optim
+import DDQN
+import numpy as np
+
+observation_space = gym.spaces.Tuple((  \
+gym.spaces.Discrete(403),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32)   \
+))
+
+action_space = gym.spaces.MultiBinary(26)
 
 def serialize_action(actions):
     """Serialize a list of floats into an action."""
     reply = veinsgym_pb2.Reply()
-#    trafficLightCtl = reply.action.tuple.values.add()
-#    RSUBroadcastCtl = reply.action.tuple.values.add()
-#    trafficLightCtl.box.values.extend(actions[0])
-#    RSUBroadcastCtl.multi_binary.values.extend(actions)
     reply.action.multi_binary.values.extend(actions)
     return reply.SerializeToString()
 
@@ -25,8 +56,45 @@ gym.register(
     },
 )
 
+# Run training on veins env
 env = gym.make("veins-v1")
+_epsilon_decay_schedule_kwargs = {
+    "decay_factor": 0.99,
+    "minimum_epsilon": 1e-2,
+}
+epsilon_decay_schedule = lambda n: DDQN.power_decay_schedule(n, **_epsilon_decay_schedule_kwargs)
+_optimizer_kwargs = {
+    "lr": 1e-3,
+    "betas": (0.9, 0.999),
+    "eps": 1e-08,
+    "weight_decay": 0,
+    "amsgrad": False,
+}
+optimizer_fn = lambda parameters: optim.Adam(parameters, **_optimizer_kwargs)
+_agent_kwargs = {
+    "state_size": gym.spaces.utils.flatdim(observation_space),
+    "action_size": gym.spaces.utils.flatdim(action_space), 
+    "number_hidden_units": 64,
+    "optimizer_fn": optimizer_fn,
+    "epsilon_decay_schedule": epsilon_decay_schedule,
+    "batch_size": 64,
+    "buffer_size": 100000,
+    "alpha": 1e-3,
+    "gamma": 0.99,
+    "update_frequency": 4,
+    "double_dqn": True,  # True uses Double DQN; False uses DQN 
+    "seed": None,
+}
+double_dqn_agent = DDQN.DeepQAgent(**_agent_kwargs)
 
+double_dqn_scores = DDQN.train(double_dqn_agent,
+                          env,
+                          "double-dqn-checkpoint.pth",
+                          number_episodes=2000,
+                          target_score=200)
+
+'''
+# Previous training script
 env.reset(return_info=True)
 done = False
 rewards = []
@@ -36,3 +104,4 @@ while not done:
     rewards.append(reward)
 print("Number of steps taken:", len(rewards))
 print("Mean reward:", sum(rewards) / len(rewards))
+'''

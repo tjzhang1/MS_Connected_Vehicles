@@ -7,8 +7,23 @@
 
     <input>
         <net-file value="osm.net.xml"/>
-        <route-files value="osm_pt.rou.xml"/>
+        <route-files value="routeDist.xml,osm_pt.rou.xml"/>
         <additional-files value="osm.add.xml"/>
     </input>
+
+    <time>
+        <end value="4800"/>
+    </time>
+
+    <processing>
+        <scale value="1"/>
+    </processing>
+
+    <output>
+	     <!--emission-output value="emissions.xml" /-->
+	     <!--full-output value="fullOut.xml" /-->
+	     <tripinfo-output value="tripInfo.xml" />
+        <device.emissions.probability value="1.0" />
+    </output>
 
 </configuration>

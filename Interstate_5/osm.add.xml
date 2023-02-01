@@ -129,7 +129,7 @@
     <laneAreaDetector id="e2_I710_enter_1" lanes="ne9_386112536_1 ne9_94666085_1" pos="659.97" endPos="100.00" period="300.00" file="e2_I710_enter_1.xml"/>
     <laneAreaDetector id="e2_I710_enter_2" lanes="ne9_386112536_2 ne9_94666085_2" pos="659.97" endPos="100.00" period="300.00" file="e2_I710_enter_2.xml"/>
     <laneAreaDetector id="e2_I710_enter_3" lanes="ne9_386112536_3 ne9_94666085_3" pos="659.97" endPos="100.00" period="300.00" file="e2_I710_enter_3.xml"/>
-    <laneAreaDetector id="e2_I710_enter_4" lanes="28895784_0 ne9_94666085_4" pos="267.09" endPos="100.00" period="300.00" file="e2_I710_enter_4.xml"/>
+    <laneAreaDetector id="e2_I710_enter_4" lanes="source_I710_0 ne9_94666085_4" pos="267.09" endPos="100.00" period="300.00" file="e2_I710_enter_4.xml"/>
     <laneAreaDetector id="e2_I710_exit_0" lanes="ne9_386112525_0 ne9_386112536_0" pos="50.00" endPos="100.00" period="300.00" file="e2_I710_exit_0.xml"/>
     <laneAreaDetector id="e2_I710_exit_1" lanes="ne9_386112525_1 ne9_386112536_1" pos="50.00" endPos="100.00" period="300.00" file="e2_I710_exit_1.xml"/>
     <laneAreaDetector id="e2_I710_exit_2" lanes="ne9_386112525_2 ne9_386112536_2" pos="50.00" endPos="100.00" period="300.00" file="e2_I710_exit_2.xml"/>
@@ -183,6 +183,7 @@
     <laneAreaDetector id="e2_WASHINGTON_exit_4" lanes="ne5_862573275#1-AddedOffRampEdge_4 ne6_866201289_3" pos="0.00" endPos="100.00" period="300.00" file="e2_WASHINGTON_exit_4.xml"/>
     <laneAreaDetector id="e2_WASHINGTON_on_ramp_0" lane="source_TELEGRAPH_WASHINGTON_0" pos="47.00" length="100.00" period="300.00" file="e2_WASHINGTON_on_ramp_0.xml"/>
     <!-- Other additionals -->
+<!-- No longer need rerouters for randomizing exits, use scripts to generate routeDistributions instead
     <rerouter id="rerouter_ATLANTIC_TRIGGS_exit" edges="ne7_95049424#1-AddedOnRampEdge" pos="6596.90,9013.51" probability="0.03" vTypes="DEFAULT_VEHTYPE">
         <interval begin="0.00" end="7200.00">
             <destProbReroute id="exit_to_ATLANTIC_TRIGGS" probability="1.00"/>
@@ -248,4 +249,5 @@
             <destProbReroute id="exit_to_WASHINGTON_BLVD" probability="1.00"/>
         </interval>
     </rerouter>
+-->
 </additional>

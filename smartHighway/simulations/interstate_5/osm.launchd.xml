@@ -34,6 +34,7 @@
 <!-- debug config -->
 <launch>
     <copy file="osm.net.xml" />
+    <copy file="routeDist.xml" />
     <copy file="osm_pt.rou.xml" />
     <copy file="osm.add.xml" />
     <copy file="osm.sumocfg" type="config" />

@@ -7,7 +7,7 @@
 
     <input>
         <net-file value="osm.net.xml"/>
-        <route-files value="osm_pt.rou.xml"/>
+        <route-files value="routeGeneration/routeDist.xml,osm_pt.rou.xml"/>
         <additional-files value="osm.add.xml"/>
     </input>
 
@@ -16,7 +16,7 @@
     </time>
 
     <processing>
-        <scale value="5"/>
+        <scale value="1"/>
     </processing>
 
     <output>

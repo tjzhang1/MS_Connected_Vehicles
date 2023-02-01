@@ -1,0 +1,69 @@
+<!-- No longer need rerouters for randomizing exits, use scripts to generate routeDistributions instead
+-    <rerouter id="rerouter_ATLANTIC_TRIGGS_exit" edges="ne7_95049424#1-AddedOnRampEdge" pos="6596.90,9013.51" probability="0.03" vTypes="DEFAULT_
+VEHTYPE">
+-        <interval begin="0.00" end="7200.00">
+-            <destProbReroute id="exit_to_ATLANTIC_TRIGGS" probability="1.00"/>
+-        </interval>
+-    </rerouter>
+-    <rerouter id="rerouter_ATLANTIC_exit" edges="ne6_32296822" pos="7021.71,8578.57" probability="0.03" vTypes="DEFAULT_VEHTYPE">
+-        <interval begin="0.00" end="7200.00">
+-            <destProbReroute id="exit_to_ATLANTIC_BLVD" probability="1.00"/>
+-        </interval>
+-    </rerouter>
+-    <rerouter id="rerouter_CALZONA_exit" edges="ne10_881914877" pos="3405.85,10238.45" probability="0.01" vTypes="DEFAULT_VEHTYPE">
+-        <interval begin="0.00" end="7200.00">
+-            <destProbReroute id="exit_to_CALZONA_ST" probability="1.00"/>
+-        </interval>
+-    </rerouter>
+-    <rerouter id="rerouter_DITMAN_exit" edges="ne9_864961753" pos="3965.09,10179.67" probability="0.04" vTypes="DEFAULT_VEHTYPE">
+-        <interval begin="0.00" end="7200.00">
+-            <destProbReroute id="exit_to_DITMAN_AVE" probability="1.00"/>
+-        </interval>
+-    </rerouter>
+-    <rerouter id="rerouter_EASTERN_AVE_exit" edges="ne8_975003949" pos="5821.16,9496.18" probability="0.02" vTypes="DEFAULT_VEHTYPE">
+-        <interval begin="0.00" end="7200.00">
+-            <destProbReroute id="exit_to_EASTERN_AVE" probability="1.00"/>
+-        </interval>
+-    </rerouter>
+-    <rerouter id="rerouter_GARFIELD_exit" edges="ne4_866203384" pos="9048.36,6100.93" probability="0.07" vTypes="DEFAULT_VEHTYPE">
+-        <interval begin="0.00" end="7200.00">
+-            <destProbReroute id="exit_to_GARFIELD_AVE" probability="1.00"/>
+-        </interval>
+-    </rerouter>
+-    <rerouter id="rerouter_I605_exit" edges="ne0_source" pos="12686.15,755.89" probability="0.23" vTypes="DEFAULT_VEHTYPE">
+-        <interval begin="0.00" end="7200.00">
+-            <destProbReroute id="exit_to_I605" probability="1.00"/>
+-        </interval>
+-    </rerouter>
+-    <rerouter id="rerouter_I710_exit" edges="ne8_975003949" pos="5713.78,9543.64" probability="0.18" vTypes="DEFAULT_VEHTYPE">
+-        <interval begin="0.00" end="7200.00">
+-            <destProbReroute id="exit_to_I710" probability="1.00"/>
+-        </interval>
+-    </rerouter>
+-    <rerouter id="rerouter_LAKEWOOD_exit" edges="ne1_158724524#1" pos="11176.78,2999.28" probability="0.04" vTypes="DEFAULT_VEHTYPE">
+-        <interval begin="0.00" end="7200.00">
+-            <destProbReroute id="exit_to_LAKEWOOD" probability="1.00"/>
+-        </interval>
+-    </rerouter>
+-    <rerouter id="rerouter_PARAMOUNT_exit" edges="ne2_866210533" pos="10423.09,3662.29" probability="0.05" vTypes="DEFAULT_VEHTYPE">
+-        <interval begin="0.00" end="7200.00">
+-            <destProbReroute id="exit_to_PARAMOUNT_BLVD" probability="1.00"/>
+-        </interval>
+-    </rerouter>
+-    <rerouter id="rerouter_PARKING" edges="ne1_158724524#1" pos="11341.82,2884.12" probability="0.50" off="1">
+-        <interval begin="3000.00" end="3180.00">
+-            <destProbReroute id="pa_0_dest_edge" probability="1.00"/>
+-        </interval>
+-    </rerouter>
+-    <rerouter id="rerouter_SLAUSON_exit" edges="ne3_32296182#1" pos="9875.75,4938.75" probability="0.07" vTypes="DEFAULT_VEHTYPE">
+-        <interval begin="0.00" end="7200.00">
+-            <destProbReroute id="exit_to_SLAUSON_AVE" probability="1.00"/>
+-        </interval>
+-    </rerouter>
+-    <rerouter id="rerouter_WASHINGTON_exit" edges="ne5_862573275#1" pos="8022.95,7289.61" probability="0.07" vTypes="DEFAULT_VEHTYPE">
+-        <interval begin="0.00" end="7200.00">
+-            <destProbReroute id="exit_to_WASHINGTON_BLVD" probability="1.00"/>
+-        </interval>
+-    </rerouter>
+--->
+

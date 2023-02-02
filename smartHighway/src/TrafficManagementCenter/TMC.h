@@ -18,12 +18,11 @@ enum {
 };
 #define RL_INTERVAL 1  // Time between receiving RSU data and performing a computation
 #define TMC_VERBOSE 0
-//#define PARKING_PENALTY_WEIGHT 1
-//#define SPEED_REWARD_WEIGHT 1
-//#define STOPPING_PENALTY_WEIGHT 0.5
-#define THROUGHPUT_WEIGHT 20
-#define DELAY_WEIGHT 0.1
-#define CO2_WEIGHT 0.001
+#define DEBUG_REWARD 1
+#define THROUGHPUT_WEIGHT 1.0/60.0  // 1 car per second for 60s = 1/60
+#define TARGET_TIME 560.0   // in seconds
+#define DELAY_WEIGHT -1.0/TARGET_TIME
+#define CO2_WEIGHT -0.0000001
 
 class parkingLotData : public cObject {
 public:
@@ -63,7 +62,14 @@ public:
     rewards_t globalReward = {0,SimTime::ZERO,0};
     rewards_t bufferedHOVReward = {0,SimTime::ZERO,0};
     rewards_t bufferedVehReward = {0,SimTime::ZERO,0};
-    int parkingSpaces = 100;
+    int parkingSpaces = 4000;
+    const int actionRSU[5] = {
+        0,  // I605_EXIT
+        3,  // I605_SB_ENTER
+        4,  // LAKEWOOD_EXIT
+        6,  // LAKEWOOD_SB_ENTER
+        7,  // PARAMOUNT_EXIT
+    };
 
 protected:
     void initialize(int stage) override;

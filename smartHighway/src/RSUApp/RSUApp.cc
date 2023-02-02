@@ -62,11 +62,14 @@ void RSUApp::handleMessage(cMessage *msg) {
     case RSU_BROADCAST_MSG: {
         if(msg->arrivedOn("TMC_port")) {
             broadcastLifetime = UPDATE_TMC_PERIOD / BROADCAST_INTERVAL - 1;
+#if RSU_VERBOSE
+            std::cout<<getParentModule()->getFullName()<<" is rerouting"<<endl;
+#endif
         }
         else {
             broadcastLifetime--;
         }
-        broadcastMsg = new ParkingReroute("RSU: reroute advised", VEH_ADVISORY_MSG);
+        ParkingReroute *broadcastMsg = new ParkingReroute("RSU: reroute advised", VEH_ADVISORY_MSG);
         DemoBaseApplLayer::populateWSM(broadcastMsg);
         sendDown(broadcastMsg);
         // Renew message

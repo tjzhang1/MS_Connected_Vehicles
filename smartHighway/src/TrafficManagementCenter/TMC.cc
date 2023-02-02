@@ -142,7 +142,7 @@ void TMC::broadcastReroute(int targetRSU) {
 */
     // RSUExampleScenario -> rsu -> appl
     //                   |-> TMC
-    cGate *target = getParentModule()->getSubmodule("rsu", targetRSU)->getSubmodule("appl")->gate("TMC_port");  // submodule name must match definition in .ned
+    cGate *target = getParentModule()->getSubmodule("rsu", actionRSU[targetRSU])->getSubmodule("appl")->gate("TMC_port");  // submodule name must match definition in .ned
 #if TMC_VERBOSE
     std::cout << "Broadcasting new route to " << target->getOwnerModule()->getParentModule()->getFullName() << ", ";
     std::cout << "size of open lot list is " << msg->getOpenLotArraySize() << endl;

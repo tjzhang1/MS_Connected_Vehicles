@@ -64,6 +64,13 @@ public:
     rewards_t bufferedHOVReward = {0,SimTime::ZERO,0};
     rewards_t bufferedVehReward = {0,SimTime::ZERO,0};
     int parkingSpaces = 100;
+    const int actionRSU[5] = {
+        0,  // I605_EXIT
+        3,  // I605_SB_ENTER
+        4,  // LAKEWOOD_EXIT
+        6,  // LAKEWOOD_SB_ENTER
+        7,  // PARAMOUNT_EXIT
+    };
 
 protected:
     void initialize(int stage) override;

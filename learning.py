@@ -35,7 +35,7 @@ gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([1
 gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32)   \
 ))
 
-action_space = gym.spaces.MultiBinary(26)
+action_space = gym.spaces.MultiBinary(5)
 
 def serialize_action(actions):
     """Serialize a list of floats into an action."""
@@ -73,7 +73,7 @@ _optimizer_kwargs = {
 optimizer_fn = lambda parameters: optim.Adam(parameters, **_optimizer_kwargs)
 _agent_kwargs = {
     "state_size": gym.spaces.utils.flatdim(observation_space),
-    "action_size": gym.spaces.utils.flatdim(action_space), 
+    "action_size": 1<<action_space.n, 
     "number_hidden_units": 64,
     "optimizer_fn": optimizer_fn,
     "epsilon_decay_schedule": epsilon_decay_schedule,

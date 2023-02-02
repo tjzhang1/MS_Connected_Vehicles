@@ -227,17 +227,14 @@ class DeepQAgent(Agent):
            
     def _uniform_random_policy(self, state: torch.Tensor) -> np.ndarray:
         """Choose an action uniformly at random."""
-#        return self._random_state.randint(self._action_size)
-        actions = gym.spaces.MultiBinary(26)
-        return actions.sample()
+        return self._random_state.randint(self._action_size)
         
     def _greedy_policy(self, state: torch.Tensor) -> np.ndarray:
         """Choose an action that maximizes the action_values given the current state."""
-#        action = (self._online_q_network(state)
-#                      .argmax()  # take the max?
-#                      .cpu()  # action_values might reside on the GPU!
-#                      .item())
-        action = self._online_q_network(state).cpu()
+        action = (self._online_q_network(state)
+                      .argmax()  # take the max?
+                      .cpu()  # action_values might reside on the GPU!
+                      .item())
         return action.numpy()
     
     def _epsilon_greedy_policy(self, state: torch.Tensor, epsilon: float) -> np.ndarray:
@@ -385,6 +382,7 @@ def _train_for_at_most(agent: Agent, env: gym.Env, max_timesteps: int) -> int:
     score = 0
     for t in range(max_timesteps):
         action = agent.choose_action(state)
+        action = [bool(action & (1<<n)) for n in range(env.action_space.n)]  # convert int into list of bools 
 #        next_state, reward, terminated, truncated, info = env.step(action)
 #        done = truncated or terminated
         next_state, reward, done, _ = env.step(action)
@@ -406,6 +404,7 @@ def _train_until_done(agent: Agent, env: gym.Env) -> float:
     done = False
     while not done:
         action = agent.choose_action(state)
+        action = [bool(action & (1<<n)) for n in range(env.action_space.n)]  # convert int into list of bools 
 #        next_state, reward, terminated, truncated, info = env.step(action)
 #        done = truncated or terminated
         next_state, reward, done, _ = env.step(action)

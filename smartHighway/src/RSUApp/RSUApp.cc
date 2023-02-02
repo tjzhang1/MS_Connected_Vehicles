@@ -17,7 +17,6 @@
 #include "veins/modules/application/traci/TraCIDemo11pMessage_m.h"
 #include "Messaging/RSU_Data_m.h"
 #include "Messaging/ProbeVehicleData_m.h"
-#include "Messaging/ParkingReroute_m.h"
 #include <boost/algorithm/string.hpp>
 #include "TrafficManagementCenter/TMC.h"
 #include "veins/base/utils/Coord.h"
@@ -61,10 +60,22 @@ void RSUApp::resetStatistics() {
 void RSUApp::handleMessage(cMessage *msg) {
     switch(msg->getKind()) {
     case RSU_BROADCAST_MSG: {
-        msg->setKind(45);  // change message kind so it doesn't affect other nearby RSUs
-        ParkingReroute *wsm = dynamic_cast<ParkingReroute*>(msg);
-        DemoBaseApplLayer::populateWSM(wsm);
-        sendDown(wsm);
+        if(msg->arrivedOn("TMC_port")) {
+            broadcastLifetime = UPDATE_TMC_PERIOD / BROADCAST_INTERVAL - 1;
+        }
+        else {
+            broadcastLifetime--;
+        }
+        broadcastMsg = new ParkingReroute("RSU: reroute advised", VEH_ADVISORY_MSG);
+        DemoBaseApplLayer::populateWSM(broadcastMsg);
+        sendDown(broadcastMsg);
+        // Renew message
+        if(broadcastLifetime > 0) {
+            scheduleAt(simTime() + BROADCAST_INTERVAL, msg);
+        }
+        else {
+            cancelAndDelete(msg);
+        }
         break;
     }
     case RSU_UPDATE_TMC_MSG: {

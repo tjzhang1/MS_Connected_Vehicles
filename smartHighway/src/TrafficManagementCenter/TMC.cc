@@ -132,7 +132,7 @@ void TMC::updateSignalTiming(int targetRM, double meterRate) {
 }
 // Control: tell RSU to broadcast vehicles to reroute
 void TMC::broadcastReroute(int targetRSU) {
-    ParkingReroute *msg = new ParkingReroute("broadcastReroute", RSU_BROADCAST_MSG);
+    cMessage *msg = new cMessage("broadcastRerouteBeacon", RSU_BROADCAST_MSG);
 /* May include again if simulating parking structures in SUMO
 //    int k=0;
 //    msg->setOpenLotArraySize(parkingLotList.size());

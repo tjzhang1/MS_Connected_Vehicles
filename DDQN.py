@@ -225,19 +225,19 @@ class DeepQAgent(Agent):
         """In place, synchronization of q_network_1 and q_network_2."""
         _ = q_network_1.load_state_dict(q_network_2.state_dict())
            
-    def _uniform_random_policy(self, state: torch.Tensor) -> np.ndarray:
+    def _uniform_random_policy(self, state: torch.Tensor) -> int:
         """Choose an action uniformly at random."""
         return self._random_state.randint(self._action_size)
         
-    def _greedy_policy(self, state: torch.Tensor) -> np.ndarray:
+    def _greedy_policy(self, state: torch.Tensor) -> int:
         """Choose an action that maximizes the action_values given the current state."""
         action = (self._online_q_network(state)
                       .argmax()  # take the max?
                       .cpu()  # action_values might reside on the GPU!
                       .item())
-        return action.numpy()
+        return action
     
-    def _epsilon_greedy_policy(self, state: torch.Tensor, epsilon: float) -> np.ndarray:
+    def _epsilon_greedy_policy(self, state: torch.Tensor, epsilon: float) -> int:
         """With probability epsilon explore randomly; otherwise exploit knowledge optimally."""
         if self._random_state.random() < epsilon:
             action = self._uniform_random_policy(state)
@@ -245,7 +245,7 @@ class DeepQAgent(Agent):
             action = self._greedy_policy(state)
         return action
 
-    def choose_action(self, state: np.array) -> np.ndarray:
+    def choose_action(self, state: np.array) -> int:
         """
         Return the action for given state as per current policy.
         

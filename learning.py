@@ -6,7 +6,7 @@ import DDQN
 import numpy as np
 
 observation_space = gym.spaces.Tuple((  \
-gym.spaces.Box(low=0, high=4000, shape=(1,), dtype=np.int32),  \
+gym.spaces.Box(low=0, high=4000, shape=(1,), dtype=np.float32),  \
 gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
 gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
 gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
@@ -90,8 +90,26 @@ double_dqn_agent = DDQN.DeepQAgent(**_agent_kwargs)
 double_dqn_scores = DDQN.train(double_dqn_agent,
                           env,
                           "double-dqn-checkpoint.pth",
-                          number_episodes=2000,
+                          number_episodes=100,
                           target_score=200)
+
+# Graph output
+import pandas as pd
+import matplotlib.pyplot as plt
+
+double_dqn_scores = pd.Series(double_dqn_scores, name="scores")
+
+fig, axes = plt.subplots(1, 1, figsize=(10, 6), sharex=True, sharey=True)
+_ = double_dqn_scores.plot(ax=axes, label="Double DQN Scores")
+_ = (double_dqn_scores.rolling(window=100)
+                      .mean()
+                      .rename("Rolling Average")
+                      .plot(ax=axes))
+_ = axes.legend()
+_ = axes.set_ylabel("Score")
+_ = axes.set_xlabel("Episode Number")
+fig.show()
+fig.savefig("training results")
 
 '''
 # Previous training script

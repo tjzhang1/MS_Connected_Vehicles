@@ -58,7 +58,7 @@ veinsgym::proto::Request TMC::serializeObservation(void) {
     // Add observation
     auto *observation_space = request.mutable_step()->mutable_observation()->mutable_tuple();
     // Insert the parking space data and calculate the corresponding reward
-    observation_space->add_values()->mutable_discrete()->set_value(parkingSpaces);
+    observation_space->add_values()->mutable_box()->add_values((double)parkingSpaces);
 /* May include again if simulating parking structures beyond just spaces
 //    double parking_penalty = 0.0;
 //    for(cQueue::Iterator iter=cQueue::Iterator(*parkingData); iter.end()==false; iter++) {
@@ -88,9 +88,12 @@ veinsgym::proto::Request TMC::serializeObservation(void) {
 
 double TMC::calculateReward() {
     double reward = 0.0;
-    reward += THROUGHPUT_WEIGHT * globalReward.hwyThroughput;
-    reward += DELAY_WEIGHT * globalReward.accumTravelTime.dbl();
-    reward += CO2_WEIGHT * globalReward.accumCO2Emissions;
+    reward += THROUGHPUT_WEIGHT * globalReward.hwyThroughput;  // maximize throughput
+    reward += DELAY_WEIGHT * ((globalReward.accumTravelTime.dbl() / globalReward.hwyThroughput) - TARGET_TIME);  // minimize average travel time
+    reward += CO2_WEIGHT * (globalReward.accumCO2Emissions / globalReward.hwyThroughput);  // minimize average CO2 emissions
+#if DEBUG_REWARD
+    std::cout<<"Send reward THROUGHPUT: "<<THROUGHPUT_WEIGHT * globalReward.hwyThroughput<<", "<<"TIME: "<<DELAY_WEIGHT * ((globalReward.accumTravelTime.dbl() / globalReward.hwyThroughput) - TARGET_TIME)<<", "<<"Emissions: "<<CO2_WEIGHT * (globalReward.accumCO2Emissions / globalReward.hwyThroughput)<<endl;
+#endif
     // Reset reward after reporting to ML script
     globalReward = {0,SimTime::ZERO,0};
     return reward;

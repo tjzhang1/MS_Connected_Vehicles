@@ -295,7 +295,6 @@ class DeepQAgent(Agent):
                                                 dones,
                                                 self._gamma,
                                                 self._target_q_network)
-
         online_q_values = (self._online_q_network(states)
                                .gather(dim=1, index=actions))
         
@@ -382,10 +381,10 @@ def _train_for_at_most(agent: Agent, env: gym.Env, max_timesteps: int) -> int:
     score = 0
     for t in range(max_timesteps):
         action = agent.choose_action(state)
-        action = [bool(action & (1<<n)) for n in range(env.action_space.n)]  # convert int into list of bools 
 #        next_state, reward, terminated, truncated, info = env.step(action)
 #        done = truncated or terminated
-        next_state, reward, done, _ = env.step(action)
+        converted_action = [bool(action & (1<<n)) for n in range(env.action_space.n)]  # convert int into list of bools 
+        next_state, reward, done, _ = env.step(converted_action)
         next_state = gym.spaces.utils.flatten(env.observation_space, next_state)
         agent.step(state, action, reward, next_state, done)
         state = next_state
@@ -404,10 +403,10 @@ def _train_until_done(agent: Agent, env: gym.Env) -> float:
     done = False
     while not done:
         action = agent.choose_action(state)
-        action = [bool(action & (1<<n)) for n in range(env.action_space.n)]  # convert int into list of bools 
 #        next_state, reward, terminated, truncated, info = env.step(action)
 #        done = truncated or terminated
-        next_state, reward, done, _ = env.step(action)
+        converted_action = [bool(action & (1<<n)) for n in range(env.action_space.n)]  # convert int into list of bools 
+        next_state, reward, done, _ = env.step(converted_action)
         next_state = gym.spaces.utils.flatten(env.observation_space, next_state)
         agent.step(state, action, reward, next_state, done)
         state = next_state

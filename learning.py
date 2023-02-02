@@ -6,7 +6,7 @@ import DDQN
 import numpy as np
 
 observation_space = gym.spaces.Tuple((  \
-gym.spaces.Discrete(403),  \
+gym.spaces.Box(low=0, high=4000, shape=(1,), dtype=np.int32),  \
 gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
 gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
 gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \

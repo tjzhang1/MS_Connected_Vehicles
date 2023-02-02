@@ -21,7 +21,7 @@
 #include "Messaging/ParkingReroute_m.h"
 
 #define DATA_SUMMARY 0  // print out sampled data
-#define RSU_VERBOSE 1
+#define RSU_VERBOSE 0
 #define EQUILIBRIUM_PERIOD 600 // How long to wait before beginning transmission to TMC
 #define UPDATE_TMC_PERIOD 60   // How often to send data to TMC
 #define ACCUM_DATA_PERIOD 10   // How often to accumulate network data, must be < UPDATE_TMC_PERIOD

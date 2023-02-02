@@ -22,6 +22,9 @@ Then, start the SUMO TRaCI connection service, open another terminal, navigate t
 
 Finally, back in the OMNeT++ IDE, navigate to smartHighway/simulations/interstate_5/omnetpp.ini, right-click this file and Run. If everything has been installed correctly, a new window should pop up with a GUI view of the simulation.
 
+## Software Overview
+![Software Overview](https://github.com/AICPS/SmartCorridor/blob/main/Software%20Flow.jpg)
+
 ## Useful information for traffic light development:
  - https://stackoverflow.com/questions/53693016/create-traffic-light-in-sumo-and-omnet
  - https://doc.omnetpp.org/omnetpp/manual/#sec:ned-lang:parameters

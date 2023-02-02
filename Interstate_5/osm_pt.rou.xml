@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-06-02 11:41:07 by Eclipse SUMO netedit Version 1.13.0
+<!-- generated on 2023-01-31 00:36:28 by Eclipse SUMO netedit Version 1.15.0
 -->
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
     <!-- VTypes -->
+    <vType id="continuingVehicle" vClass="passenger"/>
+    <vType id="basicTraffic" vClass="passenger"/>  <!-- This class of vehicle won't be loaded with OMNeT++ network capabilities -->
     <vType id="pt_aerialway" vClass="bus"/>
     <vType id="pt_bus" vClass="bus"/>
     <vType id="pt_ferry" vClass="ship"/>
@@ -16,18 +18,28 @@
     <vType id="pt_train" vClass="rail"/>
     <vType id="pt_tram" vClass="tram"/>
     <vType id="pt_trolleybus" vClass="bus"/>
+    <!-- Routes -->
+    <route id="continuingRoute" edges="source_SB_LAKEWOOD 23426514 23426514.71 399668245 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge ne4_866203384 ne4_866203384-AddedOffRampEdge ne5_862573275#0 ne5_862573275#1-AddedOnRampEdge ne5_862573275#1 ne5_862573275#1-AddedOffRampEdge ne6_866201289 ne6_32296822-AddedOnRampEdge ne6_32296822 ne6_32296822-AddedOffRampEdge ne7_864942146 ne7_95049424#1-AddedOnRampEdge ne7_95049424#1 ne8_864952781 ne8_975003948-AddedOnRampEdge ne8_975003948 ne8_975003949 ne8_975003949-AddedOffRampEdge ne9_386112525 ne9_386112536 ne9_94666085 ne9_864961753-AddedOnRampEdge ne9_864961753 ne9_864961753-AddedOffRampEdge neA_864961752 neA_397998296 neA_881914877 neA_881914877-AddedOffRampEdge neB_863776290#0 neB_863776290#1-AddedOnRampEdge neB_863776290#1 neB_863776290#1-AddedOffRampEdge destination_edge"/>
+
+    <!-- Additional routes and routeDistributions are defined in routeDist.xml, which should be included before this file in osm.sumocfg -->
+
     <!-- Vehicles, persons and containers (sorted by depart) -->
-    <flow id="flow_ATLANTIC_BLVD" begin="0.00" from="4004150" to="28897421" end="3599.94" number="327"/>
-    <flow id="flow_ATLANTIC_TRIGGS" begin="0.00" from="385595003" to="28897421" end="3599.87" number="129"/>
-    <flow id="flow_CALZONA" begin="0.00" from="139639760.97" to="28897421" end="3599.94" number="69"/>
-    <flow id="flow_DITMAN" begin="0.00" from="1047801943" to="28897421" end="3599.94" number="127"/>
-    <flow id="flow_DOWNEY" begin="0.00" from="4370760" to="28897421" end="3599.86" number="163"/>
-    <flow id="flow_FLORENCE_AVE" begin="0.00" from="399524360#1" to="28897421" end="3599.80" number="205"/>
-    <flow id="flow_NB_LAKEWOOD" begin="0.00" from="13275783" to="28897421" end="3599.82" number="209"/>
-    <flow id="flow_PARAMOUNT_BLVD" begin="0.00" from="178116793" to="28897421" end="3599.94" number="303"/>
-    <flow id="flow_SB_605" begin="0.00" from="13261575-AddedOffRampEdge" to="28897421" end="3599.74" number="380"/>
-    <flow id="flow_SB_LAKEWOOD" begin="0.00" from="399669559#0" to="28897421" end="3599.97" number="165"/>
-    <flow id="flow_STUDEBAKER" begin="0.00" from="399524358" to="28897421" end="3599.05" number="1274"/>
-    <flow id="flow_TELEGRAPH_GARFIELD" begin="0.00" from="965816736-AddedOnRampEdge" to="28897421" end="3599.69" number="534"/>
-    <flow id="flow_TELGRAPH_WASHINGTON" begin="0.00" from="23394679" to="28897421" end="3599.65" number="442"/>
+    <flow id="flow_ATLANTIC_BLVD" begin="0.00" departLane="free" route="routeDist_ATLANTIC_BLVD" number="310" period="exp(0.09)" type="basicTraffic"/>
+    <flow id="flow_ATLANTIC_TRIGGS" begin="0.00" route="routeDist_ATLANTIC_TRIGGS" number="129" period="exp(0.04)" type="basicTraffic"/>
+    <flow id="flow_CALZONA" begin="0.00" route="routeDist_CALZONA" number="69" period="exp(0.02)" type="basicTraffic"/>
+    <flow id="flow_DITMAN" begin="0.00" route="routeDist_DITMAN" number="127" period="exp(0.04)" type="basicTraffic"/>
+    <flow id="flow_DOWNEY" begin="0.00" route="routeDist_DOWNEY" number="163" period="exp(0.05)" type="basicTraffic"/>
+    <flow id="flow_FLORENCE_AVE" begin="0.00" departLane="free" departSpeed="speedLimit" route="routeDist_FLORENCE" number="205" period="exp(0.06)" type="basicTraffic"/>
+    <flow id="flow_I710" begin="0.00" route="routeDist_I710" number="1125" period="exp(0.31)" type="basicTraffic"/>
+    <flow id="flow_NB_LAKEWOOD" begin="0.00" departLane="free" route="routeDist_NB_LAKEWOOD" number="209" period="exp(0.06)" type="basicTraffic"/>
+    <flow id="flow_PARAMOUNT_BLVD" begin="0.00" departLane="free" route="routeDist_PARAMOUNT_BLVD" number="289" period="exp(0.08)" type="basicTraffic"/>
+    <flow id="flow_SB_605" begin="0.00" route="routeDist_I605_SB" number="380" period="exp(0.11)" type="basicTraffic"/>
+    <flow id="flow_SB_LAKEWOOD" begin="0.00" departLane="allowed" route="routeDist_SB_LAKEWOOD" number="165" period="exp(0.05)" type="basicTraffic"/>
+    <flow id="flow_STUDEBAKER" begin="0.00" route="routeDist_STUDEBAKER" number="1274" period="exp(0.35)" type="basicTraffic"/>
+    <flow id="flow_TELEGRAPH_GARFIELD" begin="0.00" departLane="free" route="routeDist_TELEGRAPH_GARFIELD" number="363" period="exp(0.10)" type="basicTraffic"/>
+    <flow id="flow_TELGRAPH_WASHINGTON" begin="0.00" route="routeDist_TELEGRAPH_WASHINGTON" number="435" period="exp(0.12)" type="basicTraffic"/>
+    <flow id="flow_ne0_source" begin="0.00" departLane="free" departSpeed="avg" route="routeDist_ne0_source" number="2611" period="exp(0.73)" type="basicTraffic"/>
+
+    <flow id="flow_THROUGH" begin="0.00" departLane="free" color="blue" departSpeed="avg" route="route_ne0_source_to_destination_edge" end="3600.00" period="exp(0.43)"/>
+    <flow id="flow_bus_LAKEWOOD_0" type="pt_bus" begin="0.00" departLane="allowed" color="red" from="source_SB_LAKEWOOD" to="destination_edge" end="3600.00" vehsPerHour="4.00"/>
 </routes>

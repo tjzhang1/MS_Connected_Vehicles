@@ -22,10 +22,8 @@ simple TMC
 {
     parameters:
         string parkingLots;
-        int numRSUs;
         @class(veins::TMC);
     	@display("i=block/app2");
 	gates:
-	    input RSU_port[numRSUs] @directIn;  // Connections to external RSUs, populated in RSUExampleScenario.ned
-
+	    input RSU_port @directIn;  // Connections to external RSUs, populated in I5_Scenario.ned
 }

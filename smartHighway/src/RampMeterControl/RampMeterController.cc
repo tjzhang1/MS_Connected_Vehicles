@@ -8,6 +8,7 @@
 #include <RampMeterControl/RampMeterController.h>
 #include <boost/algorithm/string.hpp>
 #include <stdio.h>
+#include "Messaging/UpdateMeteringRate_m.h"
 
 using namespace veins;
 
@@ -17,6 +18,7 @@ void RampMeterController::stringListFromParam(std::vector<std::string> &list, co
     std::string s = par(parName);
     boost::split(list, s, boost::is_any_of(", "), boost::token_compress_on);
 #if RMC_VERBOSE
+    std::cout << getParentModule()->getFullName() << " " << parName << ": ";
     std::cout << parName << ": ";
     for(auto i = list.begin(); i!=list.end(); i++) {
         std::cout << *i << " ";
@@ -26,14 +28,18 @@ void RampMeterController::stringListFromParam(std::vector<std::string> &list, co
 }
 
 RampMeterController::RampMeterController() {
-    measureMsg = new cMessage("ALINEA: measure occupancy", RMC_ALINEA_MEASURE_MSG);
-    updateMsg = new cMessage("ALINEA: update meter rate", RMC_ALINEA_UPDATE_MSG);
     changePhaseMsg = new cMessage("Set ramp meter to green", RMC_SET_GREEN_MSG);
 }
 
 RampMeterController::~RampMeterController() {
-    cancelAndDelete(measureMsg);
-    cancelAndDelete(updateMsg);
+    if(controlType.compare("ALINEA") == 0) {
+        cancelAndDelete(measureMsg);
+        cancelAndDelete(updateMsg);
+    }
+    else {
+       cancelAndDelete(updateTMC_msg);
+       cancelAndDelete(sampleMsg);
+    }
     cancelAndDelete(changePhaseMsg);
 }
 
@@ -43,24 +49,36 @@ void RampMeterController::initialize(int stage) {
     // to tell the controller to initialize itself after 0.1s
     if(stage == 0)
     {
+        std::string c = par("controlType");
+        controlType = c;
+        if(controlType.compare("ALINEA") == 0) {
+            measureMsg = new cMessage("ALINEA: measure occupancy", RMC_ALINEA_MEASURE_MSG);
+            updateMsg = new cMessage("ALINEA: update meter rate", RMC_ALINEA_UPDATE_MSG);
+            onRampOccupancy = 0.0;
+            hwyOccupancy = 0.0;
+            meterFlow = 300;
+            // Initialize highwayInductorsList as a list of strings from parameter highwayInductors
+            stringListFromParam(highwayInductorsList, "highwayInductors");
+            // Initialize onRampInductorsList as a list of strings from parameter onRampInductors
+            stringListFromParam(onRampInductorsList, "onRampInductors");
+            scheduleAt(simTime() + 1, measureMsg);
+            scheduleAt(simTime() + updatePeriodALINEA, updateMsg);
+        }
+        else {
+            updateTMC_msg = new cMessage("RSU: send data to TMC", RMC_RL_UPDATE_TMC_MSG);
+            sampleMsg = new cMessage("RSU: accumulate data", RMC_RL_SAMPLE_MSG);
+            stringListFromParam(areaDetectorList, "areaDetectors");
+            resetStatistics();
+            scheduleAt(simTime() + UPDATE_TMC_PERIOD, updateTMC_msg);  // Instead of using fixed time, use a poisson process to determine next time?
+            scheduleAt(simTime() + ACCUM_DATA_PERIOD, sampleMsg);
+        }
         if (FindModule<TraCITrafficLightInterface*>::findSubModule(getParentModule())) {
             tlInterface = TraCITrafficLightInterfaceAccess().get(getParentModule());
             traci = tlInterface->getCommandInterface();
             ASSERT(traci && tlInterface);
         }
-        onRampOccupancy = 0.0;
-        hwyOccupancy = 0.0;
-        meterFlow = 300;
         meterRate = 15.0;
-
-        scheduleAt(simTime() + 1, measureMsg);
-        scheduleAt(simTime() + updatePeriodALINEA, updateMsg);
-        scheduleAt(simTime() + (int)meterRate, changePhaseMsg);
-
-        // Initialize highwayInductorsList as a list of strings from parameter highwayInductors
-        stringListFromParam(highwayInductorsList, "highwayInductors");
-        // Initialize onRampInductorsList as a list of strings from parameter onRampInductors
-        stringListFromParam(onRampInductorsList, "onRampInductors");
+        scheduleAt(simTime() + meterRate, changePhaseMsg);
     }
 }
 
@@ -115,10 +133,127 @@ void RampMeterController::handleSelfMsg(cMessage* msg) {
             scheduleAt(simTime() + meterRate, msg);
             break;
         }
+        case RMC_RL_SAMPLE_MSG: {
+            if(!traci) {
+                TraCIScenarioManager *manager = TraCIScenarioManagerAccess().get();
+                traci = manager->getCommandInterface();
+            }
+            int totalVehCount = 0;
+            double accum_speed_local = 0.0;
+            // Loop through all lanes and accumulate data
+            for(auto area=areaDetectorList.begin(); area!=areaDetectorList.end(); area++) {
+                TraCICommandInterface::LaneAreaDetector sensor = traci->laneAreaDetector(*area);
+                // Get last step occupancy
+                accum_occupancy += sensor.getLastStepOccupancy();
+                // Get last stepMeanSpeed
+                int vehCount = sensor.getLastStepVehicleNumber();
+                totalVehCount += vehCount;
+                double lastStepMeanSpeed = sensor.getLastStepMeanSpeed();
+                accum_speed_local += ( (lastStepMeanSpeed < 0.0) ? 0 : lastStepMeanSpeed*vehCount );
+                // Get halting vehicles count
+                accum_halting_vehicles += sensor.getLastStepHaltingVehiclesNumber();
+            }
+            accum_speed += ( (totalVehCount > 0) ? (accum_speed_local / totalVehCount) : 0 );
+    #if RMC_VERBOSE && DATA_SUMMARY
+            std::cout << "From " << getParentModule()->getFullName() << " - ";
+            std::cout << "accum_occupancy: " << accum_occupancy << ", ";
+            std::cout << "sample[" << samplesCount << "] sampled_speed: " << ( (totalVehCount > 0) ? (accum_speed_local / totalVehCount) : 0 ) << ", ";
+            std::cout << "halting_vehicles: " << accum_halting_vehicles << endl;
+    #endif
+            samplesCount++;
+            scheduleAt(simTime() + ACCUM_DATA_PERIOD, msg);
+            break;
+        }
+        case RMC_RL_UPDATE_TMC_MSG: {
+            if(!traci) {
+                TraCIScenarioManager *manager = TraCIScenarioManagerAccess().get();
+                traci = manager->getCommandInterface();
+            }
+            std::list<std::string> vehicleIDs = getVehicleIDs();
+            sendToTMC(vehicleIDs);
+            scheduleAt(simTime() + UPDATE_TMC_PERIOD, msg);
+            break;
+        }
         default:
             DemoBaseApplLayer::handleSelfMsg(msg);
             break;
     }
+}
+
+void RampMeterController::handleMessage(cMessage * msg) {
+    if(UpdateMeteringRate *newMsg = dynamic_cast<UpdateMeteringRate*>(msg)) {
+        meterRate = newMsg->getMeterRate();
+        delete(msg);
+    }
+    else {
+        DemoBaseApplLayer::handleMessage(msg);
+    }
+}
+
+void RampMeterController::populateData(RSU_Data *data, std::list<std::string> &vehicleIDs) {
+    data->setRsuId(getParentModule()->getIndex());
+#if RMC_VERBOSE
+//    std::cout << "From " << getParentModule()->getFullName() << " - ";
+//    std::cout << "Recorded vehicle IDs: ";
+#endif
+    // Allocate enough space for vehicles
+    data->setVehiclesArraySize(vehicleIDs.size());
+    // Iterate through the vehicle list
+    int k = 0;
+    for(auto veh=vehicleIDs.begin(); veh!=vehicleIDs.end(); veh++) {
+        TraCICommandInterface::Vehicle vehicleConnection = traci->vehicle(*veh);
+        VehicleData vehicle;
+        vehicle.vehicleId = (omnetpp::opp_string)*veh;
+        vehicle.vehicleTypeId = vehicleConnection.getVType();
+        vehicle.speed = vehicleConnection.getSpeed();
+        Coord pos = vehicleConnection.getPosition();
+        vehicle.position[0] = pos.x;
+        vehicle.position[1] = pos.y;
+        data->setVehicles(k++, vehicle);  // Insert vehicle at position k
+#if RMC_VERBOSE
+//        std::cout << *veh << " ";
+#endif
+    }
+#if RMC_VERBOSE
+//    std::cout << endl;
+#endif
+    // Add accumulated statistics
+    double areaDetectorsCount = areaDetectorList.size();  // get average across all lanes 
+    data->setLastStepOccupancy(accum_occupancy / (samplesCount*areaDetectorsCount));
+    data->setLastStepMeanSpeed(accum_speed / samplesCount);
+    data->setLastStepHaltingVehiclesNumber(accum_halting_vehicles / samplesCount);
+#if RSU_VERBOSE && DATA_SUMMARY
+    std::cout << "From " << getParentModule()->getFullName() << " - ";
+    std::cout << "(occupancy, speed, haltingVehicles): " << accum_occupancy / (samplesCount*areaDetectorsCount) << ", " << accum_speed / (samplesCount) << ", " << accum_halting_vehicles / samplesCount << endl;
+#endif
+    // Reset sampled data values after using
+    resetStatistics();
+}
+
+void RampMeterController::resetStatistics() {
+    accum_occupancy = 0.0;
+    accum_speed = 0.0;
+    accum_halting_vehicles = 0;
+    samplesCount = 0;
+}
+
+void RampMeterController::sendToTMC(std::list<std::string> &vehicleIDs) {
+    RSU_Data *data = new RSU_Data("Collected vehicle data", TMC_DATA_MSG);  // inherited from cMessage class
+    populateData(data, vehicleIDs);
+    // RSUExampleScenario -> rampMeter -> appl
+    //                   |-> TMC
+    /******** Change these ************/
+    cModule *target = getParentModule()->getParentModule()->getSubmodule("TMC");
+    sendDirect(data, target, "RSU_port");
+}
+
+std::list<std::string> RampMeterController::getVehicleIDs() {
+    std::list<std::string> vehicleIDs;
+    for(auto area=areaDetectorList.begin(); area!=areaDetectorList.end(); area++) {
+        TraCICommandInterface::LaneAreaDetector LAD = traci->laneAreaDetector(*area);  // Acquire connection to corresponding laneAreaDetector
+        vehicleIDs.merge(LAD.getLastStepVehicleIDs());  // Append its vehicle IDs into the list
+    }
+    return vehicleIDs;
 }
 
 void RampMeterController::onWSM(BaseFrame1609_4* wsm) {

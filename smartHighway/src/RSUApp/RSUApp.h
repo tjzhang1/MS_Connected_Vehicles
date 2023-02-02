@@ -17,9 +17,18 @@
 #define RSUAPP_RSUAPP_H_
 
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
+#include "Messaging/RSU_Data_m.h"
 
+#define DATA_SUMMARY 0  // print out sampled data
 #define RSU_VERBOSE 1
-#define SAMPLING_PERIOD 8
+#define EQUILIBRIUM_PERIOD 600 // How long to wait before beginning transmission to TMC
+#define UPDATE_TMC_PERIOD 60  // How often to send data to TMC
+#define ACCUM_DATA_PERIOD 10  // How often to accumulate network data, must be < UPDATE_TMC_PERIOD
+enum RSU_MSG_types {
+    RSU_BROADCAST_MSG,    // Tells RSU to broadcast an advisory to cars
+    RSU_SAMPLE_MSG,       // Tells RSU to accumulate information from area detectors
+    RSU_UPDATE_TMC_MSG,   // Tells RSU to send collected data to TMC
+};
 
 namespace veins {
 
@@ -29,20 +38,25 @@ public:
     ~RSUApp();
     void initialize(int stage) override;
     void finish() override;
-    enum RSU_MSG_types {
-        RSU_BROADCAST_MSG,    // Tells RSU to broadcast an advisory to cars
-        RSU_SAMPLE_MSG,       // Tells RSU to collect information on nearby cars
-    };
 protected:
     void onWSM(BaseFrame1609_4* wsm) override;
     void onWSA(DemoServiceAdvertisment* wsa) override;
-    void sendToTMC(void);
+    void sendToTMC(std::list<std::string> &vehicleIDs);
     void stringListFromParam(std::vector<std::string> &list, const char *parName);
-    std::list<std::string> sampleAreaDetectors(void);
-    void handleSelfMsg(cMessage *msg) override;
+    std::list<std::string> getVehicleIDs(void);
+    void handleMessage(cMessage *msg) override;
+    void populateData(RSU_Data *data, std::list<std::string> &vehicleIDs);
+    // Reset the measured network statistics
+    void resetStatistics(void);
 private:
     std::vector<std::string> areaDetectorList;
-    cMessage *samplingMsg;
+    cMessage *updateTMC_msg, *sampleMsg;
+    TraCICommandInterface *traci;
+    // Measured statistics
+    double accum_occupancy;
+    double accum_speed;
+    int accum_halting_vehicles;
+    int samplesCount;
 };
 
 }

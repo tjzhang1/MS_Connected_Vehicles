@@ -5,7 +5,7 @@
 
 <additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
     <!-- StoppingPlaces -->
-    <parkingArea id="pa_0" lane="offRamp_0" startPos="60.01" endPos="70.01" roadsideCapacity="25"/>
+    <parkingArea id="pa_0" lane="offRamp_0" startPos="20.01" endPos="70.01" friendlyPos="true" roadsideCapacity="5"/>
     <!-- Detectors -->
     <e1Detector id="e1_hwy_lane0" lane="hwyMid_0" pos="50.00" period="300.00" file="e1_hwy_lane0.xml"/>
     <e1Detector id="e1_hwy_lane1" lane="hwyMid_1" pos="50.00" period="300.00" file="e1_hwy_lane1.xml"/>

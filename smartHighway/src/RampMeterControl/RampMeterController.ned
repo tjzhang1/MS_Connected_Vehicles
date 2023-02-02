@@ -24,8 +24,11 @@ simple RampMeterController extends DemoBaseApplLayer like ITrafficLightApplLayer
     parameters:
         string highwayInductors;
         string onRampInductors;
+        string areaDetectors;
+        string controlType = default("ALINEA");
 		@class(veins::RampMeterController);
     	@display("i=block/app2");
     gates:
         inout logic; //connects to logic block
+        input TMC_port @directIn; //direct in messages from the TMC
 }

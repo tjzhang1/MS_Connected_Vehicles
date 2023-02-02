@@ -2,14 +2,28 @@
 #define TMC_H_
 
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
+#include "protobuf/veinsgym.pb.h"
+#include "VeinsGym/GymConnection.h"
+#include "Messaging/RSU_Data_m.h"
+#include "Messaging/ParkingReroute_m.h"
+#include "Messaging/UpdateMeteringRate_m.h"
+#include "Messaging/PayloadReward_m.h"
+#include "Messaging/ProbeVehicleData_m.h"
 
 // Expected message types
 enum {
     TMC_DATA_MSG = 0,
     TMC_TIMER_MSG = 1,
+    TMC_BUFFERED_RWD_MSG = 2,
 };
-#define RL_PERIOD 10
-#define TMC_VERBOSE 1
+#define RL_INTERVAL 1  // Time between receiving RSU data and performing a computation
+#define TMC_VERBOSE 0
+//#define PARKING_PENALTY_WEIGHT 1
+//#define SPEED_REWARD_WEIGHT 1
+//#define STOPPING_PENALTY_WEIGHT 0.5
+#define THROUGHPUT_WEIGHT 20
+#define DELAY_WEIGHT 0.1
+#define CO2_WEIGHT 0.001
 
 class parkingLotData : public cObject {
 public:
@@ -28,12 +42,11 @@ public:
     int occupancy;
 };
 
-class vehicleData : public cObject {
-public:
-    int vehID;
-    int posX, posY;
-    int velX, velY;
-};
+typedef struct {
+    int hwyThroughput;
+    simtime_t accumTravelTime;
+    double accumCO2Emissions;
+} rewards_t;
 
 namespace veins {
 
@@ -46,6 +59,12 @@ class TMC : public cSimpleModule {
 public:
     TMC(void);
     ~TMC(void);
+
+    rewards_t globalReward = {0,SimTime::ZERO,0};
+    rewards_t bufferedHOVReward = {0,SimTime::ZERO,0};
+    rewards_t bufferedVehReward = {0,SimTime::ZERO,0};
+    int parkingSpaces = 100;
+
 protected:
     void initialize(int stage) override;
     void handleMessage(cMessage *msg) override;
@@ -55,13 +74,17 @@ protected:
     // Determine the control output for the system (signal timings, broadcast to reroute)
     void computeAction(void);
     // Control: update signal timing for a particular RSU
-    void updateSignalTiming(void);
+    void updateSignalTiming(int targetRM, double meterRate);
     // Control: tell RSU to broadcast vehicles to reroute
-    void broadcastReroute(void);
+    void broadcastReroute(int targetRSU);
     // Data: sample the availability of registered park n rides
     void parkingLotStatus(void);
-    // Data: sample the position and velocities of cars near RSUs
-    void collectTrafficInfo(void);
+    // Format rsuData and parkingData information into protobuf
+    veinsgym::proto::Request serializeObservation(void);
+    // Add reward
+    double calculateReward(void);
+    // Reward: vehicle has exited to park and needs to schedule a reward accordingly
+    void handleBufferedReward(PayloadReward *msg);
 
 private:
     // need some sort of queue to hold RSU data
@@ -70,6 +93,8 @@ private:
     cQueue *parkingData;
     std::vector<std::string> parkingLotList;
     cMessage *control_timer;  // Recurring self message for control updates
+    GymConnection *gymCon = nullptr;
+    int spawnCounter = 0;
 };
 
 }

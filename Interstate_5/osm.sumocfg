@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2022-05-16 15:20:10 by Eclipse SUMO sumo Version 1.13.0
+<!-- generated on 2022-11-02 11:45:06 by Eclipse SUMO GUI Version 1.14.1
 -->
 
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
 
     <input>
         <net-file value="osm.net.xml"/>
-        <route-files value="osm_pt.rou.xml"/>
-        <additional-files value="osm_stops.add.xml"/>
+        <route-files value="routeGeneration/routeDist.xml,osm_pt.rou.xml"/>
+        <additional-files value="osm.add.xml"/>
     </input>
 
+    <time>
+        <end value="4800"/>
+    </time>
+
     <processing>
-        <ignore-route-errors value="true"/>
+        <scale value="1"/>
     </processing>
 
-    <routing>
-        <device.rerouting.adaptation-steps value="18"/>
-        <device.rerouting.adaptation-interval value="10"/>
-    </routing>
-
-    <report>
-        <verbose value="true"/>
-        <duration-log.statistics value="true"/>
-        <no-step-log value="true"/>
-    </report>
-
-    <gui_only>
-        <gui-settings-file value="osm.view.xml"/>
-    </gui_only>
+    <output>
+	     <!--emission-output value="emissions.xml" /-->
+	     <!--full-output value="fullOut.xml" /-->
+	     <tripinfo-output value="tripInfo.xml" />
+        <device.emissions.probability value="1.0" />
+    </output>
 
 </configuration>

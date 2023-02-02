@@ -23,6 +23,10 @@
         <no-step-log value="true"/>
     </report>
 
+	<processing>
+		<ignore-route-errors value="true"/>	
+	</processing>
+
     <gui_only>
         <start value="false"/>
     </gui_only>

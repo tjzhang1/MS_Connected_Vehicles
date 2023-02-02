@@ -49,7 +49,7 @@ gym.register(
     kwargs={
         "action_serializer": serialize_action,
         "scenario_dir": "./smartHighway/simulations/interstate_5",
-        "run_veins": False,  # do not start veins through Veins-Gym
+        "run_veins": True,  # do not start veins through Veins-Gym
         "port": 5555,  # pick a port to use
         "timeout": 1000.0,  # new timeout value (in seconds)
         "print_veins_stdout": True,  # enable (debug) output of veins

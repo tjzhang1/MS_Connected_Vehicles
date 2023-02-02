@@ -4,6 +4,7 @@
 #include "TrafficManagementCenter/TMC.h"
 
 #define PARKNRIDE_MSG 103
+#define CARAPP_VERBOSE 0
 
 // List of possible exits to take to reach park and ride
 static const std::vector<std::string> exitList = { // Exit no:

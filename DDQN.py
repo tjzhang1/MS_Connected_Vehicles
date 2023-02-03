@@ -372,6 +372,29 @@ class DeepQAgent(Agent):
                 experiences = self._memory.sample()
                 self.learn(experiences)
 
+#------------------------------------------------ End Class -----------------------------------------------------------
+
+# Helper function to return list of directories in path that matches pattern
+import os, fnmatch
+def findDir(pattern, path):
+    result = []
+    for root,dirs,files in os.walk(path):
+        for name in dirs:
+            if fnmatch.fnmatch(name, pattern):
+                result.append(os.path.join(root, name))
+    return result
+
+import shutil
+def deleteResults():
+    results = findDir("sumo-launchd-tmp-*","/tmp")
+    for tmp in results:
+        shutil.rmtree(tmp)
+
+def moveResults(episode_num, avg_score, cur_score):
+    results = findDir("sumo-launchd-tmp-*","/tmp")
+    name = "run_%d_avgScore_%.3f_curScore_%.3f" % (episode_num,avg_score,cur_score)
+    for i,tmp in enumerate(results):
+        shutil.move(tmp, "./results/"+name+"_"+str(i))
 
 def _train_for_at_most(agent: Agent, env: gym.Env, max_timesteps: int) -> int:
     """Train agent for a maximum number of timesteps."""
@@ -453,6 +476,9 @@ def train(agent: Agent,
             break
         if (i + 1) % 100 == 0:
             print(f"\rEpisode {i + 1}\tAverage Score: {average_score:.2f}")
+            moveResults(i+1, average_score, score)
+        else:
+            deleteResults()
 
     return scores
 

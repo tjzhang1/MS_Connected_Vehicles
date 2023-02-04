@@ -13,7 +13,6 @@ def select_greedy_actions(states: torch.Tensor, q_network: nn.Module) -> torch.T
     _, actions = q_network(states).max(dim=1, keepdim=True)
     return actions
 
-
 def evaluate_selected_actions(states: torch.Tensor,
                               actions: torch.Tensor,
                               rewards: torch.Tensor,
@@ -24,7 +23,6 @@ def evaluate_selected_actions(states: torch.Tensor,
     next_q_values = q_network(states).gather(dim=1, index=actions)        
     q_values = rewards + (gamma * next_q_values * (1 - dones))
     return q_values
-
 
 def q_learning_update(states: torch.Tensor,
                       rewards: torch.Tensor,
@@ -143,7 +141,8 @@ class DeepQAgent(Agent):
                  gamma: float,
                  update_frequency: int,
                  double_dqn: bool = False,
-                 seed: int = None) -> None:
+                 seed: int = None,
+                 load_checkpoint_path: str = None) -> None:
         """
         Initialize a DeepQAgent.
         
@@ -191,12 +190,17 @@ class DeepQAgent(Agent):
         self._update_frequency = update_frequency
         self._online_q_network = self._initialize_q_network(number_hidden_units)
         self._target_q_network = self._initialize_q_network(number_hidden_units)
+        if load_checkpoint_path is not None:
+            checkpoint = torch.load(load_checkpoint_path, map_location=torch.device('cpu'))
+            self._online_q_network.load_state_dict(checkpoint['q-network-state'])
         self._synchronize_q_networks(self._target_q_network, self._online_q_network)        
         self._online_q_network.to(self._device)
         self._target_q_network.to(self._device)
         
         # initialize the optimizer
         self._optimizer = optimizer_fn(self._online_q_network.parameters())
+        if load_checkpoint_path is not None:
+            self._optimizer.load_state_dict(checkpoint['optimizer-state']) 
 
         # initialize some counters
         self._number_episodes = 0
@@ -314,7 +318,7 @@ class DeepQAgent(Agent):
     def has_sufficient_experience(self) -> bool:
         """True if agent has enough experience to train on a batch of samples; False otherwise."""
         return len(self._memory) >= self._memory.batch_size
-    
+
     def save(self, filepath: str) -> None:
         """
         Saves the state of the DeepQAgent.
@@ -341,7 +345,7 @@ class DeepQAgent(Agent):
             }
         }
         torch.save(checkpoint, filepath)
-        
+
     def step(self,
              state: np.array,
              action: int,
@@ -493,6 +497,7 @@ def train(agent: Agent,
             break
         if (i + 1) % 100 == 0:
             print(f"\rEpisode {i + 1}\tAverage Score: {average_score:.2f}")
+            agent.save(checkpoint_filepath)
         if (i + 1) % 10 == 0:
             copyResults(i+1, average_score, score)
     return scores

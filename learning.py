@@ -84,6 +84,7 @@ _agent_kwargs = {
     "update_frequency": 4,
     "double_dqn": True,  # True uses Double DQN; False uses DQN 
     "seed": None,
+    "load_checkpoint_path": None
 }
 double_dqn_agent = DDQN.DeepQAgent(**_agent_kwargs)
 

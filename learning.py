@@ -2,8 +2,8 @@ import gym
 import veins_gym
 from veins_gym import veinsgym_pb2
 from torch import optim
-import DDQN
 import numpy as np
+import DDQN
 
 observation_space = gym.spaces.Tuple((  \
 gym.spaces.Box(low=0, high=4000, shape=(1,), dtype=np.float32),  \

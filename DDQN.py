@@ -5,7 +5,8 @@ import numpy as np
 from torch import nn, optim
 from torch.nn import functional as F
 import gym
-
+import zmq
+import time
 
 def select_greedy_actions(states: torch.Tensor, q_network: nn.Module) -> torch.Tensor:
     """Select the greedy action for the current state given some Q-network."""
@@ -390,16 +391,24 @@ def deleteResults():
     for tmp in results:
         shutil.rmtree(tmp)
 
-def moveResults(episode_num, avg_score, cur_score):
+def copyResults(episode_num, avg_score, cur_score):
     results = findDir("sumo-launchd-tmp-*","/tmp")
     name = "run_%d_avgScore_%.3f_curScore_%.3f" % (episode_num,avg_score,cur_score)
     for i,tmp in enumerate(results):
-        shutil.move(tmp, "./results/"+name+"_"+str(i))
+        shutil.copytree(tmp, "./results/"+name+"_"+str(i))
 
 def _train_for_at_most(agent: Agent, env: gym.Env, max_timesteps: int) -> int:
     """Train agent for a maximum number of timesteps."""
 #    state,info = env.reset()
-    state = env.reset()
+    while True:
+        try:
+            state = env.reset()  # Occasionally runs into port errors since launching process over and over
+        except zmq.error.ZMQError as z:
+            print(z)
+            time.sleep(1)
+            continue
+        else:
+            break
     state = gym.spaces.utils.flatten(env.observation_space, state)
     score = 0
     for t in range(max_timesteps):
@@ -420,7 +429,15 @@ def _train_for_at_most(agent: Agent, env: gym.Env, max_timesteps: int) -> int:
 def _train_until_done(agent: Agent, env: gym.Env) -> float:
     """Train the agent until the current episode is complete."""
 #    state,info = env.reset()
-    state = env.reset()
+    while True:
+        try:
+            state = env.reset()  # Occasionally runs into port errors since launching process over and over
+        except zmq.error.ZMQError as z:
+            print(z)
+            time.sleep(1)
+            continue
+        else:
+            break
     state = gym.spaces.utils.flatten(env.observation_space, state)
     score = 0
     done = False
@@ -476,10 +493,8 @@ def train(agent: Agent,
             break
         if (i + 1) % 100 == 0:
             print(f"\rEpisode {i + 1}\tAverage Score: {average_score:.2f}")
-            moveResults(i+1, average_score, score)
-        else:
-            deleteResults()
-
+        if (i + 1) % 10 == 0:
+            copyResults(i+1, average_score, score)
     return scores
 
 def power_decay_schedule(episode_number: int,

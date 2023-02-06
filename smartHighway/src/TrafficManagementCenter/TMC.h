@@ -62,7 +62,7 @@ public:
     rewards_t globalReward = {0,SimTime::ZERO,0};
     rewards_t bufferedHOVReward = {0,SimTime::ZERO,0};
     rewards_t bufferedVehReward = {0,SimTime::ZERO,0};
-    int parkingSpaces = 4000;
+    int parkingSpaces = 400;
     const int actionRSU[5] = {
         0,  // I605_EXIT
         3,  // I605_SB_ENTER

@@ -110,7 +110,9 @@ _ = axes.legend()
 _ = axes.set_ylabel("Score")
 _ = axes.set_xlabel("Episode Number")
 fig.show()
-fig.savefig("training results")
+fig.savefig("training_results")
+
+np.save("scores", double_dqn_scores)
 
 '''
 # Previous training script

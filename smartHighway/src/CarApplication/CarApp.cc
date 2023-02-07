@@ -99,7 +99,13 @@ void CarApp::redirect(void) {
             traciVehicle->changeTarget(getExit(exitNo));
         }
         catch(cRuntimeError &e){
-            std::cerr << e.what() << endl;
+            try{
+                exitNo++;
+                traciVehicle->changeTarget(getExit(exitNo));
+            }
+            catch(cRuntimeError &e) {
+                std::cerr << e.what() << endl;
+            }
         }
     }
 }

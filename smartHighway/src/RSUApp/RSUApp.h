@@ -24,7 +24,7 @@
 #define RSU_VERBOSE 0
 #define EQUILIBRIUM_PERIOD 600 // How long to wait before beginning transmission to TMC
 #define UPDATE_TMC_PERIOD 60   // How often to send data to TMC
-#define ACCUM_DATA_PERIOD 10   // How often to accumulate network data, must be < UPDATE_TMC_PERIOD
+#define ACCUM_DATA_PERIOD 5   // How often to accumulate network data, must be < UPDATE_TMC_PERIOD
 #define BROADCAST_INTERVAL 10  // How often to broadcast to drivers, must be < UPDATE_TMC_PERIOD
 enum RSU_MSG_types {
     RSU_BROADCAST_MSG,    // Tells RSU to broadcast an advisory to cars

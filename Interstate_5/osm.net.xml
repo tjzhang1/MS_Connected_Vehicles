@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2023-01-31 16:29:09 by Eclipse SUMO netedit Version 1.15.0
+<!-- generated on 2023-02-07 14:03:15 by Eclipse SUMO netedit Version 1.15.0
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
@@ -29,11 +29,6 @@
     <pedestrian>
         <walkingareas value="0"/>
     </pedestrian>
-
-    <netedit>
-        <additional-files value="/home/tjzhang/Research/VEINS_Connected_Vehicles/Interstate_5/osm.add.xml"/>
-        <route-files value="/home/tjzhang/Research/VEINS_Connected_Vehicles/Interstate_5/routeGeneration/source_routes.xml"/>
-    </netedit>
 
 </configuration>
 -->
@@ -1032,7 +1027,7 @@
     </edge>
     <edge id=":3010199900_0" function="internal">
         <lane id=":3010199900_0_0" index="0" allow="private emergency authority army vip passenger hov taxi bus coach delivery truck trailer motorcycle evehicle custom1 custom2" speed="18.93" length="8.36" shape="10970.81,3281.69 10969.81,3279.48 10969.08,3277.99 10968.27,3276.54 10967.03,3274.45"/>
-        <lane id=":3010199900_0_1" index="1" allow="private emergency authority army vip passenger hov taxi bus coach delivery truck trailer motorcycle evehicle custom1 custom2" speed="18.93" length="8.36" shape="10973.73,3280.38 10972.68,3278.07 10971.92,3276.51 10971.07,3274.99 10969.78,3272.81"/>
+        <lane id=":3010199900_0_1" index="1" allow="bus" speed="18.93" length="8.36" shape="10973.73,3280.38 10972.68,3278.07 10971.92,3276.51 10971.07,3274.99 10969.78,3272.81"/>
     </edge>
     <edge id=":3010199900_2" function="internal">
         <lane id=":3010199900_2_0" index="0" disallow="all" speed="15.65" length="8.53" shape="10976.65,3279.06 10973.07,3271.41"/>
@@ -2224,7 +2219,7 @@
     </edge>
     <edge id=":J1_0" function="internal">
         <lane id=":J1_0_0" index="0" allow="private emergency authority army vip passenger hov taxi bus coach delivery truck trailer motorcycle evehicle custom1 custom2" speed="22.22" length="0.10" shape="10907.50,3266.18 10907.50,3266.18"/>
-        <lane id=":J1_0_1" index="1" allow="private emergency authority army vip passenger hov taxi bus coach delivery truck trailer motorcycle evehicle custom1 custom2" speed="22.22" length="0.10" shape="10906.76,3263.06 10906.76,3263.06"/>
+        <lane id=":J1_0_1" index="1" allow="bus" speed="22.22" length="0.10" shape="10906.76,3263.06 10906.76,3263.06"/>
     </edge>
     <edge id=":J10_0" function="internal">
         <lane id=":J10_0_0" index="0" allow="private emergency authority army vip passenger hov taxi bus coach delivery truck trailer motorcycle evehicle custom1 custom2" speed="22.22" length="0.30" shape="6438.08,9170.06 6437.84,9170.24"/>
@@ -4106,7 +4101,7 @@
         <lane id="23426514_0" index="0" allow="private emergency authority army vip passenger hov taxi bus coach delivery truck trailer motorcycle evehicle custom1 custom2" speed="22.22" length="67.00" shape="10967.03,3274.45 10962.71,3267.19 10951.21,3263.26 10937.99,3261.24 10921.31,3262.90 10907.50,3266.18">
             <param key="origId" value="23426514"/>
         </lane>
-        <lane id="23426514_1" index="1" allow="private emergency authority army vip passenger hov taxi bus coach delivery truck trailer motorcycle evehicle custom1 custom2" speed="22.22" length="67.00" shape="10969.78,3272.81 10964.85,3264.55 10951.97,3260.14 10938.07,3258.02 10920.79,3259.74 10906.76,3263.06">
+        <lane id="23426514_1" index="1" allow="bus" speed="22.22" length="67.00" shape="10969.78,3272.81 10964.85,3264.55 10951.97,3260.14 10938.07,3258.02 10920.79,3259.74 10906.76,3263.06">
             <param key="origId" value="23426514"/>
         </lane>
     </edge>
@@ -7645,7 +7640,7 @@
         <lane id="source_SB_LAKEWOOD_0" index="0" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="15.65" length="17.22" shape="10977.90,3297.39 10970.81,3281.69">
             <param key="origId" value="399669559"/>
         </lane>
-        <lane id="source_SB_LAKEWOOD_1" index="1" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="15.65" length="17.22" shape="10980.81,3296.07 10973.73,3280.38">
+        <lane id="source_SB_LAKEWOOD_1" index="1" allow="bus" speed="15.65" length="17.22" shape="10980.81,3296.07 10973.73,3280.38">
             <param key="origId" value="399669559"/>
         </lane>
         <lane id="source_SB_LAKEWOOD_2" index="2" disallow="all" speed="15.65" length="17.22" shape="10983.73,3294.76 10976.65,3279.06">
@@ -7702,7 +7697,7 @@
     </tlLogic>
     <tlLogic id="J1" type="static" programID="2" offset="0">
         <phase duration="1"  state="GG"/>
-        <phase duration="4"  state="rr"/>
+        <phase duration="4"  state="rG"/>
     </tlLogic>
     <tlLogic id="J10" type="static" programID="0" offset="0">
         <phase duration="1"  state="GG"/>

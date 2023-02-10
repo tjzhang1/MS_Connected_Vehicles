@@ -44,11 +44,11 @@ public:
 protected:
     void onWSM(BaseFrame1609_4* wsm) override;
     void onWSA(DemoServiceAdvertisment* wsa) override;
-    void sendToTMC(std::list<std::string> &vehicleIDs);
+    void sendToTMC(void);
     void stringListFromParam(std::vector<std::string> &list, const char *parName);
     std::list<std::string> getVehicleIDs(void);
     void handleMessage(cMessage *msg) override;
-    void populateData(RSU_Data *data, std::list<std::string> &vehicleIDs);
+    void populateData(RSU_Data *data);
     // Reset the measured network statistics
     void resetStatistics(void);
 private:
@@ -59,6 +59,7 @@ private:
     double accum_occupancy;
     double accum_speed;
     int accum_halting_vehicles;
+    int accum_veh_count;
     int samplesCount;
     int broadcastLifetime=0;
 };

@@ -54,6 +54,7 @@ void RSUApp::resetStatistics() {
     accum_occupancy = 0.0;
     accum_speed = 0.0;
     accum_halting_vehicles = 0;
+    accum_veh_count = 0;
     samplesCount = 0;
 }
 
@@ -86,8 +87,8 @@ void RSUApp::handleMessage(cMessage *msg) {
             TraCIScenarioManager *manager = TraCIScenarioManagerAccess().get();
             traci = manager->getCommandInterface();
         }
-        std::list<std::string> vehicleIDs = getVehicleIDs();
-        sendToTMC(vehicleIDs);
+//        std::list<std::string> vehicleIDs = getVehicleIDs();
+        sendToTMC();
         scheduleAt(simTime() + UPDATE_TMC_PERIOD, msg);
         break;
     }
@@ -112,6 +113,7 @@ void RSUApp::handleMessage(cMessage *msg) {
             accum_halting_vehicles += sensor.getLastStepHaltingVehiclesNumber();
         }
         accum_speed += ( (totalVehCount > 0) ? (accum_speed_local / totalVehCount) : 0 );
+        accum_veh_count += totalVehCount;
 #if RSU_VERBOSE && DATA_SUMMARY
         std::cout << "From " << getParentModule()->getFullName() << " - ";
         std::cout << "accum_occupancy: " << accum_occupancy << ", ";
@@ -127,9 +129,9 @@ void RSUApp::handleMessage(cMessage *msg) {
     }
 }
 
-void RSUApp::populateData(RSU_Data *data, std::list<std::string> &vehicleIDs) {
+void RSUApp::populateData(RSU_Data *data) {
     data->setRsuId(getParentModule()->getIndex());
-    data->setVehiclesNumber(vehicleIDs.size());
+//    data->setVehiclesNumber(vehicleIDs.size());
 /*  May reuse this code if necessary to include detailed vehicle positions
 #if RSU_VERBOSE
 //    std::cout << "From " << getParentModule()->getFullName() << " - ";
@@ -163,11 +165,13 @@ void RSUApp::populateData(RSU_Data *data, std::list<std::string> &vehicleIDs) {
         data->setLastStepOccupancy(accum_occupancy / (samplesCount*areaDetectorsCount));
         data->setLastStepMeanSpeed(accum_speed / samplesCount);
         data->setLastStepHaltingVehiclesNumber(accum_halting_vehicles / samplesCount);
+        data->setVehiclesNumber(accum_veh_count / samplesCount);
     }
     else {
         data->setLastStepOccupancy(0.0);
         data->setLastStepMeanSpeed(0.0);
         data->setLastStepHaltingVehiclesNumber(0);
+        data->setVehiclesNumber(0);
     }
 #if RSU_VERBOSE && DATA_SUMMARY
     std::cout << "From " << getParentModule()->getFullName() << " - ";
@@ -177,9 +181,9 @@ void RSUApp::populateData(RSU_Data *data, std::list<std::string> &vehicleIDs) {
     resetStatistics();
 }
 
-void RSUApp::sendToTMC(std::list<std::string> &vehicleIDs) {
+void RSUApp::sendToTMC(void) {
     RSU_Data *data = new RSU_Data("Collected vehicle data", TMC_DATA_MSG);  // inherited from cMessage class
-    populateData(data, vehicleIDs);
+    populateData(data);
     // RSUExampleScenario -> RSU -> RSUApp
     //                   |-> TMC
     cModule *target = getParentModule()->getParentModule()->getSubmodule("TMC");

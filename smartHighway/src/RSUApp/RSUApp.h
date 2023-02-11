@@ -17,8 +17,8 @@
 #define RSUAPP_RSUAPP_H_
 
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
-#include "Messaging/RSU_Data_m.h"
 #include "Messaging/ParkingReroute_m.h"
+#include "TrafficManagementCenter/TMC.h"
 
 #define DATA_SUMMARY 0  // print out sampled data
 #define RSU_VERBOSE 0
@@ -42,16 +42,15 @@ public:
     void initialize(int stage) override;
     void finish() override;
 protected:
-    void onWSM(BaseFrame1609_4* wsm) override;
-    void onWSA(DemoServiceAdvertisment* wsa) override;
     void sendToTMC(void);
     void stringListFromParam(std::vector<std::string> &list, const char *parName);
     std::list<std::string> getVehicleIDs(void);
     void handleMessage(cMessage *msg) override;
-    void populateData(RSU_Data *data);
+    void populateData(RsuData *data);
     // Reset the measured network statistics
     void resetStatistics(void);
 private:
+    TMC *TMC_connection;
     std::vector<std::string> areaDetectorList;
     cMessage *updateTMC_msg, *sampleMsg;
     TraCICommandInterface *traci;

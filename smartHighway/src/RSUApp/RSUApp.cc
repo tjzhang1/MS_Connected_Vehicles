@@ -14,11 +14,7 @@
 // 
 
 #include "RSUApp.h"
-#include "veins/modules/application/traci/TraCIDemo11pMessage_m.h"
-#include "Messaging/RSU_Data_m.h"
-#include "Messaging/ProbeVehicleData_m.h"
 #include <boost/algorithm/string.hpp>
-#include "TrafficManagementCenter/TMC.h"
 #include "veins/base/utils/Coord.h"
 
 using namespace veins;
@@ -39,6 +35,7 @@ void RSUApp::initialize(int stage) {
     DemoBaseApplLayer::initialize(stage);
     if(stage == 0) {
         traci = NULL;
+        TMC_connection = dynamic_cast<TMC *>(getParentModule()->getParentModule()->getSubmodule("TMC"));
         stringListFromParam(areaDetectorList, "areaDetectors");
         resetStatistics();
         scheduleAt(simTime() + EQUILIBRIUM_PERIOD, updateTMC_msg);
@@ -87,7 +84,6 @@ void RSUApp::handleMessage(cMessage *msg) {
             TraCIScenarioManager *manager = TraCIScenarioManagerAccess().get();
             traci = manager->getCommandInterface();
         }
-//        std::list<std::string> vehicleIDs = getVehicleIDs();
         sendToTMC();
         scheduleAt(simTime() + UPDATE_TMC_PERIOD, msg);
         break;
@@ -108,11 +104,11 @@ void RSUApp::handleMessage(cMessage *msg) {
             int vehCount = sensor.getLastStepVehicleNumber();
             totalVehCount += vehCount;
             double lastStepMeanSpeed = sensor.getLastStepMeanSpeed();
-            accum_speed_local += ( (lastStepMeanSpeed < 0.0) ? 0 : lastStepMeanSpeed*vehCount );
+            accum_speed_local += ( (lastStepMeanSpeed < 0.0) ? 0.0 : lastStepMeanSpeed*vehCount );
             // Get halting vehicles count
-            accum_halting_vehicles += sensor.getLastStepHaltingVehiclesNumber();
+//            accum_halting_vehicles += sensor.getLastStepHaltingVehiclesNumber();
         }
-        accum_speed += ( (totalVehCount > 0) ? (accum_speed_local / totalVehCount) : 0 );
+        accum_speed += ( (totalVehCount > 0) ? (accum_speed_local / totalVehCount) : 0.0 );
         accum_veh_count += totalVehCount;
 #if RSU_VERBOSE && DATA_SUMMARY
         std::cout << "From " << getParentModule()->getFullName() << " - ";
@@ -129,9 +125,8 @@ void RSUApp::handleMessage(cMessage *msg) {
     }
 }
 
-void RSUApp::populateData(RSU_Data *data) {
-    data->setRsuId(getParentModule()->getIndex());
-//    data->setVehiclesNumber(vehicleIDs.size());
+void RSUApp::populateData(RsuData *data) {
+    data->rsuId = getParentModule()->getIndex();
 /*  May reuse this code if necessary to include detailed vehicle positions
 #if RSU_VERBOSE
 //    std::cout << "From " << getParentModule()->getFullName() << " - ";
@@ -162,32 +157,29 @@ void RSUApp::populateData(RSU_Data *data) {
     // Add accumulated statistics
     double areaDetectorsCount = areaDetectorList.size();  // get average across all lanes 
     if(samplesCount > 0 && areaDetectorsCount > 0.0) {  // Avoid dividing by 0
-        data->setLastStepOccupancy(accum_occupancy / (samplesCount*areaDetectorsCount));
-        data->setLastStepMeanSpeed(accum_speed / samplesCount);
-        data->setLastStepHaltingVehiclesNumber(accum_halting_vehicles / samplesCount);
-        data->setVehiclesNumber(accum_veh_count / samplesCount);
+        data->lastStepOccupancy = accum_occupancy / (samplesCount*areaDetectorsCount);
+        data->lastStepMeanSpeed = accum_speed / samplesCount;
+//        data->setLastStepHaltingVehiclesNumber(accum_halting_vehicles / samplesCount);
+        data->vehiclesNumber = accum_veh_count / samplesCount;
     }
     else {
-        data->setLastStepOccupancy(0.0);
-        data->setLastStepMeanSpeed(0.0);
-        data->setLastStepHaltingVehiclesNumber(0);
-        data->setVehiclesNumber(0);
+        data->lastStepOccupancy = 0.0;
+        data->lastStepMeanSpeed = 0.0;
+//        data->setLastStepHaltingVehiclesNumber(0);
+        data->vehiclesNumber = 0;
     }
 #if RSU_VERBOSE && DATA_SUMMARY
     std::cout << "From " << getParentModule()->getFullName() << " - ";
-    std::cout << "(occupancy, speed, haltingVehicles): " << accum_occupancy / (samplesCount*areaDetectorsCount) << ", " << accum_speed / (samplesCount) << ", " << accum_halting_vehicles / samplesCount << endl;
+    std::cout << "(occupancy, speed, numVehicles): " << data->lastStepOccupancy << ", " << data->lastStepMeanSpeed << ", " << data->vehiclesNumber << endl;
 #endif
     // Reset sampled data values after using
     resetStatistics();
 }
 
 void RSUApp::sendToTMC(void) {
-    RSU_Data *data = new RSU_Data("Collected vehicle data", TMC_DATA_MSG);  // inherited from cMessage class
+    RsuData *data = new RsuData();
     populateData(data);
-    // RSUExampleScenario -> RSU -> RSUApp
-    //                   |-> TMC
-    cModule *target = getParentModule()->getParentModule()->getSubmodule("TMC");
-    sendDirect(data, target, "RSU_port");
+    TMC_connection->appendObs(data);
 }
 
 std::list<std::string> RSUApp::getVehicleIDs() {
@@ -197,29 +189,6 @@ std::list<std::string> RSUApp::getVehicleIDs() {
         vehicleIDs.merge(LAD.getLastStepVehicleIDs());  // Append its vehicle IDs into the list
     }
     return vehicleIDs;
-}
-
-void RSUApp::onWSA(DemoServiceAdvertisment* wsa)
-{
-    // if this RSU receives a WSA for service 42, it will tune to the chan
-    if (wsa->getPsid() == 42) {
-        mac->changeServiceChannel(static_cast<Channel>(wsa->getTargetChannel()));
-    }
-}
-
-// Handles what happens when receives message from a lower network layer
-void RSUApp::onWSM(BaseFrame1609_4* frame)
-{
-    if ( TraCIDemo11pMessage* wsm = dynamic_cast<TraCIDemo11pMessage*>(frame) )
-    {
-        // this rsu repeats the received traffic update in 2 seconds plus some random delay
-        sendDelayedDown(wsm->dup(), 2 + uniform(0.01, 0.2));
-    }
-    else if ( ProbeVehicleData* pvd = dynamic_cast<ProbeVehicleData*>(frame) )
-    {
-        std::cout << "Received vType " << pvd->getVehicleTypeID() << " data from pos" << pvd->getSenderPos() << ", speed" << pvd->getSenderSpeed() << std::endl;
-    }
-    // Can add more functionality here
 }
 
 void RSUApp::stringListFromParam(std::vector<std::string> &list, const char *parName) {

@@ -10,9 +10,9 @@ Define_Module(veins::TMC);
 
 // Make sure the RSU messages are sorted for observation
 int rsuDataCompare(cObject *a, cObject *b) {
-    RSU_Data *a_converted = dynamic_cast<RSU_Data *>(a);
-    RSU_Data *b_converted = dynamic_cast<RSU_Data *>(b);
-    return a_converted->getRsuId() - b_converted->getRsuId();
+    RsuData *a_converted = dynamic_cast<RsuData *>(a);
+    RsuData *b_converted = dynamic_cast<RsuData *>(b);
+    return a_converted->rsuId - b_converted->rsuId;
 }
 // Make sure the parking info are sorted for observation
 int parkingCompare(cObject *a, cObject *b) {
@@ -74,12 +74,12 @@ veinsgym::proto::Request TMC::serializeObservation(void) {
 //   double parking_penalty *= PARKING_PENALTY_WEIGHT;
  */
     for(cQueue::Iterator iter=cQueue::Iterator(*rsuData); iter.end()==false; iter++) {
-        auto *data = dynamic_cast<RSU_Data *>(*iter);
+        auto *data = dynamic_cast<RsuData *>(*iter);
         // Add a space to observation tuple and create a box there
         auto *data_box = observation_space->add_values()->mutable_box();
-        data_box->add_values(data->getLastStepOccupancy());
-        data_box->add_values(data->getLastStepMeanSpeed());
-        data_box->add_values((double)data->getVehiclesNumber());
+        data_box->add_values(data->lastStepOccupancy);
+        data_box->add_values(data->lastStepMeanSpeed);
+        data_box->add_values((double)data->vehiclesNumber);
     }
     // Add reward
     request.mutable_step()->mutable_reward()->mutable_box()->add_values(calculateReward());
@@ -189,17 +189,21 @@ void TMC::handleBufferedReward(PayloadReward *msg) {
     }
 }
 
+void TMC::appendObs(RsuData *r) {
+    rsuData->insert(r);
+    // Doesn't cause issues if multiple RSUs feed data at once
+    if(control_timer->isScheduled() == false) {
+        scheduleAt(simTime() + RL_INTERVAL, control_timer);
+    }
+}
+
 void TMC::handleMessage(cMessage *msg) {
     // Can receive messages from gate for RSU data
     // Can receive self messages as a timer for updating control plan
     // Can receive messages from vehicles to assign payload rewards
     switch(msg->getKind()) {
     case TMC_DATA_MSG: {
-        rsuData->insert(dynamic_cast<RSU_Data *>(msg));
-        // Doesn't cause issues if multiple RSUs feed data at once
-        if(control_timer->isScheduled() == false) {
-            scheduleAt(simTime() + RL_INTERVAL, control_timer);
-        }
+        std::cerr << "Not implemented" << endl;
         break;
     }
     case TMC_TIMER_MSG: {

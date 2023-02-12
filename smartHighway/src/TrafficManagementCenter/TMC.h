@@ -4,7 +4,6 @@
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
 #include "protobuf/veinsgym.pb.h"
 #include "VeinsGym/GymConnection.h"
-#include "Messaging/RSU_Data_m.h"
 #include "Messaging/ParkingReroute_m.h"
 #include "Messaging/UpdateMeteringRate_m.h"
 #include "Messaging/PayloadReward_m.h"
@@ -24,6 +23,7 @@ enum {
 #define DELAY_WEIGHT -1.0/TARGET_TIME
 #define CO2_WEIGHT -0.0000001
 
+/* Object that holds state info for parking lots */
 class parkingLotData : public cObject {
 public:
     parkingLotData(std::string nodeId, int cap, int occ) {
@@ -41,6 +41,31 @@ public:
     int occupancy;
 };
 
+/* Object that holds state info for RSUs */
+class RsuData : public cObject {
+public:
+    RsuData(int id, double occ, double speed, int haltingVeh, int veh) {
+        rsuId = id;
+        lastStepOccupancy = occ;
+        lastStepMeanSpeed = speed;
+        lastStepHaltingVehiclesNumber = haltingVeh;
+        vehiclesNumber = veh;
+    }
+    RsuData(void) {
+        rsuId = 0;
+        lastStepOccupancy = 0.0;
+        lastStepMeanSpeed = 0.0;
+        lastStepHaltingVehiclesNumber = 0;
+        vehiclesNumber = 0;
+    }
+    int rsuId;
+    double lastStepOccupancy;
+    double lastStepMeanSpeed;
+    int lastStepHaltingVehiclesNumber;
+    int vehiclesNumber;
+};
+
+/* Defines rewards structure for ML training */
 typedef struct {
     int hwyThroughput;
     simtime_t accumTravelTime;
@@ -70,6 +95,8 @@ public:
         6,  // LAKEWOOD_SB_ENTER
         7,  // PARAMOUNT_EXIT
     };
+    // Data: enqueue observations from RSU and schedule processing
+    void appendObs(RsuData *r);
 
 protected:
     void initialize(int stage) override;

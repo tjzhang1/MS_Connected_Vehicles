@@ -66,31 +66,29 @@ int getTravelTime(int exitNo) {
 
 namespace veins {
 
+    /*
+     * It is assumed that this application will be assigned only to vehicles whose destinations are the mainline sink,
+     * and that this vehicle is not an HOV or continuing vehicle.
+     */
     class VEINS_API CarApp : public DemoBaseApplLayer {
     public:
         void initialize(int stage) override;
         void finish() override;
         /*
          * Command to tell vehicle to redirect to the park and ride structure using the next exit
-         * Each road is labeled as "ne<exitNo>_<road_name>", and the exitNo dictates which exit
+         * Each road is labeled with a "ne<exitNo>" prefix, and the exitNo dictates which exit
          * the vehicle will take. exitNo may be (0,1,2...9,A,B).
          */
         void redirect(void);
 
     protected:
         TMC *TMC_connection;
-        rewards_t payloadReward = {0,SimTime::ZERO,0};
-        // Important vehicle metadata
-        simtime_t spawnTime;  // When vehicle was placed onto road
-        uint8_t exitNo = UNASSIGNED;  // If redirected to park and ride,
-        bool mainline_veh = false;
-        std::string currentRoad;
+        simtime_t spawnTime;
+        uint8_t exitNo = UNASSIGNED;  // If redirected to park and ride, will be updated with value from enumerated exits
         double CO2Emissions = 0.0;
-        std::string vType;
         bool consideredRerouting = false;
 
         void onWSM(BaseFrame1609_4* wsm) override;
-//        void onWSA(DemoServiceAdvertisment* wsa) override;
         void handlePositionUpdate(cObject* obj) override;
     };
 }

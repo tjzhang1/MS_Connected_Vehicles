@@ -48,8 +48,10 @@ void CarApp::finish() {
         TMC_connection->globalReward.hwyThroughput += payloadReward.hwyThroughput;
         TMC_connection->globalReward.accumTravelTime += payloadReward.accumTravelTime;
         TMC_connection->globalReward.accumCO2Emissions += payloadReward.accumCO2Emissions;
+#if CARAPP_VERBOSE
         std::cout<<"Exited a "<<vType<<" with travel time " << (simTime()-spawnTime).str() << "s and emissions " << CO2Emissions <<"\t";
         std::cout<<"THROUGHPUT: "<<TMC_connection->globalReward.hwyThroughput<<", "<<"TIME: "<<TMC_connection->globalReward.accumTravelTime.str()<<", "<<"Emissions: "<<TMC_connection->globalReward.accumCO2Emissions<<endl;
+#endif
     }
     // If vehicle leaves to park and there's a spot available, add values to buffered reward to be delivered as a payload for the next HOV
     else if(exitNo != UNASSIGNED && TMC_connection->parkingSpaces > 0) {
@@ -97,7 +99,13 @@ void CarApp::redirect(void) {
             traciVehicle->changeTarget(getExit(exitNo));
         }
         catch(cRuntimeError &e){
-            std::cerr << e.what() << endl;
+            try{
+                exitNo++;
+                traciVehicle->changeTarget(getExit(exitNo));
+            }
+            catch(cRuntimeError &e) {
+                std::cerr << e.what() << endl;
+            }
         }
     }
 }

@@ -18,16 +18,19 @@
 
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
 #include "Messaging/RSU_Data_m.h"
+#include "Messaging/ParkingReroute_m.h"
 
 #define DATA_SUMMARY 0  // print out sampled data
-#define RSU_VERBOSE 1
+#define RSU_VERBOSE 0
 #define EQUILIBRIUM_PERIOD 600 // How long to wait before beginning transmission to TMC
-#define UPDATE_TMC_PERIOD 60  // How often to send data to TMC
-#define ACCUM_DATA_PERIOD 10  // How often to accumulate network data, must be < UPDATE_TMC_PERIOD
+#define UPDATE_TMC_PERIOD 60   // How often to send data to TMC
+#define ACCUM_DATA_PERIOD 5   // How often to accumulate network data, must be < UPDATE_TMC_PERIOD
+#define BROADCAST_INTERVAL 10  // How often to broadcast to drivers, must be < UPDATE_TMC_PERIOD
 enum RSU_MSG_types {
     RSU_BROADCAST_MSG,    // Tells RSU to broadcast an advisory to cars
     RSU_SAMPLE_MSG,       // Tells RSU to accumulate information from area detectors
     RSU_UPDATE_TMC_MSG,   // Tells RSU to send collected data to TMC
+    VEH_ADVISORY_MSG,     // Advisory message of type 1609_4 frame (DSRC/WAVE)
 };
 
 namespace veins {
@@ -57,6 +60,7 @@ private:
     double accum_speed;
     int accum_halting_vehicles;
     int samplesCount;
+    int broadcastLifetime=0;
 };
 
 }

@@ -5,13 +5,13 @@ import numpy as np
 from torch import nn, optim
 from torch.nn import functional as F
 import gym
-
+import zmq
+import time
 
 def select_greedy_actions(states: torch.Tensor, q_network: nn.Module) -> torch.Tensor:
     """Select the greedy action for the current state given some Q-network."""
     _, actions = q_network(states).max(dim=1, keepdim=True)
     return actions
-
 
 def evaluate_selected_actions(states: torch.Tensor,
                               actions: torch.Tensor,
@@ -23,7 +23,6 @@ def evaluate_selected_actions(states: torch.Tensor,
     next_q_values = q_network(states).gather(dim=1, index=actions)        
     q_values = rewards + (gamma * next_q_values * (1 - dones))
     return q_values
-
 
 def q_learning_update(states: torch.Tensor,
                       rewards: torch.Tensor,
@@ -142,7 +141,8 @@ class DeepQAgent(Agent):
                  gamma: float,
                  update_frequency: int,
                  double_dqn: bool = False,
-                 seed: int = None) -> None:
+                 seed: int = None,
+                 load_checkpoint_path: str = None) -> None:
         """
         Initialize a DeepQAgent.
         
@@ -190,12 +190,17 @@ class DeepQAgent(Agent):
         self._update_frequency = update_frequency
         self._online_q_network = self._initialize_q_network(number_hidden_units)
         self._target_q_network = self._initialize_q_network(number_hidden_units)
+        if load_checkpoint_path is not None:
+            checkpoint = torch.load(load_checkpoint_path, map_location=torch.device('cpu'))
+            self._online_q_network.load_state_dict(checkpoint['q-network-state'])
         self._synchronize_q_networks(self._target_q_network, self._online_q_network)        
         self._online_q_network.to(self._device)
         self._target_q_network.to(self._device)
         
         # initialize the optimizer
         self._optimizer = optimizer_fn(self._online_q_network.parameters())
+        if load_checkpoint_path is not None:
+            self._optimizer.load_state_dict(checkpoint['optimizer-state']) 
 
         # initialize some counters
         self._number_episodes = 0
@@ -225,22 +230,19 @@ class DeepQAgent(Agent):
         """In place, synchronization of q_network_1 and q_network_2."""
         _ = q_network_1.load_state_dict(q_network_2.state_dict())
            
-    def _uniform_random_policy(self, state: torch.Tensor) -> np.ndarray:
+    def _uniform_random_policy(self, state: torch.Tensor) -> int:
         """Choose an action uniformly at random."""
-#        return self._random_state.randint(self._action_size)
-        actions = gym.spaces.MultiBinary(26)
-        return actions.sample()
+        return self._random_state.randint(self._action_size)
         
-    def _greedy_policy(self, state: torch.Tensor) -> np.ndarray:
+    def _greedy_policy(self, state: torch.Tensor) -> int:
         """Choose an action that maximizes the action_values given the current state."""
-#        action = (self._online_q_network(state)
-#                      .argmax()  # take the max?
-#                      .cpu()  # action_values might reside on the GPU!
-#                      .item())
-        action = self._online_q_network(state).cpu()
-        return action.numpy()
+        action = (self._online_q_network(state)
+                      .argmax()  # take the max?
+                      .cpu()  # action_values might reside on the GPU!
+                      .item())
+        return action
     
-    def _epsilon_greedy_policy(self, state: torch.Tensor, epsilon: float) -> np.ndarray:
+    def _epsilon_greedy_policy(self, state: torch.Tensor, epsilon: float) -> int:
         """With probability epsilon explore randomly; otherwise exploit knowledge optimally."""
         if self._random_state.random() < epsilon:
             action = self._uniform_random_policy(state)
@@ -248,7 +250,7 @@ class DeepQAgent(Agent):
             action = self._greedy_policy(state)
         return action
 
-    def choose_action(self, state: np.array) -> np.ndarray:
+    def choose_action(self, state: np.array) -> int:
         """
         Return the action for given state as per current policy.
         
@@ -298,7 +300,6 @@ class DeepQAgent(Agent):
                                                 dones,
                                                 self._gamma,
                                                 self._target_q_network)
-
         online_q_values = (self._online_q_network(states)
                                .gather(dim=1, index=actions))
         
@@ -317,7 +318,7 @@ class DeepQAgent(Agent):
     def has_sufficient_experience(self) -> bool:
         """True if agent has enough experience to train on a batch of samples; False otherwise."""
         return len(self._memory) >= self._memory.batch_size
-    
+
     def save(self, filepath: str) -> None:
         """
         Saves the state of the DeepQAgent.
@@ -344,7 +345,7 @@ class DeepQAgent(Agent):
             }
         }
         torch.save(checkpoint, filepath)
-        
+
     def step(self,
              state: np.array,
              action: int,
@@ -376,18 +377,50 @@ class DeepQAgent(Agent):
                 experiences = self._memory.sample()
                 self.learn(experiences)
 
+#------------------------------------------------ End Class -----------------------------------------------------------
+
+# Helper function to return list of directories in path that matches pattern
+import os, fnmatch
+def findDir(pattern, path):
+    result = []
+    for root,dirs,files in os.walk(path):
+        for name in dirs:
+            if fnmatch.fnmatch(name, pattern):
+                result.append(os.path.join(root, name))
+    return result
+
+import shutil
+def deleteResults():
+    results = findDir("sumo-launchd-tmp-*","/tmp")
+    for tmp in results:
+        shutil.rmtree(tmp)
+
+def copyResults(episode_num, avg_score, cur_score):
+    results = findDir("sumo-launchd-tmp-*","/tmp")
+    name = "run_%d_avgScore_%.3f_curScore_%.3f" % (episode_num,avg_score,cur_score)
+    for i,tmp in enumerate(results):
+        shutil.copytree(tmp, "./results/"+name+"_"+str(i))
 
 def _train_for_at_most(agent: Agent, env: gym.Env, max_timesteps: int) -> int:
     """Train agent for a maximum number of timesteps."""
 #    state,info = env.reset()
-    state = env.reset()
+    while True:
+        try:
+            state = env.reset()  # Occasionally runs into port errors since launching process over and over
+        except zmq.error.ZMQError as z:
+            print(z)
+            time.sleep(1)
+            continue
+        else:
+            break
     state = gym.spaces.utils.flatten(env.observation_space, state)
     score = 0
     for t in range(max_timesteps):
         action = agent.choose_action(state)
 #        next_state, reward, terminated, truncated, info = env.step(action)
 #        done = truncated or terminated
-        next_state, reward, done, _ = env.step(action)
+        converted_action = [bool(action & (1<<n)) for n in range(env.action_space.n)]  # convert int into list of bools 
+        next_state, reward, done, _ = env.step(converted_action)
         next_state = gym.spaces.utils.flatten(env.observation_space, next_state)
         agent.step(state, action, reward, next_state, done)
         state = next_state
@@ -400,7 +433,15 @@ def _train_for_at_most(agent: Agent, env: gym.Env, max_timesteps: int) -> int:
 def _train_until_done(agent: Agent, env: gym.Env) -> float:
     """Train the agent until the current episode is complete."""
 #    state,info = env.reset()
-    state = env.reset()
+    while True:
+        try:
+            state = env.reset()  # Occasionally runs into port errors since launching process over and over
+        except zmq.error.ZMQError as z:
+            print(z)
+            time.sleep(1)
+            continue
+        else:
+            break
     state = gym.spaces.utils.flatten(env.observation_space, state)
     score = 0
     done = False
@@ -408,7 +449,8 @@ def _train_until_done(agent: Agent, env: gym.Env) -> float:
         action = agent.choose_action(state)
 #        next_state, reward, terminated, truncated, info = env.step(action)
 #        done = truncated or terminated
-        next_state, reward, done, _ = env.step(action)
+        converted_action = [bool(action & (1<<n)) for n in range(env.action_space.n)]  # convert int into list of bools 
+        next_state, reward, done, _ = env.step(converted_action)
         next_state = gym.spaces.utils.flatten(env.observation_space, next_state)
         agent.step(state, action, reward, next_state, done)
         state = next_state
@@ -455,7 +497,9 @@ def train(agent: Agent,
             break
         if (i + 1) % 100 == 0:
             print(f"\rEpisode {i + 1}\tAverage Score: {average_score:.2f}")
-
+            agent.save(checkpoint_filepath)
+        if (i + 1) % 10 == 0:
+            copyResults(i+1, average_score, score)
     return scores
 
 def power_decay_schedule(episode_number: int,

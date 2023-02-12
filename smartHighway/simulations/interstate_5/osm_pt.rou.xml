@@ -41,5 +41,5 @@
     <flow id="flow_ne0_source" begin="0.00" departLane="free" departSpeed="avg" route="routeDist_ne0_source" number="2611" period="exp(0.73)" type="basicTraffic"/>
 
     <flow id="flow_THROUGH" begin="0.00" departLane="free" color="blue" departSpeed="avg" route="route_ne0_source_to_destination_edge" end="3600.00" period="exp(0.43)"/>
-    <flow id="flow_bus_LAKEWOOD_0" type="pt_bus" begin="0.00" departLane="allowed" color="red" from="source_SB_LAKEWOOD" to="destination_edge" end="3600.00" vehsPerHour="4.00"/>
+    <flow id="flow_bus_LAKEWOOD_0" type="pt_bus" begin="0.00" departLane="allowed" color="red" from="source_SB_LAKEWOOD" to="destination_edge" end="3600.00" vehsPerHour="120"/>
 </routes>

@@ -84,14 +84,14 @@ _agent_kwargs = {
     "update_frequency": 4,
     "double_dqn": True,  # True uses Double DQN; False uses DQN 
     "seed": None,
-    "load_checkpoint_path": None
+    "load_checkpoint_path": "double-dqn-checkpoint.pth"
 }
 double_dqn_agent = DDQN.DeepQAgent(**_agent_kwargs)
 
 double_dqn_scores = DDQN.train(double_dqn_agent,
                           env,
                           "double-dqn-checkpoint.pth",
-                          number_episodes=100,
+                          number_episodes=1000,
                           target_score=200)
 
 # Graph output

@@ -191,6 +191,7 @@ class DeepQAgent(Agent):
         self._online_q_network = self._initialize_q_network(number_hidden_units)
         self._target_q_network = self._initialize_q_network(number_hidden_units)
         if load_checkpoint_path is not None:
+            print("Loading checkpoint from", load_checkpoint_path)
             checkpoint = torch.load(load_checkpoint_path, map_location=torch.device('cpu'))
             self._online_q_network.load_state_dict(checkpoint['q-network-state'])
         self._synchronize_q_networks(self._target_q_network, self._online_q_network)        
@@ -484,9 +485,25 @@ def train(agent: Agent,
     most_recent_scores = collections.deque(maxlen=100)
     for i in range(number_episodes):
         if maximum_timesteps is None:
-            score = _train_until_done(agent, env)
+            try:
+                score = _train_until_done(agent, env)
+            except KeyboardInterrupt:
+                print("Training interrupted")
+                average_score = sum(most_recent_scores) / len(most_recent_scores)
+                print(f"\rEpisode {i + 1}\tAverage Score: {average_score:.2f}")
+                agent.save(("ep_%d_"%(i+1)) + checkpoint_filepath)
+                copyResults(i+1, average_score, 0.0)
+                break
         else:
-            score = _train_for_at_most(agent, env, maximum_timesteps)         
+            try:
+                score = _train_for_at_most(agent, env, maximum_timesteps)
+            except KeyboardInterrupt:
+                print("Training interrupted")
+                average_score = sum(most_recent_scores) / len(most_recent_scores)
+                print(f"\rEpisode {i + 1}\tAverage Score: {average_score:.2f}")
+                agent.save(("ep_%d_"%(i+1)) + checkpoint_filepath)
+                copyResults(i+1, average_score, 0.0)
+                break
         scores.append(score)
         most_recent_scores.append(score)
         
@@ -497,7 +514,7 @@ def train(agent: Agent,
             break
         if (i + 1) % 100 == 0:
             print(f"\rEpisode {i + 1}\tAverage Score: {average_score:.2f}")
-            agent.save(checkpoint_filepath)
+            agent.save(("ep_%d_"%(i+1)) + checkpoint_filepath)
         if (i + 1) % 10 == 0:
             copyResults(i+1, average_score, score)
     return scores

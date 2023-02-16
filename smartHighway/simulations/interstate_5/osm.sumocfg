@@ -18,12 +18,17 @@
     <processing>
         <scale value="2"/>
         <time-to-teleport value="-1"/>
+        <max-depart-delay value="10"/>
     </processing>
+
+    <routing>
+        <device.rerouting.threads value="2"/>
+    </routing>
 
     <output>
 	     <!--emission-output value="emissions.xml" /-->
 	     <!--full-output value="fullOut.xml" /-->
-	     <tripinfo-output value="tripInfo.xml" />
+	    <tripinfo-output value="tripInfo.xml" />
         <device.emissions.probability value="1.0" />
     </output>
 

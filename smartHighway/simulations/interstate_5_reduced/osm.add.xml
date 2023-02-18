@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2023-02-16 14:32:12 by Eclipse SUMO netedit Version 1.15.0
+-->
+
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <!-- Detectors -->
+    <laneAreaDetector id="e2_FLORENCE_enter_0" lanes="158716863_0 ne1_28050938#1-AddedOnRampEdge_0" pos="156.91" endPos="94.00" period="300.00" file="e2_FLORENCE_enter_0.xml"/>
+    <laneAreaDetector id="e2_FLORENCE_enter_1" lanes="ne1_28050938#0_0 ne1_28050938#1-AddedOnRampEdge_1" pos="515.22" endPos="94.00" period="300.00" file="e2_FLORENCE_enter_1.xml"/>
+    <laneAreaDetector id="e2_FLORENCE_enter_2" lanes="ne1_28050938#0_1 ne1_28050938#1-AddedOnRampEdge_2" pos="515.22" endPos="94.00" period="300.00" file="e2_FLORENCE_enter_2.xml"/>
+    <laneAreaDetector id="e2_FLORENCE_enter_3" lanes="ne1_28050938#0_2 ne1_28050938#1-AddedOnRampEdge_3" pos="515.22" endPos="94.00" period="300.00" file="e2_FLORENCE_enter_3.xml"/>
+    <laneAreaDetector id="e2_FLORENCE_enter_4" lanes="ne1_28050938#0_3 ne1_28050938#1-AddedOnRampEdge_4" pos="515.22" endPos="94.00" period="300.00" file="e2_FLORENCE_enter_4.xml"/>
+    <laneAreaDetector id="e2_GARFIELD_enter_0" lanes="965816736_0 ne5_862573275#1-AddedOnRampEdge_0" pos="0.00" endPos="94.00" period="300.00" file="e2_GARFIELD_enter_0.xml"/>
+    <laneAreaDetector id="e2_GARFIELD_enter_1" lanes="ne5_862573275#0_0 ne5_862573275#1-AddedOnRampEdge_1" pos="374.96" endPos="94.00" period="300.00" file="e2_GARFIELD_enter_1.xml"/>
+    <laneAreaDetector id="e2_GARFIELD_enter_2" lanes="ne5_862573275#0_1 ne5_862573275#1-AddedOnRampEdge_2" pos="374.96" endPos="94.00" period="300.00" file="e2_GARFIELD_enter_2.xml"/>
+    <laneAreaDetector id="e2_GARFIELD_enter_3" lanes="ne5_862573275#0_2 ne5_862573275#1-AddedOnRampEdge_3" pos="374.96" endPos="94.00" period="300.00" file="e2_GARFIELD_enter_3.xml"/>
+    <laneAreaDetector id="e2_GARFIELD_enter_4" lanes="ne5_862573275#0_3 ne5_862573275#1-AddedOnRampEdge_4" pos="374.96" endPos="94.00" period="300.00" file="e2_GARFIELD_enter_4.xml"/>
+    <laneAreaDetector id="e2_GARFIELD_exit_0" lanes="ne4_866203384-AddedOffRampEdge_0 exit_to_GARFIELD_AVE_0" pos="0.00" endPos="100.00" period="300.00" file="e2_GARFIELD_exit_0.xml"/>
+    <laneAreaDetector id="e2_GARFIELD_exit_1" lanes="ne4_866203384-AddedOffRampEdge_1 ne5_862573275#0_0" pos="0.00" endPos="100.00" period="300.00" file="e2_GARFIELD_exit_1.xml"/>
+    <laneAreaDetector id="e2_GARFIELD_exit_2" lanes="ne4_866203384-AddedOffRampEdge_2 ne5_862573275#0_1" pos="0.00" endPos="100.00" period="300.00" file="e2_GARFIELD_exit_2.xml"/>
+    <laneAreaDetector id="e2_GARFIELD_exit_3" lanes="ne4_866203384-AddedOffRampEdge_3 ne5_862573275#0_2" pos="0.00" endPos="100.00" period="300.00" file="e2_GARFIELD_exit_3.xml"/>
+    <laneAreaDetector id="e2_GARFIELD_exit_4" lanes="ne4_866203384-AddedOffRampEdge_4 ne5_862573275#0_3" pos="0.00" endPos="100.00" period="300.00" file="e2_GARFIELD_exit_4.xml"/>
+    <laneAreaDetector id="e2_GARFIELD_on_ramp_0" lanes="source_TELEGRAPH_GARFIELD_0 965816736-AddedOnRampEdge.70_0" pos="5.54" endPos="23.75" period="300.00" file="e2_GARFIELD_on_ramp_0.xml"/>
+    <laneAreaDetector id="e2_GARFIELD_on_ramp_1" lanes="source_TELEGRAPH_GARFIELD_1 965816736-AddedOnRampEdge.70_1" pos="5.70" endPos="22.85" period="300.00" file="e2_GARFIELD_on_ramp_1.xml"/>
+    <laneAreaDetector id="e2_I605_NB_enter_0" lanes="source_STUDEBAKER_0 ne1_124100109-AddedOnRampEdge_0" pos="511.70" endPos="94.00" period="300.00" file="e2_I605_NB_enter_0.xml"/>
+    <laneAreaDetector id="e2_I605_NB_enter_1" lanes="source_STUDEBAKER_1 ne1_124100109-AddedOnRampEdge_1" pos="511.70" endPos="94.00" period="300.00" file="e2_I605_NB_enter_1.xml"/>
+    <laneAreaDetector id="e2_I605_NB_enter_2" lanes="ne1_28050938#1_0 ne1_124100109-AddedOnRampEdge_2" pos="43.07" endPos="94.00" period="300.00" file="e2_I605_NB_enter_2.xml"/>
+    <laneAreaDetector id="e2_I605_NB_enter_3" lanes="ne1_28050938#1_1 ne1_124100109-AddedOnRampEdge_3" pos="43.07" endPos="94.00" period="300.00" file="e2_I605_NB_enter_3.xml"/>
+    <laneAreaDetector id="e2_I605_NB_enter_4" lanes="ne1_28050938#1_2 ne1_124100109-AddedOnRampEdge_4" pos="43.07" endPos="94.00" period="300.00" file="e2_I605_NB_enter_4.xml"/>
+    <laneAreaDetector id="e2_I605_NB_enter_5" lanes="ne1_28050938#1_3 ne1_124100109-AddedOnRampEdge_5" pos="43.07" endPos="94.00" period="300.00" file="e2_I605_NB_enter_5.xml"/>
+    <laneAreaDetector id="e2_I605_SB_enter_0" lanes="158726580_0 ne1_158724524#1-AddedOnRampEdge_0" pos="267.16" endPos="94.00" period="300.00" file="e2_I605_SB_enter_0.xml"/>
+    <laneAreaDetector id="e2_I605_SB_enter_1" lanes="ne1_124100109_0 ne1_158724524#1-AddedOnRampEdge_1" pos="27.81" endPos="94.00" period="300.00" file="e2_I605_SB_enter_1.xml"/>
+    <laneAreaDetector id="e2_I605_SB_enter_2" lanes="ne1_124100109_1 ne1_158724524#1-AddedOnRampEdge_2" pos="27.81" endPos="94.00" period="300.00" file="e2_I605_SB_enter_3.xml"/>
+    <laneAreaDetector id="e2_I605_SB_enter_3" lanes="ne1_124100109_2 ne1_158724524#1-AddedOnRampEdge_3" pos="27.81" endPos="94.00" period="300.00" file="e2_I605_SB_enter_3.xml"/>
+    <laneAreaDetector id="e2_I605_SB_enter_4" lanes="ne1_124100109_3 ne1_158724524#1-AddedOnRampEdge_4" pos="27.81" endPos="94.00" period="300.00" file="e2_I605_SB_enter_4.xml"/>
+    <laneAreaDetector id="e2_I605_exit_0" lanes="ne0_source_0 exit_to_I605_0" pos="416.75" endPos="100.00" period="300.00" file="e2_I605_exit_0.xml"/>
+    <laneAreaDetector id="e2_I605_exit_1" lanes="ne0_source_1 exit_to_I605_1" pos="416.75" endPos="100.00" period="300.00" file="e2_I605_exit_1.xml"/>
+    <laneAreaDetector id="e2_I605_exit_2" lanes="ne0_source_2 ne1_28050938#0_0" pos="416.75" endPos="100.00" period="300.00" file="e2_I605_exit_2.xml"/>
+    <laneAreaDetector id="e2_I605_exit_3" lanes="ne0_source_3 ne1_28050938#0_1" pos="416.75" endPos="100.00" period="300.00" file="e2_I605_exit_3.xml"/>
+    <laneAreaDetector id="e2_I605_exit_4" lanes="ne0_source_4 ne1_28050938#0_2" pos="416.75" endPos="100.00" period="300.00" file="e2_I605_exit_4.xml"/>
+    <laneAreaDetector id="e2_I605_exit_5" lanes="ne0_source_5 ne1_28050938#0_3" pos="416.75" endPos="100.00" period="300.00" file="e2_I605_exit_5.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_NB_enter_0" lanes="399669014_0 ne2_32296077_0" pos="0.00" endPos="58.00" period="300.00" file="e2_LAKEWOOD_NB_enter_0.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_NB_enter_1" lanes="ne2_862063814_0 ne2_32296077_1 ne2_32296080_0" pos="150.90" endPos="100.00" period="300.00" file="e2_LAKEWOOD_NB_enter_1.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_NB_enter_2" lanes="ne2_862063814_1 ne2_32296077_2 ne2_32296080_1" pos="150.90" endPos="100.00" period="300.00" file="e2_LAKEWOOD_NB_enter_2.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_NB_enter_3" lanes="ne2_862063814_2 ne2_32296077_3 ne2_32296080_2" pos="150.90" endPos="100.00" period="300.00" file="e2_LAKEWOOD_NB_enter_3.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_NB_enter_4" lanes="ne2_862063814_3 ne2_32296077_4 ne2_32296080_3" pos="150.90" endPos="100.00" period="300.00" file="e2_LAKEWOOD_NB_enter_4.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_NB_on_ramp_0" lanes="source_NB_LAKEWOOD_0 13275783.140_0" pos="27.46" endPos="10.56" period="300.00" file="e2_LAKEWOOD_NB_on_ramp_0.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_NB_on_ramp_1" lanes="source_NB_LAKEWOOD_1 13275783.140_1" pos="30.43" endPos="10.06" period="300.00" file="e2_LAKEWOOD_NB_on_ramp_1.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_SB_enter_0" lanes="399668245_0 ne2_866210533-AddedOnRampEdge_0" pos="133.14" endPos="94.00" period="300.00" file="e2_LAKEWOOD_SB_enter_0.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_SB_enter_1" lanes="ne2_32296080_0 ne2_866210533-AddedOnRampEdge_1" pos="195.91" endPos="94.00" period="300.00" file="e2_LAKEWOOD_SB_enter_1.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_SB_enter_2" lanes="ne2_32296080_1 ne2_866210533-AddedOnRampEdge_2" pos="195.91" endPos="94.00" period="300.00" file="e2_LAKEWOOD_SB_enter_2.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_SB_enter_3" lanes="ne2_32296080_2 ne2_866210533-AddedOnRampEdge_3" pos="195.91" endPos="94.00" period="300.00" file="e2_LAKEWOOD_SB_enter_3.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_SB_enter_4" lanes="ne2_32296080_3 ne2_866210533-AddedOnRampEdge_4" pos="195.91" endPos="94.00" period="300.00" file="e2_LAKEWOOD_SB_enter_4.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_SB_on_ramp_0" lanes="23426514_0 23426514.71_0" pos="6.69" endPos="14.10" period="300.00" file="e2_LAKEWOOD_SB_on_ramp_0.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_SB_on_ramp_1" lanes="23426514_1 23426514.71_1" pos="9.30" endPos="13.43" period="300.00" file="e2_LAKEWOOD_SB_on_ramp_1.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_exit_0" lanes="ne1_158724524#1-AddedOffRampEdge_0 139639762_0" pos="0.00" endPos="100.00" period="300.00" file="e2_LAKEWOOD_exit_0.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_exit_1" lanes="ne1_158724524#1-AddedOffRampEdge_1 ne2_862063814_0" pos="0.00" endPos="100.00" period="300.00" file="e2_LAKEWOOD_exit_1.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_exit_2" lanes="ne1_158724524#1-AddedOffRampEdge_2 ne2_862063814_1" pos="0.00" endPos="100.00" period="300.00" file="e2_LAKEWOOD_exit_2.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_exit_3" lanes="ne1_158724524#1-AddedOffRampEdge_3 ne2_862063814_2" pos="0.00" endPos="100.00" period="300.00" file="e2_LAKEWOOD_exit_3.xml"/>
+    <laneAreaDetector id="e2_LAKEWOOD_exit_4" lanes="ne1_158724524#1-AddedOffRampEdge_4 ne2_862063814_3" pos="0.00" endPos="100.00" period="300.00" file="e2_LAKEWOOD_exit_4.xml"/>
+    <laneAreaDetector id="e2_PARAMOUNT_enter_0" lanes="399654775_0 ne3_32296182#1-AddedOnRampEdge_0" pos="15.00" endPos="94.00" period="300.00" file="e2_PARAMOUNT_enter_0.xml"/>
+    <laneAreaDetector id="e2_PARAMOUNT_enter_1" lanes="ne3_866210532_0 ne3_32296182#1-AddedOnRampEdge_1" pos="213.87" endPos="94.00" period="300.00" file="e2_PARAMOUNT_enter_1.xml"/>
+    <laneAreaDetector id="e2_PARAMOUNT_enter_2" lanes="ne3_866210532_1 ne3_32296182#1-AddedOnRampEdge_2" pos="213.87" endPos="94.00" period="300.00" file="e2_PARAMOUNT_enter_2.xml"/>
+    <laneAreaDetector id="e2_PARAMOUNT_enter_3" lanes="ne3_866210532_2 ne3_32296182#1-AddedOnRampEdge_3" pos="213.87" endPos="94.00" period="300.00" file="e2_PARAMOUNT_enter_3.xml"/>
+    <laneAreaDetector id="e2_PARAMOUNT_enter_4" lanes="ne3_866210532_3 ne3_32296182#1-AddedOnRampEdge_4" pos="213.87" endPos="94.00" period="300.00" file="e2_PARAMOUNT_enter_4.xml"/>
+    <laneAreaDetector id="e2_PARAMOUNT_exit_0" lanes="ne2_866210533-AddedOffRampEdge_0 exit_to_PARAMOUNT_BLVD_0" pos="0.00" endPos="100.00" period="300.00" file="e2_PARAMOUNT_exit_0.xml"/>
+    <laneAreaDetector id="e2_PARAMOUNT_exit_1" lanes="ne2_866210533-AddedOffRampEdge_1 ne3_866210532_0" pos="0.00" endPos="100.00" period="300.00" file="e2_PARAMOUNT_exit_1.xml"/>
+    <laneAreaDetector id="e2_PARAMOUNT_exit_2" lanes="ne2_866210533-AddedOffRampEdge_2 ne3_866210532_1" pos="0.00" endPos="100.00" period="300.00" file="e2_PARAMOUNT_exit_2.xml"/>
+    <laneAreaDetector id="e2_PARAMOUNT_exit_3" lanes="ne2_866210533-AddedOffRampEdge_3 ne3_866210532_2" pos="0.00" endPos="100.00" period="300.00" file="e2_PARAMOUNT_exit_3.xml"/>
+    <laneAreaDetector id="e2_PARAMOUNT_exit_4" lanes="ne2_866210533-AddedOffRampEdge_4 ne3_866210532_3" pos="0.00" endPos="100.00" period="300.00" file="e2_PARAMOUNT_exit_4.xml"/>
+    <laneAreaDetector id="e2_PARAMOUNT_on_ramp_0" lanes="source_PARAMOUNT_BLVD_0 178116793.68_0" pos="10.51" endPos="3.50" period="300.00" file="e2_PARAMOUNT_on_ramp_0.xml"/>
+    <laneAreaDetector id="e2_PARAMOUNT_on_ramp_1" lanes="source_PARAMOUNT_BLVD_1 178116793.68_1" pos="11.84" endPos="4.95" period="300.00" file="e2_PARAMOUNT_on_ramp_1.xml"/>
+    <laneAreaDetector id="e2_SLAUSON_exit_0" lanes="ne3_32296182#1-AddedOffRampEdge_0 exit_to_SLAUSON_AVE_0" pos="0.00" endPos="100.00" period="300.00" file="e2_SLAUSON_exit_0.xml"/>
+    <laneAreaDetector id="e2_SLAUSON_exit_1" lanes="ne3_32296182#1-AddedOffRampEdge_1 ne4_866203384_0" pos="0.00" endPos="100.00" period="300.00" file="e2_SLAUSON_exit_1.xml"/>
+    <laneAreaDetector id="e2_SLAUSON_exit_2" lanes="ne3_32296182#1-AddedOffRampEdge_2 ne4_866203384_1" pos="0.00" endPos="100.00" period="300.00" file="e2_SLAUSON_exit_2.xml"/>
+    <laneAreaDetector id="e2_SLAUSON_exit_3" lanes="ne3_32296182#1-AddedOffRampEdge_3 ne4_866203384_2" pos="0.00" endPos="100.00" period="300.00" file="e2_SLAUSON_exit_3.xml"/>
+    <laneAreaDetector id="e2_SLAUSON_exit_4" lanes="ne3_32296182#1-AddedOffRampEdge_4 ne4_866203384_3" pos="0.00" endPos="100.00" period="300.00" file="e2_SLAUSON_exit_4.xml"/>
+</additional>

@@ -1,0 +1,84 @@
+<routes>
+    <route edges="ne0_source exit_to_I605" id="route_ne0_source_to_I605"/>
+    <route edges="source_TELEGRAPH_GARFIELD 965816736-AddedOnRampEdge.70 965816736 ne5_862573275#1-AddedOnRampEdge destination_edge" id="route_TELEGRAPH_GARFIELD_to_destination_edge"/>
+    <route edges="source_I605_SB 158726580 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge 139639762 exit_to_LAKEWOOD" id="route_I605_SB_to_LAKEWOOD"/>
+    <route edges="source_PARAMOUNT_BLVD 178116793.68 399654775 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge exit_to_SLAUSON_AVE" id="route_PARAMOUNT_BLVD_to_SLAUSON_AVE"/>
+    <route edges="source_SB_LAKEWOOD 23426514 23426514.71 399668245 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge exit_to_PARAMOUNT_BLVD" id="route_SB_LAKEWOOD_to_PARAMOUNT_BLVD"/>
+    <route edges="source_STUDEBAKER ne1_124100109-AddedOnRampEdge ne1_124100109 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge 139639762 exit_to_LAKEWOOD" id="route_STUDEBAKER_to_LAKEWOOD"/>
+    <route edges="source_NB_LAKEWOOD 13275783.140 399669014 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge exit_to_PARAMOUNT_BLVD" id="route_NB_LAKEWOOD_to_PARAMOUNT_BLVD"/>
+    <route edges="source_PARAMOUNT_BLVD 178116793.68 399654775 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge ne4_866203384 ne4_866203384-AddedOffRampEdge exit_to_GARFIELD_AVE" id="route_PARAMOUNT_BLVD_to_GARFIELD_AVE"/>
+    <route edges="ne0_source ne1_28050938#0 ne1_28050938#1-AddedOnRampEdge ne1_28050938#1 ne1_124100109-AddedOnRampEdge ne1_124100109 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge 139639762 exit_to_LAKEWOOD" id="route_ne0_source_to_LAKEWOOD"/>
+    <route edges="source_PARAMOUNT_BLVD 178116793.68 399654775 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge ne4_866203384 ne4_866203384-AddedOffRampEdge ne5_862573275#0 ne5_862573275#1-AddedOnRampEdge destination_edge" id="route_PARAMOUNT_BLVD_to_destination_edge"/>
+    <route edges="source_FLORENCE 32295866#1 158716863 ne1_28050938#1-AddedOnRampEdge ne1_28050938#1 ne1_124100109-AddedOnRampEdge ne1_124100109 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge 139639762 exit_to_LAKEWOOD" id="route_FLORENCE_to_LAKEWOOD"/>
+    <route edges="source_I605_SB 158726580 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge ne2_862063814 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge exit_to_PARAMOUNT_BLVD" id="route_I605_SB_to_PARAMOUNT_BLVD"/>
+    <route edges="source_SB_LAKEWOOD 23426514 23426514.71 399668245 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge exit_to_SLAUSON_AVE" id="route_SB_LAKEWOOD_to_SLAUSON_AVE"/>
+    <route edges="source_NB_LAKEWOOD 13275783.140 399669014 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge exit_to_SLAUSON_AVE" id="route_NB_LAKEWOOD_to_SLAUSON_AVE"/>
+    <route edges="source_STUDEBAKER ne1_124100109-AddedOnRampEdge ne1_124100109 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge ne2_862063814 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge exit_to_PARAMOUNT_BLVD" id="route_STUDEBAKER_to_PARAMOUNT_BLVD"/>
+    <route edges="source_SB_LAKEWOOD 23426514 23426514.71 399668245 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge ne4_866203384 ne4_866203384-AddedOffRampEdge exit_to_GARFIELD_AVE" id="route_SB_LAKEWOOD_to_GARFIELD_AVE"/>
+    <route edges="source_NB_LAKEWOOD 13275783.140 399669014 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge ne4_866203384 ne4_866203384-AddedOffRampEdge exit_to_GARFIELD_AVE" id="route_NB_LAKEWOOD_to_GARFIELD_AVE"/>
+    <route edges="ne0_source ne1_28050938#0 ne1_28050938#1-AddedOnRampEdge ne1_28050938#1 ne1_124100109-AddedOnRampEdge ne1_124100109 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge ne2_862063814 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge exit_to_PARAMOUNT_BLVD" id="route_ne0_source_to_PARAMOUNT_BLVD"/>
+    <route edges="source_I605_SB 158726580 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge ne2_862063814 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge exit_to_SLAUSON_AVE" id="route_I605_SB_to_SLAUSON_AVE"/>
+    <route edges="source_SB_LAKEWOOD 23426514 23426514.71 399668245 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge ne4_866203384 ne4_866203384-AddedOffRampEdge ne5_862573275#0 ne5_862573275#1-AddedOnRampEdge destination_edge" id="route_SB_LAKEWOOD_to_destination_edge"/>
+    <route edges="source_FLORENCE 32295866#1 158716863 ne1_28050938#1-AddedOnRampEdge ne1_28050938#1 ne1_124100109-AddedOnRampEdge ne1_124100109 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge ne2_862063814 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge exit_to_PARAMOUNT_BLVD" id="route_FLORENCE_to_PARAMOUNT_BLVD"/>
+    <route edges="source_NB_LAKEWOOD 13275783.140 399669014 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge ne4_866203384 ne4_866203384-AddedOffRampEdge ne5_862573275#0 ne5_862573275#1-AddedOnRampEdge destination_edge" id="route_NB_LAKEWOOD_to_destination_edge"/>
+    <route edges="source_STUDEBAKER ne1_124100109-AddedOnRampEdge ne1_124100109 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge ne2_862063814 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge exit_to_SLAUSON_AVE" id="route_STUDEBAKER_to_SLAUSON_AVE"/>
+    <route edges="source_I605_SB 158726580 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge ne2_862063814 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge ne4_866203384 ne4_866203384-AddedOffRampEdge exit_to_GARFIELD_AVE" id="route_I605_SB_to_GARFIELD_AVE"/>
+    <route edges="source_STUDEBAKER ne1_124100109-AddedOnRampEdge ne1_124100109 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge ne2_862063814 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge ne4_866203384 ne4_866203384-AddedOffRampEdge exit_to_GARFIELD_AVE" id="route_STUDEBAKER_to_GARFIELD_AVE"/>
+    <route edges="ne0_source ne1_28050938#0 ne1_28050938#1-AddedOnRampEdge ne1_28050938#1 ne1_124100109-AddedOnRampEdge ne1_124100109 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge ne2_862063814 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge exit_to_SLAUSON_AVE" id="route_ne0_source_to_SLAUSON_AVE"/>
+    <route edges="source_I605_SB 158726580 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge ne2_862063814 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge ne4_866203384 ne4_866203384-AddedOffRampEdge ne5_862573275#0 ne5_862573275#1-AddedOnRampEdge destination_edge" id="route_I605_SB_to_destination_edge"/>
+    <route edges="source_FLORENCE 32295866#1 158716863 ne1_28050938#1-AddedOnRampEdge ne1_28050938#1 ne1_124100109-AddedOnRampEdge ne1_124100109 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge ne2_862063814 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge exit_to_SLAUSON_AVE" id="route_FLORENCE_to_SLAUSON_AVE"/>
+    <route edges="source_STUDEBAKER ne1_124100109-AddedOnRampEdge ne1_124100109 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge ne2_862063814 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge ne4_866203384 ne4_866203384-AddedOffRampEdge ne5_862573275#0 ne5_862573275#1-AddedOnRampEdge destination_edge" id="route_STUDEBAKER_to_destination_edge"/>
+    <route edges="ne0_source ne1_28050938#0 ne1_28050938#1-AddedOnRampEdge ne1_28050938#1 ne1_124100109-AddedOnRampEdge ne1_124100109 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge ne2_862063814 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge ne4_866203384 ne4_866203384-AddedOffRampEdge exit_to_GARFIELD_AVE" id="route_ne0_source_to_GARFIELD_AVE"/>
+    <route edges="source_FLORENCE 32295866#1 158716863 ne1_28050938#1-AddedOnRampEdge ne1_28050938#1 ne1_124100109-AddedOnRampEdge ne1_124100109 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge ne2_862063814 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge ne4_866203384 ne4_866203384-AddedOffRampEdge exit_to_GARFIELD_AVE" id="route_FLORENCE_to_GARFIELD_AVE"/>
+    <route edges="ne0_source ne1_28050938#0 ne1_28050938#1-AddedOnRampEdge ne1_28050938#1 ne1_124100109-AddedOnRampEdge ne1_124100109 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge ne2_862063814 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge ne4_866203384 ne4_866203384-AddedOffRampEdge ne5_862573275#0 ne5_862573275#1-AddedOnRampEdge destination_edge" id="route_ne0_source_to_destination_edge"/>
+    <route edges="source_FLORENCE 32295866#1 158716863 ne1_28050938#1-AddedOnRampEdge ne1_28050938#1 ne1_124100109-AddedOnRampEdge ne1_124100109 ne1_158724524#1-AddedOnRampEdge ne1_158724524#1 ne1_158724524#1-AddedOffRampEdge ne2_862063814 ne2_32296077 ne2_32296080 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge ne4_866203384 ne4_866203384-AddedOffRampEdge ne5_862573275#0 ne5_862573275#1-AddedOnRampEdge destination_edge" id="route_FLORENCE_to_destination_edge"/>
+    <routeDistribution id="routeDist_ne0_source">
+        <route probability="2198.0" refId="route_ne0_source_to_I605"/>
+        <route probability="347.0" refId="route_ne0_source_to_LAKEWOOD"/>
+        <route probability="385.0" refId="route_ne0_source_to_PARAMOUNT_BLVD"/>
+        <route probability="534.0" refId="route_ne0_source_to_SLAUSON_AVE"/>
+        <route probability="457.0" refId="route_ne0_source_to_GARFIELD_AVE"/>
+        <!--route probability="6079.0" refId="route_ne0_source_to_destination_edge"/-->
+    </routeDistribution>
+    <routeDistribution id="routeDist_TELEGRAPH_GARFIELD">
+        <route probability="10000.0" refId="route_TELEGRAPH_GARFIELD_to_destination_edge"/>
+    </routeDistribution>
+    <routeDistribution id="routeDist_I605_SB">
+        <route probability="347.0" refId="route_I605_SB_to_LAKEWOOD"/>
+        <route probability="385.0" refId="route_I605_SB_to_PARAMOUNT_BLVD"/>
+        <route probability="534.0" refId="route_I605_SB_to_SLAUSON_AVE"/>
+        <route probability="457.0" refId="route_I605_SB_to_GARFIELD_AVE"/>
+        <route probability="8277.0" refId="route_I605_SB_to_destination_edge"/>
+    </routeDistribution>
+    <routeDistribution id="routeDist_PARAMOUNT_BLVD">
+        <route probability="534.0" refId="route_PARAMOUNT_BLVD_to_SLAUSON_AVE"/>
+        <route probability="457.0" refId="route_PARAMOUNT_BLVD_to_GARFIELD_AVE"/>
+        <route probability="9009.0" refId="route_PARAMOUNT_BLVD_to_destination_edge"/>
+    </routeDistribution>
+    <routeDistribution id="routeDist_SB_LAKEWOOD">
+        <route probability="385.0" refId="route_SB_LAKEWOOD_to_PARAMOUNT_BLVD"/>
+        <route probability="534.0" refId="route_SB_LAKEWOOD_to_SLAUSON_AVE"/>
+        <route probability="457.0" refId="route_SB_LAKEWOOD_to_GARFIELD_AVE"/>
+        <route probability="8624.0" refId="route_SB_LAKEWOOD_to_destination_edge"/>
+    </routeDistribution>
+    <routeDistribution id="routeDist_STUDEBAKER">
+        <route probability="347.0" refId="route_STUDEBAKER_to_LAKEWOOD"/>
+        <route probability="385.0" refId="route_STUDEBAKER_to_PARAMOUNT_BLVD"/>
+        <route probability="534.0" refId="route_STUDEBAKER_to_SLAUSON_AVE"/>
+        <route probability="457.0" refId="route_STUDEBAKER_to_GARFIELD_AVE"/>
+        <route probability="8277.0" refId="route_STUDEBAKER_to_destination_edge"/>
+    </routeDistribution>
+    <routeDistribution id="routeDist_NB_LAKEWOOD">
+        <route probability="385.0" refId="route_NB_LAKEWOOD_to_PARAMOUNT_BLVD"/>
+        <route probability="534.0" refId="route_NB_LAKEWOOD_to_SLAUSON_AVE"/>
+        <route probability="457.0" refId="route_NB_LAKEWOOD_to_GARFIELD_AVE"/>
+        <route probability="8624.0" refId="route_NB_LAKEWOOD_to_destination_edge"/>
+    </routeDistribution>
+    <routeDistribution id="routeDist_FLORENCE">
+        <route probability="347.0" refId="route_FLORENCE_to_LAKEWOOD"/>
+        <route probability="385.0" refId="route_FLORENCE_to_PARAMOUNT_BLVD"/>
+        <route probability="534.0" refId="route_FLORENCE_to_SLAUSON_AVE"/>
+        <route probability="457.0" refId="route_FLORENCE_to_GARFIELD_AVE"/>
+        <route probability="8277.0" refId="route_FLORENCE_to_destination_edge"/>
+    </routeDistribution>
+</routes>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2022-11-02 11:45:06 by Eclipse SUMO GUI Version 1.14.1
+-->
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="osm.net.xml"/>
+        <route-files value="routeGeneration/routeDist.xml,osm_pt.rou.xml"/>
+        <additional-files value="osm.add.xml"/>
+    </input>
+
+    <time>
+        <end value="4800"/>
+    </time>
+
+    <processing>
+        <time-to-teleport value="-1"/>
+        <scale value="2"/>
+    </processing>
+
+    <output>
+	     <!--emission-output value="emissions.xml" /-->
+	     <!--full-output value="fullOut.xml" /-->
+	     <tripinfo-output value="tripInfo.xml" />
+        <device.emissions.probability value="1.0" />
+    </output>
+
+</configuration>

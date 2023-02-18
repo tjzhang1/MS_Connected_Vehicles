@@ -99,7 +99,7 @@ void RSUApp::handleMessage(cMessage *msg) {
         for(auto area=areaDetectorList.begin(); area!=areaDetectorList.end(); area++) {
             TraCICommandInterface::LaneAreaDetector sensor = traci->laneAreaDetector(*area);
             // Get last step occupancy
-            accum_occupancy += sensor.getLastStepOccupancy();
+//            accum_occupancy += sensor.getLastStepOccupancy();
             // Get last stepMeanSpeed
             int vehCount = sensor.getLastStepVehicleNumber();
             totalVehCount += vehCount;
@@ -112,7 +112,7 @@ void RSUApp::handleMessage(cMessage *msg) {
         accum_veh_count += totalVehCount;
 #if RSU_VERBOSE && DATA_SUMMARY
         std::cout << "From " << getParentModule()->getFullName() << " - ";
-        std::cout << "accum_occupancy: " << accum_occupancy << ", ";
+//        std::cout << "accum_occupancy: " << accum_occupancy << ", ";
         std::cout << "sample[" << samplesCount << "] sampled_speed: " << ( (totalVehCount > 0) ? (accum_speed_local / totalVehCount) : 0 ) << ", ";
         std::cout << "halting_vehicles: " << accum_halting_vehicles << endl;
 #endif
@@ -157,20 +157,21 @@ void RSUApp::populateData(RsuData *data) {
     // Add accumulated statistics
     double areaDetectorsCount = areaDetectorList.size();  // get average across all lanes 
     if(samplesCount > 0 && areaDetectorsCount > 0.0) {  // Avoid dividing by 0
-        data->lastStepOccupancy = accum_occupancy / (samplesCount*areaDetectorsCount);
+//        data->lastStepOccupancy = accum_occupancy / (samplesCount*areaDetectorsCount);
         data->lastStepMeanSpeed = accum_speed / samplesCount;
 //        data->setLastStepHaltingVehiclesNumber(accum_halting_vehicles / samplesCount);
         data->vehiclesNumber = accum_veh_count / samplesCount;
     }
     else {
-        data->lastStepOccupancy = 0.0;
+//        data->lastStepOccupancy = 0.0;
         data->lastStepMeanSpeed = 0.0;
 //        data->setLastStepHaltingVehiclesNumber(0);
         data->vehiclesNumber = 0;
     }
 #if RSU_VERBOSE && DATA_SUMMARY
     std::cout << "From " << getParentModule()->getFullName() << " - ";
-    std::cout << "(occupancy, speed, numVehicles): " << data->lastStepOccupancy << ", " << data->lastStepMeanSpeed << ", " << data->vehiclesNumber << endl;
+//    std::cout << "(occupancy, speed, numVehicles): " << data->lastStepOccupancy << ", " << data->lastStepMeanSpeed << ", " << data->vehiclesNumber << endl;
+    std::cout << "(speed, numVehicles): " << data->lastStepMeanSpeed << ", " << data->vehiclesNumber << endl;
 #endif
     // Reset sampled data values after using
     resetStatistics();

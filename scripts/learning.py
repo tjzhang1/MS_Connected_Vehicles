@@ -6,33 +6,19 @@ import numpy as np
 import DDQN
 
 observation_space = gym.spaces.Tuple((  \
-gym.spaces.Box(low=0, high=4000, shape=(1,), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32),  \
-gym.spaces.Box(low=np.array([0.0, 0.0, 0.0], dtype=np.float32), high=np.array([100.0, 100.0, 10000.0], dtype=np.float32), dtype=np.float32)   \
+gym.spaces.Box(low=0, high=400, shape=(1,), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0], dtype=np.float32), high=np.array([100.0, 2500.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0], dtype=np.float32), high=np.array([100.0, 2500.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0], dtype=np.float32), high=np.array([100.0, 2500.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0], dtype=np.float32), high=np.array([100.0, 2500.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0], dtype=np.float32), high=np.array([100.0, 2500.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0], dtype=np.float32), high=np.array([100.0, 2500.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0], dtype=np.float32), high=np.array([100.0, 2500.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0], dtype=np.float32), high=np.array([100.0, 2500.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0], dtype=np.float32), high=np.array([100.0, 2500.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0], dtype=np.float32), high=np.array([100.0, 2500.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0], dtype=np.float32), high=np.array([100.0, 2500.0], dtype=np.float32), dtype=np.float32),  \
+gym.spaces.Box(low=np.array([0.0, 0.0], dtype=np.float32), high=np.array([100.0, 2500.0], dtype=np.float32), dtype=np.float32),  \
 ))
 
 action_space = gym.spaces.MultiBinary(5)
@@ -48,7 +34,7 @@ gym.register(
     entry_point="veins_gym:VeinsEnv",
     kwargs={
         "action_serializer": serialize_action,
-        "scenario_dir": "./smartHighway/simulations/interstate_5",
+        "scenario_dir": "../smartHighway/simulations/interstate_5_reduced",
         "run_veins": True,  # do not start veins through Veins-Gym
         "port": 5555,  # pick a port to use
         "timeout": 1000.0,  # new timeout value (in seconds)
@@ -83,7 +69,7 @@ _agent_kwargs = {
     "gamma": 0.99,
     "update_frequency": 4,
     "double_dqn": True,  # True uses Double DQN; False uses DQN 
-    "seed": 1305,
+    "seed": 1300,
     "load_checkpoint_path": None
 }
 double_dqn_agent = DDQN.DeepQAgent(**_agent_kwargs)

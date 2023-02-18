@@ -18,7 +18,12 @@
     <processing>
         <time-to-teleport value="-1"/>
         <scale value="2"/>
+		<max-depart-delay value="10"/>
     </processing>
+
+    <routing>
+        <device.rerouting.threads value="2"/>
+    </routing>
 
     <output>
 	     <!--emission-output value="emissions.xml" /-->

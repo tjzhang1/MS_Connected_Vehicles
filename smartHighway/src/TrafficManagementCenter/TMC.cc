@@ -77,7 +77,7 @@ veinsgym::proto::Request TMC::serializeObservation(void) {
         auto *data = dynamic_cast<RsuData *>(*iter);
         // Add a space to observation tuple and create a box there
         auto *data_box = observation_space->add_values()->mutable_box();
-        data_box->add_values(data->lastStepOccupancy);
+//        data_box->add_values(data->lastStepOccupancy);
         data_box->add_values(data->lastStepMeanSpeed);
         data_box->add_values((double)data->vehiclesNumber);
     }

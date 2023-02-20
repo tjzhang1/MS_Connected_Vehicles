@@ -37,6 +37,7 @@ protected:
     double CO2Emissions = 0.0;
     /** @brief this function is called every time the vehicle receives a position update signal */
     void handlePositionUpdate(cObject* obj) override;
+    bool passengerOnboard;
 };
 
 } /* namespace veins */

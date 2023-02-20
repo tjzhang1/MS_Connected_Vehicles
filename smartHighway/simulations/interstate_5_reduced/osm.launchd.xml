@@ -33,6 +33,7 @@
 
 <!-- debug config -->
 <launch>
+	<random value="true"/>
     <copy file="osm.net.xml" />
     <copy file="routeDist.xml" />
     <copy file="osm_pt.rou.xml" />

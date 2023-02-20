@@ -25,6 +25,11 @@
         <device.rerouting.threads value="2"/>
     </routing>
 
+	<random_number>
+		<seed value="0"/>
+		<random value="true"/>
+	</random_number>
+
     <output>
 	     <!--emission-output value="emissions.xml" /-->
 	     <!--full-output value="fullOut.xml" /-->

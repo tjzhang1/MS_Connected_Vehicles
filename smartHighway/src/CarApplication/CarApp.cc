@@ -65,9 +65,13 @@ void CarApp::redirect(void) {
     if(exitNo == UNASSIGNED && uniform(0, 100) < 5.0) {  // generates a value in range [0,100)
         std::string currentRoad = traciVehicle->getRoadId();
         char exitCode[2] = {currentRoad[2], '\0'};
+        if(currentRoad[0] == ':') {  // happens if current road is actually a node
+            exitCode[0] = currentRoad[3];
+        }
         exitNo = strtol(exitCode, NULL, 16);
 #if CARAPP_VERBOSE
         std::cout << "Rerouting vehicle " << getParentModule()->getFullName();
+        std::cout << "from current edge " << currentRoad;
         std::cout << " to exit " << exitCode;
         std::cout << " = " << getExit(exitNo) << endl;
 #endif

@@ -40,6 +40,7 @@ structure:
   <copy file="net.net.xml" />
   <copy file="routes.rou.xml" />
   <copy file="sumo.sumo.cfg" type="config" />
+  <tmp-log-dir prefix="prefix" />
 </launch>
 """
 
@@ -400,10 +401,22 @@ def handle_launch_configuration(sumo_command, shlex, launch_xml_string, client_s
     """
     Process launch configuration in launch_xml_string.
     """
+    # Add prefix to temp directory
+    p = xml.dom.minidom.parseString(launch_xml_string)
+    # get root node "launch"
+    launch_node = p.documentElement
+    if (launch_node.tagName != "launch"):
+        raise RuntimeError("launch config root element not <launch>, but <%s>" % launch_node.tagName)
+    tmpdir_prefix=""
+    tmp_log_dir_nodes = [x for x in launch_node.getElementsByTagName("tmp-log-dir") if x.parentNode==launch_node]
+    if len(tmp_log_dir_nodes) > 1:
+        raise RuntimeError('launch config contains %d <tmp-log-dir> nodes, expected at most 1' % (len(tmp_log_dir_nodes)))
+    elif len(tmp_log_dir_nodes) == 1:
+        tmpdir_prefix = tmp_log_dir_nodes[0].getAttribute("prefix")
 
     # create temporary directory
     logging.debug("Creating temporary directory...")
-    runpath = tempfile.mkdtemp(prefix="sumo-launchd-tmp-")
+    runpath = tempfile.mkdtemp(prefix="sumo-launchd-tmp-"+tmpdir_prefix+"-")
     if not runpath:
         raise RuntimeError("Could not create temporary directory")
     if not os.path.exists(runpath):

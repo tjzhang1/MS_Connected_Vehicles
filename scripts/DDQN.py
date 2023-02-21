@@ -397,7 +397,7 @@ def deleteResults():
         shutil.rmtree(tmp)
 
 def copyResults(episode_num, avg_score, cur_score):
-    results = findDir("sumo-launchd-tmp-*","/tmp")
+    results = findDir("sumo-launchd-tmp-configA*","/tmp")
     name = "run_%d_avgScore_%.3f_curScore_%.3f" % (episode_num,avg_score,cur_score)
     for i,tmp in enumerate(results):
         # copy log results into temp directory

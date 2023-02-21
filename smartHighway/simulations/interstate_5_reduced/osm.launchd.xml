@@ -39,5 +39,6 @@
     <copy file="osm_pt.rou.xml" />
     <copy file="osm.add.xml" />
     <copy file="osm.sumocfg" type="config" />
+    <tmp-log-dir prefix="configA" />
 </launch>
 

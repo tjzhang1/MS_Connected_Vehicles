@@ -400,6 +400,9 @@ def copyResults(episode_num, avg_score, cur_score):
     results = findDir("sumo-launchd-tmp-*","/tmp")
     name = "run_%d_avgScore_%.3f_curScore_%.3f" % (episode_num,avg_score,cur_score)
     for i,tmp in enumerate(results):
+        # copy log results into temp directory
+        shutil.copy("../smartHighway/simulations/interstate_5_reduced/results/General-#0.out", tmp)
+        # copy directory into local folder
         shutil.copytree(tmp, "./results/"+name+"_"+str(i))
 
 def _train_for_at_most(agent: Agent, env: gym.Env, max_timesteps: int) -> int:

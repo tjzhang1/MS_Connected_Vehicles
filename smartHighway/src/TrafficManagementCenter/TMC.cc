@@ -45,11 +45,15 @@ void TMC::initialize(int stage) {
         stringListFromParam(parkingLotList, "parkingLots");
         gymCon = veins::FindModule<GymConnection*>::findGlobalModule();
         ASSERT(gymCon);
+        bufferedHOVReward = RewardsBuffer();
+        bufferedVehReward = RewardsBuffer();
     }
 }
 
 void TMC::finish() {
-    // Does nothing at sim end
+    for(auto i=LOG.begin(); i!=LOG.end(); i++) {
+        EV_INFO<<*i<<endl;
+    }
 }
 
 veinsgym::proto::Request TMC::serializeObservation(void) {
@@ -173,18 +177,20 @@ void TMC::parkingLotStatus(void) {
 
 void TMC::handleBufferedReward(PayloadReward *msg) {
     if(msg->getVType() == HOV) {
-        bufferedHOVReward.hwyThroughput++;
-        bufferedHOVReward.accumTravelTime+=msg->getTravelTime();
-        bufferedHOVReward.accumCO2Emissions+=msg->getCO2Emissions();
+        bufferedHOVReward.buffer.hwyThroughput++;
+        bufferedHOVReward.buffer.accumTravelTime+=msg->getTravelTime();
+        bufferedHOVReward.buffer.accumCO2Emissions+=msg->getCO2Emissions();
+        bufferedHOVReward.sourceIdList.push_back(msg->getSourceId());
     }
     else {
         // Spawn vehicle with extra characteristics
         TraCIScenarioManager *manager = TraCIScenarioManagerAccess().get();
         TraCICommandInterface *traci = manager->getCommandInterface();
         traci->addVehicle("continuingVehicle" + std::to_string(spawnCounter++), "continuingVehicle", "continuingRoute", simTime());
-        bufferedVehReward.hwyThroughput++;
-        bufferedVehReward.accumTravelTime+=msg->getTravelTime();
-        bufferedVehReward.accumCO2Emissions+=msg->getCO2Emissions();
+        bufferedVehReward.buffer.hwyThroughput++;
+        bufferedVehReward.buffer.accumTravelTime+=msg->getTravelTime();
+        bufferedVehReward.buffer.accumCO2Emissions+=msg->getCO2Emissions();
+        bufferedVehReward.sourceIdList.push_back(msg->getSourceId());
 //        std::cout<<"spawning new continuing vehicle"<<endl;
     }
 }

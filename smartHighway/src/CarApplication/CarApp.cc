@@ -35,6 +35,7 @@ void CarApp::finish() {
         double wait_time = fmod(simTime().dbl() + travel_time, 15.0);  // based on HOV interval
         PayloadReward *msg = new PayloadReward("HOV_reward", TMC_BUFFERED_RWD_MSG);
         // Populate msg with this vehicle's rewards
+        msg->setSourceId(mobility->getExternalId().c_str());
         msg->setVType(HOV);
         msg->setTravelTime(SimTime(travel_time + wait_time) + simTime() - spawnTime);
         msg->setCO2Emissions(CO2Emissions);
@@ -50,6 +51,7 @@ void CarApp::finish() {
     else if(TMC_connection->parkingSpaces == 0) {
         double travel_time = abs( normal(2*getTravelTime(exitNo), getTravelTime(exitNo)/4) );  // Roughly twice the time it takes to get to the PAR (perhaps should not be 2x, but time taken to PAR + reentering at nearest ramp
         PayloadReward *msg = new PayloadReward("Continuing_VEH_reward", TMC_BUFFERED_RWD_MSG);
+        msg->setSourceId(mobility->getExternalId().c_str());
         msg->setVType(CONTINUING_VEH);
         msg->setTravelTime(SimTime(travel_time) + simTime() - spawnTime);
         msg->setCO2Emissions(CO2Emissions);

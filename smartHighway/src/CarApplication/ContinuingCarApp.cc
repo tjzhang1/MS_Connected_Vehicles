@@ -14,6 +14,7 @@
 // 
 
 #include <CarApplication/ContinuingCarApp.h>
+#include <boost/algorithm/string.hpp>
 
 using namespace veins;
 
@@ -33,9 +34,9 @@ void ContinuingCarApp::initialize(int stage) {
         spawnTime = simTime();
         TMC_connection = dynamic_cast<TMC *>(getParentModule()->getParentModule()->getSubmodule("TMC"));
         // Collect contents of continuing vehicle reward buffer
-        payloadReward = TMC_connection->bufferedVehReward;
+        payloadReward = RewardsBuffer(TMC_connection->bufferedVehReward);
         // Reset continuing vehicle reward buffer
-        TMC_connection->bufferedVehReward = {0,SimTime::ZERO,0};
+        TMC_connection->bufferedVehReward.reset();
     }
 }
 
@@ -45,9 +46,12 @@ void ContinuingCarApp::finish() {
     TMC_connection->globalReward.accumTravelTime+=(simTime() - spawnTime);
     TMC_connection->globalReward.accumCO2Emissions+=CO2Emissions;
     // Add additional payload
-    TMC_connection->globalReward.hwyThroughput += payloadReward.hwyThroughput;
-    TMC_connection->globalReward.accumTravelTime += payloadReward.accumTravelTime;
-    TMC_connection->globalReward.accumCO2Emissions += payloadReward.accumCO2Emissions;
+    TMC_connection->globalReward.hwyThroughput += payloadReward.buffer.hwyThroughput;
+    TMC_connection->globalReward.accumTravelTime += payloadReward.buffer.accumTravelTime;
+    TMC_connection->globalReward.accumCO2Emissions += payloadReward.buffer.accumCO2Emissions;
+    // Log list of vehicles this car represents
+    payloadReward.sourceIdList.push_back("Leader:"+mobility->getExternalId());
+    TMC_connection->LOG.push_back(boost::algorithm::join(payloadReward.sourceIdList, " "));
 #if CONTCARAPP_VERBOSE
     std::cout<<"Exited a continuing car with travel time " << (simTime()-spawnTime+payloadReward.accumTravelTime).str() << "s and emissions " << CO2Emissions+payloadReward.accumCO2Emissions<<"\t";
     std::cout<<"THROUGHPUT: "<<TMC_connection->globalReward.hwyThroughput<<", "<<"TIME: "<<TMC_connection->globalReward.accumTravelTime.str()<<", "<<"Emissions: "<<TMC_connection->globalReward.accumCO2Emissions<<endl;

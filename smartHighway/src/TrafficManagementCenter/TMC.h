@@ -72,9 +72,27 @@ typedef struct {
     double accumCO2Emissions;
 } rewards_t;
 
+/* Class to hold rewards value for various vehicles */
+class RewardsBuffer : public cObject {
+public:
+    RewardsBuffer(int throughput=0, simtime_t time=SimTime::ZERO, double emissions=0) {
+        buffer.hwyThroughput = throughput;
+        buffer.accumTravelTime = time;
+        buffer.accumCO2Emissions = emissions;
+    }
+    RewardsBuffer(RewardsBuffer &r) {
+        buffer = r.buffer;
+        sourceIdList = r.sourceIdList;
+    }
+    rewards_t buffer;
+    void reset(void) {
+        buffer = {0,SimTime::ZERO,0};
+        sourceIdList.clear();
+    }
+    std::vector<std::string> sourceIdList;  // List of vehicles that this buffer represents
+};
+
 namespace veins {
-
-
 /*
  * TMC will receive information from RSUs periodically. Every set amount of time,
  * the TMC will consult an RL agent to update signal timings and send broadcasts.
@@ -83,10 +101,10 @@ class TMC : public cSimpleModule {
 public:
     TMC(void);
     ~TMC(void);
-
+    std::vector<std::string> LOG;
     rewards_t globalReward = {0,SimTime::ZERO,0};
-    rewards_t bufferedHOVReward = {0,SimTime::ZERO,0};
-    rewards_t bufferedVehReward = {0,SimTime::ZERO,0};
+    RewardsBuffer bufferedHOVReward;
+    RewardsBuffer bufferedVehReward;
     int parkingSpaces = 400;
     const int actionRSU[5] = {
         0,  // I605_EXIT

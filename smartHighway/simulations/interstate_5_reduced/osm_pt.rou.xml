@@ -6,7 +6,9 @@
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
     <!-- VTypes -->
     <vType id="continuingVehicle" vClass="passenger"/>
-    <vType id="basicTraffic" vClass="passenger"/>  <!-- This class of vehicle won't be loaded with OMNeT++ network capabilities -->
+    <vType id="basicTraffic" vClass="passenger">  <!-- This class of vehicle won't be loaded with OMNeT++ network capabilities -->
+    	<param key="has.tripinfo.device" value="false"/>
+    </vType>
     <vType id="pt_aerialway" vClass="bus"/>
     <vType id="pt_bus" vClass="bus"/>
     <vType id="pt_ferry" vClass="ship"/>

@@ -18,6 +18,8 @@ import org.car2x.veins.modules.application.ieee80211p.DemoBaseApplLayer;
 
 simple CarApp extends DemoBaseApplLayer
 {
-    @class(veins::CarApp);
-    @display("i=block/app2");
+	parameters:
+	    double compliance = default(5.0);
+        @class(veins::CarApp);
+        @display("i=block/app2");       
 }

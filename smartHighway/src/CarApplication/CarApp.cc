@@ -31,8 +31,8 @@ void CarApp::finish() {
     }
     // If vehicle leaves to park and there's a spot available, add values to buffered reward to be delivered as a payload for the next HOV
     else if(TMC_connection->parkingSpaces > 0) {
-        double travel_time = abs( normal(getTravelTime(exitNo), getTravelTime(exitNo)/4) );
-        double wait_time = fmod(simTime().dbl() + travel_time, 15.0);  // based on HOV interval
+        double travel_time = getTravelTime(exitNo) + abs( normal(0, getTravelTime(exitNo)/8) );
+        double wait_time = fmod(simTime().dbl() + travel_time, HOV_INTERVAL);  // based on HOV interval
         PayloadReward *msg = new PayloadReward("HOV_reward", TMC_BUFFERED_RWD_MSG);
         // Populate msg with this vehicle's rewards
         msg->setSourceId(mobility->getExternalId().c_str());
@@ -49,7 +49,7 @@ void CarApp::finish() {
     }
     // If vehicle leaves to park and there's no spots left, add a vehicle at the next spawn point
     else if(TMC_connection->parkingSpaces == 0) {
-        double travel_time = abs( normal(2*getTravelTime(exitNo), getTravelTime(exitNo)/4) );  // Roughly twice the time it takes to get to the PAR (perhaps should not be 2x, but time taken to PAR + reentering at nearest ramp
+        double travel_time = 2*getTravelTime(exitNo) + abs( normal(0, getTravelTime(exitNo)/4) );  // Roughly twice the time it takes to get to the PAR (perhaps should not be 2x, but time taken to PAR + reentering at nearest ramp
         PayloadReward *msg = new PayloadReward("Continuing_VEH_reward", TMC_BUFFERED_RWD_MSG);
         msg->setSourceId(mobility->getExternalId().c_str());
         msg->setVType(CONTINUING_VEH);
@@ -64,7 +64,7 @@ void CarApp::finish() {
 
 void CarApp::redirect(void) {
     consideredRerouting = true;
-    if(exitNo == UNASSIGNED && uniform(0, 100) < 5.0) {  // generates a value in range [0,100)
+    if(exitNo == UNASSIGNED && uniform(0, 100) < (double)par("compliance")) {  // generates a value in range [0,100)
         std::string currentRoad = traciVehicle->getRoadId();
         char exitCode[2] = {currentRoad[2], '\0'};
         if(currentRoad[0] == ':') {  // happens if current road is actually a node

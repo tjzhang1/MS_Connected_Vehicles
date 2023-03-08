@@ -48,11 +48,12 @@ void BusApp::initialize(int stage) {
 
 void BusApp::finish() {
     BasicCarApp::finish();
+    // Always contribute the emissions
+    TMC_connection->globalReward.accumCO2Emissions+=CO2Emissions;
     // Only contribute to reward if bus has passengers
     if(passengerOnboard) {
         TMC_connection->globalReward.hwyThroughput++;
         TMC_connection->globalReward.accumTravelTime+=(simTime() - spawnTime);
-        TMC_connection->globalReward.accumCO2Emissions+=CO2Emissions;
         // Add additional payload
         TMC_connection->globalReward.hwyThroughput += payloadReward.buffer.hwyThroughput;
         TMC_connection->globalReward.accumTravelTime += payloadReward.buffer.accumTravelTime;
@@ -68,11 +69,9 @@ void BusApp::finish() {
 }
 
 void BusApp::handlePositionUpdate(cObject* obj) {
-    if(passengerOnboard) {
-        CO2Emissions += traciVehicle->getCO2Emissions();
+    CO2Emissions += traciVehicle->getCO2Emissions();
 #if BUSAPP_VERY_VERBOSE
     std::cout<<getParentModule()->getFullName()<<" co2: "<<CO2Emissions<<" mg"<<endl;
 #endif
-    }
 }
 

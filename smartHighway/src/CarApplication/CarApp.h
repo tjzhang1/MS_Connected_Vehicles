@@ -5,6 +5,8 @@
 
 #define PARKNRIDE_MSG 103
 #define CARAPP_VERBOSE 0
+#define HOV_INTERVAL 60  //num seconds between each bus
+#define COMPLIANCE 5.0  //out of 100.0, percentage chance for vehicle to reroute
 
 // List of possible exits to take to reach park and ride
 static const std::vector<std::string> exitList = { // Exit no:

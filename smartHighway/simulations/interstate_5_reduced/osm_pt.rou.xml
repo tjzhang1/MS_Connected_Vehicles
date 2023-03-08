@@ -35,5 +35,5 @@
     <flow id="flow_TELEGRAPH_GARFIELD" begin="0.00" departLane="free" route="routeDist_TELEGRAPH_GARFIELD" number="363" period="exp(0.10)" type="basicTraffic"/>
     <flow id="flow_ne0_source" begin="0.00" departLane="free" departSpeed="avg" route="routeDist_ne0_source" number="1634" period="exp(0.45)" type="basicTraffic"/>
     <flow id="flow_THROUGH" begin="0.00" departLane="free" color="blue" departSpeed="avg" route="route_ne0_source_to_destination_edge" end="3600.00" period="exp(0.70)"/>
-    <flow id="flow_bus_LAKEWOOD_0" type="pt_bus" begin="0.00" departLane="allowed" color="red" from="source_SB_LAKEWOOD" to="destination_edge" end="3600.00" vehsPerHour="120"/>
+    <flow id="flow_bus_LAKEWOOD_0" type="pt_bus" begin="0.00" departLane="allowed" color="red" from="source_SB_LAKEWOOD" to="destination_edge" end="3600.00" vehsPerHour="30"/>
 </routes>

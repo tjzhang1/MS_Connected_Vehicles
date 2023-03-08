@@ -60,7 +60,7 @@ optimizer_fn = lambda parameters: optim.Adam(parameters, **_optimizer_kwargs)
 _agent_kwargs = {
     "state_size": gym.spaces.utils.flatdim(observation_space),
     "action_size": 1<<action_space.n, 
-    "number_hidden_units": 64,
+    "number_hidden_units": 128,
     "optimizer_fn": optimizer_fn,
     "epsilon_decay_schedule": epsilon_decay_schedule,
     "batch_size": 64,
@@ -69,7 +69,7 @@ _agent_kwargs = {
     "gamma": 0.99,
     "update_frequency": 4,
     "double_dqn": True,  # True uses Double DQN; False uses DQN 
-    "seed": 1300,
+    "seed": 1201,
     "load_checkpoint_path": None
 }
 double_dqn_agent = DDQN.DeepQAgent(**_agent_kwargs)

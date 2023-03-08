@@ -212,9 +212,11 @@ class DeepQAgent(Agent):
         q_network = nn.Sequential(
             nn.Linear(in_features=self._state_size, out_features=number_hidden_units),
             nn.ReLU(),
-            nn.Linear(in_features=number_hidden_units, out_features=number_hidden_units),
+            nn.Linear(in_features=number_hidden_units, out_features=number_hidden_units>>1),
             nn.ReLU(),
-            nn.Linear(in_features=number_hidden_units, out_features=self._action_size)
+            nn.Linear(in_features=number_hidden_units>>1, out_features=number_hidden_units>>2),
+            nn.ReLU(),
+            nn.Linear(in_features=number_hidden_units>>2, out_features=self._action_size)
         )
         return q_network
                  
@@ -362,15 +364,14 @@ class DeepQAgent(Agent):
         action (int): the action taken by the agent in the previous state.
         reward (float): the reward received from the environment.
         next_state (np.array): the resulting state of the environment following the action.
-        done (bool): True is the training episode is finised; false otherwise.
+        done (bool): True is the training episode is finised; false otherwise. Assume this is unaffected by selected action.
         
-        """
-        experience = Experience(state, action, reward, next_state, done)
-        self._memory.append(experience)
-            
+        """ 
         if done:
             self._number_episodes += 1
         else:
+            experience = Experience(state, action, reward, next_state, done)
+            self._memory.append(experience)
             self._number_timesteps += 1
             
             # every so often the agent should learn from experiences

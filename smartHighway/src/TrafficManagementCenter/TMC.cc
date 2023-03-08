@@ -92,12 +92,17 @@ veinsgym::proto::Request TMC::serializeObservation(void) {
 
 double TMC::calculateReward() {
     double reward = 0.0;
-    reward += THROUGHPUT_WEIGHT * globalReward.hwyThroughput;  // maximize throughput
-    reward += DELAY_WEIGHT * ((globalReward.accumTravelTime.dbl() / globalReward.hwyThroughput) - TARGET_TIME);  // minimize average travel time
-    reward += CO2_WEIGHT * (globalReward.accumCO2Emissions / globalReward.hwyThroughput);  // minimize average CO2 emissions
+    if(globalReward.hwyThroughput > 0) {
+        reward += THROUGHPUT_WEIGHT * (globalReward.hwyThroughput - TARGET_THROUGHPUT);  // maximize throughput
+        reward += DELAY_WEIGHT * ((globalReward.accumTravelTime.dbl() / globalReward.hwyThroughput) - TARGET_TIME);  // minimize average travel time
+        reward += CO2_WEIGHT * (globalReward.accumCO2Emissions / globalReward.hwyThroughput);  // minimize average CO2 emissions
 #if DEBUG_REWARD
-    std::cout<<"Send reward THROUGHPUT: "<<THROUGHPUT_WEIGHT * globalReward.hwyThroughput<<", "<<"TIME: "<<DELAY_WEIGHT * ((globalReward.accumTravelTime.dbl() / globalReward.hwyThroughput) - TARGET_TIME)<<", "<<"Emissions: "<<CO2_WEIGHT * (globalReward.accumCO2Emissions / globalReward.hwyThroughput)<<endl;
+        std::cout<<"Send reward THROUGHPUT: "<<THROUGHPUT_WEIGHT * (globalReward.hwyThroughput - TARGET_THROUGHPUT)<<", "<<"TIME: "<<DELAY_WEIGHT * ((globalReward.accumTravelTime.dbl() / globalReward.hwyThroughput) - TARGET_TIME)<<", "<<"Emissions: "<<CO2_WEIGHT * (globalReward.accumCO2Emissions / globalReward.hwyThroughput)<<endl;
 #endif
+    }
+    else {
+        reward = -10.0;
+    }
     // Reset reward after reporting to ML script
     globalReward = {0,SimTime::ZERO,0};
     return reward;

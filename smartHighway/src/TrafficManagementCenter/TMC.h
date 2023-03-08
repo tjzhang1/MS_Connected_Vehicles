@@ -18,7 +18,8 @@ enum {
 #define RL_INTERVAL 1  // Time between receiving RSU data and performing a computation
 #define TMC_VERBOSE 0
 #define DEBUG_REWARD 1
-#define THROUGHPUT_WEIGHT 1.0/600.0  // 1 car per second for 600s = 1/600
+#define TARGET_THROUGHPUT 600  // 1 per second
+#define THROUGHPUT_WEIGHT 10.0/600.0  // quickly gain reward if exceed 600 (60 extra vehicles will get a reward of 1)
 #define TARGET_TIME 400.0   // in seconds, how long it is expected for a mainline vehicle to get to the end
 #define DELAY_WEIGHT -1.0/TARGET_TIME
 #define CO2_WEIGHT -4.0/10000000  // magnitude of values is 10e6

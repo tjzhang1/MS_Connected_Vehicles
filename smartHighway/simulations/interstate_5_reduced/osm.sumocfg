@@ -16,19 +16,24 @@
     </time>
 
     <processing>
-        <scale value="2"/>
         <time-to-teleport value="-1"/>
-        <max-depart-delay value="10"/>
+        <scale value="2"/>
+		<max-depart-delay value="10"/>
     </processing>
 
     <routing>
         <device.rerouting.threads value="2"/>
     </routing>
 
+	<random_number>
+		<seed value="0"/>
+		<random value="true"/>
+	</random_number>
+
     <output>
 	     <!--emission-output value="emissions.xml" /-->
 	     <!--full-output value="fullOut.xml" /-->
-	    <tripinfo-output value="tripInfo.xml" />
+	     <tripinfo-output value="tripInfo.xml" />
         <device.emissions.probability value="1.0" />
     </output>
 

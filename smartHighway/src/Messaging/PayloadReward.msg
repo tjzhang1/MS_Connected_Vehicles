@@ -22,6 +22,7 @@ enum RewardType {
 };
 
 message PayloadReward {
+    string sourceId;
     RewardType vType;
     simtime_t travelTime;
     double CO2Emissions;

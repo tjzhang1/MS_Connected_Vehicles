@@ -45,11 +45,15 @@ void TMC::initialize(int stage) {
         stringListFromParam(parkingLotList, "parkingLots");
         gymCon = veins::FindModule<GymConnection*>::findGlobalModule();
         ASSERT(gymCon);
+        bufferedHOVReward = RewardsBuffer();
+        bufferedVehReward = RewardsBuffer();
     }
 }
 
 void TMC::finish() {
-    // Does nothing at sim end
+    for(auto i=LOG.begin(); i!=LOG.end(); i++) {
+        EV_INFO<<*i<<endl;
+    }
 }
 
 veinsgym::proto::Request TMC::serializeObservation(void) {
@@ -77,7 +81,7 @@ veinsgym::proto::Request TMC::serializeObservation(void) {
         auto *data = dynamic_cast<RsuData *>(*iter);
         // Add a space to observation tuple and create a box there
         auto *data_box = observation_space->add_values()->mutable_box();
-        data_box->add_values(data->lastStepOccupancy);
+//        data_box->add_values(data->lastStepOccupancy);
         data_box->add_values(data->lastStepMeanSpeed);
         data_box->add_values((double)data->vehiclesNumber);
     }
@@ -88,12 +92,17 @@ veinsgym::proto::Request TMC::serializeObservation(void) {
 
 double TMC::calculateReward() {
     double reward = 0.0;
-    reward += THROUGHPUT_WEIGHT * globalReward.hwyThroughput;  // maximize throughput
-    reward += DELAY_WEIGHT * ((globalReward.accumTravelTime.dbl() / globalReward.hwyThroughput) - TARGET_TIME);  // minimize average travel time
-    reward += CO2_WEIGHT * (globalReward.accumCO2Emissions / globalReward.hwyThroughput);  // minimize average CO2 emissions
+    if(globalReward.hwyThroughput > 0) {
+        reward += THROUGHPUT_WEIGHT * (globalReward.hwyThroughput - TARGET_THROUGHPUT);  // maximize throughput
+        reward += DELAY_WEIGHT * ((globalReward.accumTravelTime.dbl() / globalReward.hwyThroughput) - TARGET_TIME);  // minimize average travel time
+        reward += CO2_WEIGHT * (globalReward.accumCO2Emissions / globalReward.hwyThroughput);  // minimize average CO2 emissions
 #if DEBUG_REWARD
-    std::cout<<"Send reward THROUGHPUT: "<<THROUGHPUT_WEIGHT * globalReward.hwyThroughput<<", "<<"TIME: "<<DELAY_WEIGHT * ((globalReward.accumTravelTime.dbl() / globalReward.hwyThroughput) - TARGET_TIME)<<", "<<"Emissions: "<<CO2_WEIGHT * (globalReward.accumCO2Emissions / globalReward.hwyThroughput)<<endl;
+        std::cout<<"Send reward THROUGHPUT: "<<THROUGHPUT_WEIGHT * (globalReward.hwyThroughput - TARGET_THROUGHPUT)<<", "<<"TIME: "<<DELAY_WEIGHT * ((globalReward.accumTravelTime.dbl() / globalReward.hwyThroughput) - TARGET_TIME)<<", "<<"Emissions: "<<CO2_WEIGHT * (globalReward.accumCO2Emissions / globalReward.hwyThroughput)<<endl;
 #endif
+    }
+    else {
+        reward = -10.0;
+    }
     // Reset reward after reporting to ML script
     globalReward = {0,SimTime::ZERO,0};
     return reward;
@@ -173,18 +182,20 @@ void TMC::parkingLotStatus(void) {
 
 void TMC::handleBufferedReward(PayloadReward *msg) {
     if(msg->getVType() == HOV) {
-        bufferedHOVReward.hwyThroughput++;
-        bufferedHOVReward.accumTravelTime+=msg->getTravelTime();
-        bufferedHOVReward.accumCO2Emissions+=msg->getCO2Emissions();
+        bufferedHOVReward.buffer.hwyThroughput++;
+        bufferedHOVReward.buffer.accumTravelTime+=msg->getTravelTime();
+        bufferedHOVReward.buffer.accumCO2Emissions+=msg->getCO2Emissions();
+        bufferedHOVReward.sourceIdList.push_back(msg->getSourceId());
     }
     else {
         // Spawn vehicle with extra characteristics
         TraCIScenarioManager *manager = TraCIScenarioManagerAccess().get();
         TraCICommandInterface *traci = manager->getCommandInterface();
         traci->addVehicle("continuingVehicle" + std::to_string(spawnCounter++), "continuingVehicle", "continuingRoute", simTime());
-        bufferedVehReward.hwyThroughput++;
-        bufferedVehReward.accumTravelTime+=msg->getTravelTime();
-        bufferedVehReward.accumCO2Emissions+=msg->getCO2Emissions();
+        bufferedVehReward.buffer.hwyThroughput++;
+        bufferedVehReward.buffer.accumTravelTime+=msg->getTravelTime();
+        bufferedVehReward.buffer.accumCO2Emissions+=msg->getCO2Emissions();
+        bufferedVehReward.sourceIdList.push_back(msg->getSourceId());
 //        std::cout<<"spawning new continuing vehicle"<<endl;
     }
 }

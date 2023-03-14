@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2023-01-31 00:36:28 by Eclipse SUMO netedit Version 1.15.0
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <!-- VTypes -->
+    <vType id="continuingVehicle" vClass="passenger"/>
+    <vType id="basicTraffic" vClass="passenger">  <!-- This class of vehicle won't be loaded with OMNeT++ network capabilities -->
+    	<param key="has.tripinfo.device" value="false"/>
+    </vType>
+    <vType id="pt_aerialway" vClass="bus"/>
+    <vType id="pt_bus" vClass="bus"/>
+    <vType id="pt_ferry" vClass="ship"/>
+    <vType id="pt_light_rail" vClass="rail_urban"/>
+    <vType id="pt_minibus" vClass="bus"/>
+    <vType id="pt_monorail" vClass="rail"/>
+    <vType id="pt_share_taxi" vClass="taxi"/>
+    <vType id="pt_subway" vClass="rail_urban"/>
+    <vType id="pt_train" vClass="rail"/>
+    <vType id="pt_tram" vClass="tram"/>
+    <vType id="pt_trolleybus" vClass="bus"/>
+    <!-- Routes -->
+    <route edges="source_SB_LAKEWOOD 23426514 23426514.71 399668245 ne2_866210533-AddedOnRampEdge ne2_866210533 ne2_866210533-AddedOffRampEdge ne3_866210532 ne3_32296182#1-AddedOnRampEdge ne3_32296182#1 ne3_32296182#1-AddedOffRampEdge ne4_866203384 ne4_866203384-AddedOffRampEdge ne5_862573275#0 ne5_862573275#1-AddedOnRampEdge destination_edge" id="continuingRoute"/>
+
+    <!-- Additional routes and routeDistributions are defined in routeDist.xml, which should be included before this file in osm.sumocfg -->
+
+    <!-- Vehicles, persons and containers (sorted by depart) -->
+    <flow id="flow_FLORENCE_AVE" begin="0.00" departLane="free" departSpeed="speedLimit" route="routeDist_FLORENCE" number="205" period="exp(0.06)" type="basicTraffic"/>
+    <flow id="flow_NB_LAKEWOOD" begin="0.00" departLane="free" route="routeDist_NB_LAKEWOOD" number="209" period="exp(0.06)" type="basicTraffic"/>
+    <flow id="flow_PARAMOUNT_BLVD" begin="0.00" departLane="free" route="routeDist_PARAMOUNT_BLVD" number="289" period="exp(0.08)" type="basicTraffic"/>
+    <flow id="flow_SB_605" begin="0.00" route="routeDist_I605_SB" number="380" period="exp(0.11)" type="basicTraffic"/>
+    <flow id="flow_SB_LAKEWOOD" begin="0.00" departLane="allowed" route="routeDist_SB_LAKEWOOD" number="165" period="exp(0.05)" type="basicTraffic"/>
+    <flow id="flow_STUDEBAKER" begin="0.00" route="routeDist_STUDEBAKER" number="1274" period="exp(0.35)" type="basicTraffic"/>
+    <flow id="flow_TELEGRAPH_GARFIELD" begin="0.00" departLane="free" route="routeDist_TELEGRAPH_GARFIELD" number="363" period="exp(0.10)" type="basicTraffic"/>
+    <flow id="flow_ne0_source" begin="0.00" departLane="free" departSpeed="avg" route="routeDist_ne0_source" number="1634" period="exp(0.45)" type="basicTraffic"/>
+    <flow id="flow_THROUGH" begin="0.00" departLane="free" color="blue" departSpeed="avg" route="route_ne0_source_to_destination_edge" end="3600.00" period="exp(0.70)"/>
+    <flow id="flow_bus_LAKEWOOD_0" type="pt_bus" begin="0.00" departLane="allowed" color="red" from="source_SB_LAKEWOOD" to="destination_edge" end="3600.00" vehsPerHour="30"/>
+</routes>

@@ -18,10 +18,11 @@ enum {
 #define RL_INTERVAL 1  // Time between receiving RSU data and performing a computation
 #define TMC_VERBOSE 0
 #define DEBUG_REWARD 1
-#define THROUGHPUT_WEIGHT 1.0/60.0  // 1 car per second for 60s = 1/60
-#define TARGET_TIME 560.0   // in seconds
+#define TARGET_THROUGHPUT 600  // 1 per second
+#define THROUGHPUT_WEIGHT 10.0/600.0  // quickly gain reward if exceed 600 (60 extra vehicles will get a reward of 1)
+#define TARGET_TIME 400.0   // in seconds, how long it is expected for a mainline vehicle to get to the end
 #define DELAY_WEIGHT -1.0/TARGET_TIME
-#define CO2_WEIGHT -0.0000001
+#define CO2_WEIGHT -4.0/10000000  // magnitude of values is 10e6
 
 /* Object that holds state info for parking lots */
 class parkingLotData : public cObject {
@@ -72,9 +73,27 @@ typedef struct {
     double accumCO2Emissions;
 } rewards_t;
 
+/* Class to hold rewards value for various vehicles */
+class RewardsBuffer : public cObject {
+public:
+    RewardsBuffer(int throughput=0, simtime_t time=SimTime::ZERO, double emissions=0) {
+        buffer.hwyThroughput = throughput;
+        buffer.accumTravelTime = time;
+        buffer.accumCO2Emissions = emissions;
+    }
+    RewardsBuffer(RewardsBuffer &r) {
+        buffer = r.buffer;
+        sourceIdList = r.sourceIdList;
+    }
+    rewards_t buffer;
+    void reset(void) {
+        buffer = {0,SimTime::ZERO,0};
+        sourceIdList.clear();
+    }
+    std::vector<std::string> sourceIdList;  // List of vehicles that this buffer represents
+};
+
 namespace veins {
-
-
 /*
  * TMC will receive information from RSUs periodically. Every set amount of time,
  * the TMC will consult an RL agent to update signal timings and send broadcasts.
@@ -83,10 +102,10 @@ class TMC : public cSimpleModule {
 public:
     TMC(void);
     ~TMC(void);
-
+    std::vector<std::string> LOG;
     rewards_t globalReward = {0,SimTime::ZERO,0};
-    rewards_t bufferedHOVReward = {0,SimTime::ZERO,0};
-    rewards_t bufferedVehReward = {0,SimTime::ZERO,0};
+    RewardsBuffer bufferedHOVReward;
+    RewardsBuffer bufferedVehReward;
     int parkingSpaces = 400;
     const int actionRSU[5] = {
         0,  // I605_EXIT

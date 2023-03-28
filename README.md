@@ -17,9 +17,13 @@ Open OMNeT++ IDE. Ensure the veins-5.2 project has been imported into the IDE, i
 
 Before compiling the smartHighway project, I have made some changes to the VEINS project that need to be updated. Copy the files in `modified_veins_files/veins/src/veins/modules/mobility/traci/*` to the corresponding `veins-veins-5.2/veins/src/modules/mobility/traci/` directory in your VEINS installation folder.
 
+Additionally, you will need to generate the `protobuf` header files for the project. Navigate to `smartHighway/src/protobuf` and run the command in the `generateProtobufs` file. You will need `libprotobuf17` installed to use this command.
+
 In the OMNeT++ IDE, navigate to smartHighway/simulations/interstate_5_reduced/omnetpp.ini, right-click this file and click Run. If everything has been installed correctly, the compilation process should begin and a new window should pop up with a GUI view of the simulation. You can exit from this view now, it won't work yet until it establishes connections to the Python scripts described below.
 
-Then, start the SUMO TRaCI connection service; open another terminal, activate the `pytorch` conda environment, navigate to the modified_veins_files/bin folder and run `./veins_launchd -v`.
+Then, start the SUMO TRaCI connection service; open another terminal, activate the `pytorch` conda environment, navigate to the modified_veins_files/bin folder and run `./veins_launchd -v`. You may need to turn give this file executable permission using `chmod +x veins_launchd`.
+
+The Python training script uses a script located at `smartHighway/simulations/interstate_5_reduced/run` to load the Veins simulation. Before launching the Python script, edit this `run` file to make sure the `cd` destination is to absolute path for the `smartHighway/simulations/interstate_5_reduced/` folder on your machine. You may also need to give this file executable permission using `chmod +x run`.
 
 Next, start the machine learning script, open a terminal, activate the `pytorch` conda environment, and run `python learning.py`.
 

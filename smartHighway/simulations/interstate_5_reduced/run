@@ -23,5 +23,5 @@
 #
 
 # exec ../../bin/veins_run "$@"
-cd /home/tjzhang/Documents/VEINS_Connected_Vehicles/smartHighway/simulations/interstate_5
+cd /home/tjzhang/Research/VEINS_Connected_Vehicles/smartHighway/simulations/interstate_5_reduced
 exec ../../src/smartHighway -r 0 -m -u Cmdenv -n ..:../../src:../../../../../programs/veins-veins-5.2/examples/veins:../../../../../programs/veins-veins-5.2/src/veins --image-path=../../../../../programs/veins-veins-5.2/images -l ../../../../../programs/veins-veins-5.2/src/veins omnetpp.ini
